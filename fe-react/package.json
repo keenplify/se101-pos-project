@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve-ssl": "serve -s -S --ssl-cert ssl/192.168.254.100.pem --ssl-key ssl/192.168.254.100-key.pem build"
   },
   "eslintConfig": {
     "extends": [

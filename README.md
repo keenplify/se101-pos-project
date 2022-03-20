@@ -20,3 +20,10 @@ This POS is a portable, PWA-enabled React App with Express as a backend. Below a
 
 1. Open your desired terminal and CD to **fe-react**
 2. Run **serve build**
+
+## SERVING FRONTEND TO NON LOCALHOST (SERVE TO MOBILE DEVICES, ETC...)
+### SOLUTION 1
+> PWA applications dont work on non-secure hosts. First you must whitelist the website by enabling the flag **Insecure origins treated as secure** and by putting the origin URL into the textbox.
+
+### SOLUTION 2
+> You can serve the application naturally and run **ngrok https 3000** to get HTTPS link. You now can install PWA application to non localhost devices.
