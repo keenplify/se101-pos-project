@@ -1,59 +1,39 @@
 {
-  "name": "create-react-electron-app",
+  "name": "fe-react-pwa",
   "version": "0.1.0",
-  "description": "A simple starter project to get up and developing quickly with the blend of React and Electron JS for building a Native Desktop App on various OS Platforms like Windows, Linux and macOS using Electron Builder.",
-  "main": "main.js",
-  "author": "Souleh Shaikh <author.souleh@thegeekytutor.com>",
-  "license": "MIT",
-  "private": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/soulehshaikh99/create-react-electron-app"
-  },
-  "bugs": {
-    "url": "https://github.com/soulehshaikh99/create-react-electron-app/issues"
-  },
-  "build": {
-    "icon": "public/logo512.png",
-    "productName": "React and Electron App",
-    "files": [
-      "build/**/*",
-      "main.js"
-    ],
-    "extraMetadata": {
-      "main": "main.js"
-    },
-    "win": {},
-    "linux": {},
-    "mac": {}
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "web-vitals": "^0.2.4",
+    "workbox-background-sync": "^5.1.4",
+    "workbox-broadcast-update": "^5.1.4",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-core": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-google-analytics": "^5.1.4",
+    "workbox-navigation-preload": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
+    "workbox-range-requests": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron": "wait-on http://localhost:3000 && electron .",
-    "electron-dev": "concurrently \"yarn run start\" \"yarn run electron\"",
-    "preelectron-pack": "yarn run build",
-    "electron-pack": "electron-builder"
-  },
-  "dependencies": {
-    "electron-serve": "^1.0.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "concurrently": "^5.3.0",
-    "electron": "^10.0.1",
-    "electron-builder": "^22.8.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
-    "wait-on": "^5.2.0"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -66,27 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "keywords": [
-    "cross-platform",
-    "native-app",
-    "installed-app",
-    "desktop-applications",
-    "windows",
-    "linux",
-    "macos",
-    "html",
-    "css",
-    "javascript",
-    "front-end",
-    "declarative",
-    "react",
-    "react-dom",
-    "react-scripts",
-    "electron",
-    "electron-builder",
-    "electron-serve",
-    "concurrently",
-    "wait-on"
-  ]
+  }
 }
