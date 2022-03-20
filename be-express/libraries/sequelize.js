@@ -17,7 +17,9 @@ async function prestart() {
   try {
     await sequelize.authenticate();
     if (process.env.ENV !== "PROD") {
-      sequelize.sync();
+      sequelize.sync({
+        force: true,
+      });
     }
     console.log("Connection has been established successfully.");
   } catch (error) {
