@@ -7,6 +7,8 @@ const Product = require("./product");
 const Token = require("./token");
 const Variant = require ("./variant");
 const Image = require ("./image")
+const Category = require("./category");
+const Log = require("./log");
 
 const models = {
   Product,
@@ -14,6 +16,8 @@ const models = {
   Token,
   Variant,
   Image,
+  Category,
+  Log,
 };
 
 Object.values(models).forEach((model) => {
