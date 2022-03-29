@@ -1,20 +1,22 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
 
-const Model = sequelize.define("logs", {
- 
+const Model = sequelize.define("categories", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   description: {
     type: DataTypes.STRING,
     allowNull: false,
   }
 });
 
-Model.associate = ({ Employee, Product, Categories, Variants, Transaction }) => {
+Model.associate = ({ Employee, Product, Log }) => {
   Model.belongsTo(Employee);
   Model.belongsTo(Product);
-  Model.belongsTo(Categories);
-  Model.belongsTo(Variants);
-  Model.belongsTo(Transaction);
+  Model.hasOne(Log);
+
 };
 
 module.exports = Model;
