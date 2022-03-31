@@ -7,7 +7,7 @@ const Model = sequelize.define("variants", {
     allowNull: false,
   },
   stock: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
   }
