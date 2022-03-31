@@ -7,6 +7,11 @@ const Product = require("./product");
 const Token = require("./token");
 const EWallet = require("./e-wallet");
 const Transaction = require("./transaction");
+const TransactedVariant = require("./transactedvariant");
+const Variant = require ("./variant");
+const Image = require ("./image")
+const Category = require("./category");
+const Log = require("./log");
 
 const models = {
   Product,
@@ -14,6 +19,11 @@ const models = {
   Token,
   EWallet,
   Transaction,
+  TransactedVariant,
+  Variant,
+  Image,
+  Category,
+  Log,
 };
 
 Object.values(models).forEach((model) => {
