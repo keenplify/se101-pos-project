@@ -5,11 +5,15 @@ const { hashSync } = require("bcrypt");
 const Employee = require("./employee");
 const Product = require("./product");
 const Token = require("./token");
+const EWallet = require("./e-wallet");
+const Transaction = require("./transaction");
 
 const models = {
   Product,
   Employee,
   Token,
+  EWallet,
+  Transaction,
 };
 
 Object.values(models).forEach((model) => {
