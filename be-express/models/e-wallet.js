@@ -9,6 +9,10 @@ const Model = sequelize.define("e-wallets", {
     phone_number:{
         type: DataTypes.INTEGER,
         allowNull: false,
+    },
+    account_name:{
+        type: DataTypes.STRING,
+        allowNull: false
     }
 });
 Model.associate = ({ Employee }) => {
