@@ -5,6 +5,7 @@ const { hashSync } = require("bcrypt");
 const Employee = require("./employee");
 const Product = require("./product");
 const Token = require("./token");
+const TransactedVariant = require("./transactedvariant");
 const Variant = require ("./variant");
 const Image = require ("./image")
 const Category = require("./category");
@@ -14,6 +15,7 @@ const models = {
   Product,
   Employee,
   Token,
+  TransactedVariant,
   Variant,
   Image,
   Category,
