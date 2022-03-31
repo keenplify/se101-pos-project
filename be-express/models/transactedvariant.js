@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
 
-const Model = sequelize.define("transactedvariant", {
+const Model = sequelize.define("transactedvariants", {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
