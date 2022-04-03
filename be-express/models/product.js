@@ -9,11 +9,11 @@ const Model = sequelize.define("products", {
 });
 
 Model.associate = ({ Employee, Variant, Category, Log }) => {
-  Model.hasOne(Category);
   Model.hasOne(Log);
   Model.hasMany(Variant);
   
   Model.belongsTo(Employee);
+  Model.belongsTo(Category);
 
 };
 

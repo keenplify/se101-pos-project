@@ -8,9 +8,10 @@ const Model = sequelize.define("images", {
   },
 });
 
-Model.associate = ({ Employee, Variant }) => {
-  Model.belongsTo(Employee);
-  Model.belongsTo(Variant);
+Model.associate = ({ Employee, Variant, Category }) => {
+  Model.hasMany(Employee);
+  Model.hasMany(Variant);
+  Model.hasMany(Category);
 };
 
 module.exports = Model;

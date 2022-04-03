@@ -16,7 +16,8 @@ const Model = sequelize.define("variants", {
 Model.associate = ({ Employee, Product, Image, TransactedVariant }) => {
   Model.belongsTo(Employee);
   Model.belongsTo(Product);
-  Model.hasOne(Image);
+  Model.belongsTo(Image);
+  
   Model.hasMany(TransactedVariant);
 };
 

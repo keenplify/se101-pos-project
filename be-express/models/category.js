@@ -12,11 +12,12 @@ const Model = sequelize.define("categories", {
   }
 });
 
-Model.associate = ({ Employee, Product, Log }) => {
-  Model.belongsTo(Employee);
-  Model.belongsTo(Product);
+Model.associate = ({ Employee, Product, Log, Image }) => {
   Model.hasOne(Log);
+  Model.hasMany(Product);
 
+  Model.belongsTo(Employee);
+  Model.belongsTo(Image);
 };
 
 module.exports = Model;

@@ -20,12 +20,16 @@ const Model = sequelize.define("employees", {
   },
 });
 
-Model.associate = ({ Employee, Product, Token, Image }) => {
+Model.associate = ({ Employee, Product, Token, Image, Log, Transaction, Variant, Category }) => {
   Model.hasMany(Employee);
   Model.hasMany(Product);
   Model.hasMany(Token);
-  Model.hasOne(Image);
+  Model.hasMany(Log);
+  Model.hasMany(Transaction);
+  Model.hasMany(Variant);
+  Model.hasMany(Category);
 
+  Model.belongsTo(Image);
   Model.belongsTo(Employee);
 };
 

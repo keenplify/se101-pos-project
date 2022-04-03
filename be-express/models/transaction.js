@@ -4,25 +4,23 @@ const sequelize = require("../libraries/sequelize");
 const Model = sequelize.define("transactions", {
     remarks: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     total_price: {
         type: DataTypes.INTEGER,
-        allowNull: false,
     },
     state: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(["PROCESSING", "PAID", "CANCELLED"]),
         allowNull: false,
-    },
-    isPaid: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
+        defaultValue: "PROCESSING"
     },
     type: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(["CASH", "EWALLET"]),
+        allowNull: false
     },
 });
-Model.associate = ({ Employee }) => {
+Model.associate = ({ Employee, EWallet }) => {
+    Model.belongsTo(EWallet);
+
     Model.belongsTo(Employee);
   };
   
