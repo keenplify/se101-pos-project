@@ -54,7 +54,6 @@ router.post(
         token: token.hash,
       });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ error: error.message });
     }
   }
