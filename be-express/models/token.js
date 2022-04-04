@@ -9,7 +9,7 @@ const Model = sequelize.define("tokens", {
 });
 
 Model.associate = ({ Employee }) => {
-  Model.belongsTo(Employee);
+  Model.belongsTo(Employee, { foreignKey: "createdBy" });
 };
 
 Model.registerEvents = (models) => {};
