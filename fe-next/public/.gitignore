@@ -1,1 +1,7 @@
 *.map
+workbox*.js
+*.js
+!.png
+!.jpeg
+!.jpg
+!.gif
