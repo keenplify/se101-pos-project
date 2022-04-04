@@ -8,8 +8,8 @@ const Token = require("./token");
 const EWallet = require("./e-wallet");
 const Transaction = require("./transaction");
 const TransactedVariant = require("./transactedvariant");
-const Variant = require ("./variant");
-const Image = require ("./image")
+const Variant = require("./variant");
+const Image = require("./image");
 const Category = require("./category");
 const Log = require("./log");
 
@@ -30,25 +30,5 @@ Object.values(models).forEach((model) => {
   model.associate && model.associate(models);
   model.registerEvents && model.registerEvents(models);
 });
-
-// Create genesis admin (Admin #1) after 2.5 seconds
-setTimeout(() => {
-  Employee.findOrCreate({
-    where: {
-      id: 1,
-    },
-    defaults: {
-      firstName: "Genesis",
-      lastName: "Admin",
-      password: hashSync("admin", 10),
-      type: "Admin",
-      employeeId: 1,
-    },
-  })
-    .then(() => console.log("Genesis admin sucessfully created."))
-    .catch((err) => {
-      console.log(err);
-    });
-}, 2500);
 
 module.exports = models;

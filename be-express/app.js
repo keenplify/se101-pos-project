@@ -5,9 +5,10 @@ const logger = require("morgan");
 
 const app = express();
 
-const sequelize = require("./libraries/sequelize");
-const models = require("./models");
-const passport = require("./libraries/passport");
+require("./libraries/sequelize");
+require("./models");
+require("./libraries/passport");
+require("./libraries/createadmin.js");
 
 const productsRouter = require("./routes/products");
 const employeesRouter = require("./routes/employees");

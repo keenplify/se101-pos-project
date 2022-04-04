@@ -1,2 +1,6 @@
 
 *.map
+
+fe-next/public/workbox-*.js
+fe-next/public/sw.js
+fe-next/public/worker-*.js
