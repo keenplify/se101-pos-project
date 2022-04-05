@@ -234,7 +234,9 @@ router.post(
   validateResultMiddleware,
   upload.single("image"),
   async (req, res) => {
-    console.log(req.params);
+    if (!req.file) {
+      res.status(422).send("Image not found");
+    }
     const newImage = await Image.create({
       location: req.file.path,
     });
