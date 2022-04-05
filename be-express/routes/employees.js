@@ -235,7 +235,7 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     if (!req.file) {
-      res.status(422).send("Image not found");
+      return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
       location: req.file.path,
