@@ -239,6 +239,7 @@ router.post(
     }
     const newImage = await Image.create({
       location: req.file.path,
+      createdBy: req.user.id,
     });
 
     Employee.update(

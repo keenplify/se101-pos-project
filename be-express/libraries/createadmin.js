@@ -5,15 +5,6 @@ const { Image, Employee } = require("../models");
 setTimeout(async () => {
   if (process.env.CREATEGENESISADMIN !== "true") return;
 
-  await Image.findOrCreate({
-    where: {
-      id: 1,
-    },
-    defaults: {
-      location: "\\public\\images\\genesisadmin.png",
-    },
-  });
-
   await Employee.findOrCreate({
     where: {
       id: 1,
@@ -24,11 +15,20 @@ setTimeout(async () => {
       password: hashSync("admin", 10),
       type: "ADMIN",
       createdBy: 1,
-      imageId: 1,
     },
-  })
-    .then(() => console.log("Genesis admin sucessfully created."))
-    .catch((err) => {
-      console.log(err);
-    });
+  });
+
+  await Image.findOrCreate({
+    where: {
+      id: 1,
+    },
+    defaults: {
+      location: "\\public\\images\\genesisadmin.png",
+      createdBy: 1,
+    },
+  });
+
+  Employee.update({ imageId: 1 }, { where: { id: 1 } });
+
+  console.log("Genesis admin sucessfully created.");
 }, 2500);

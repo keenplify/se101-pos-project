@@ -39,8 +39,9 @@ Model.associate = ({
   Model.hasMany(Variant, { foreignKey: "createdBy" });
   Model.hasMany(Category, { foreignKey: "createdBy" });
   Model.hasMany(EWallet, { foreignKey: "createdBy" });
+  Model.hasMany(Image, { foreignKey: "createdBy" });
 
-  Model.belongsTo(Image);
+  Model.belongsTo(Image, { constraints: false, foreignKeyConstraint: false });
   Model.belongsTo(Employee, { foreignKey: "createdBy" });
 };
 
