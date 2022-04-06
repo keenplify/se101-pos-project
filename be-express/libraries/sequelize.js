@@ -16,8 +16,8 @@ const sequelize = new Sequelize(
 async function prestart() {
   try {
     await sequelize.authenticate();
-    if (process.env.ENV !== "PROD") {
-      sequelize.sync({
+    if (process.env.SYNCDATABASE === "true") {
+      await sequelize.sync({
         force: true,
       });
     }

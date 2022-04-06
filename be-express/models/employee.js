@@ -15,22 +15,34 @@ const Model = sequelize.define("employees", {
     allowNull: false,
   },
   type: {
-    type: DataTypes.ENUM(["Admin", "Cashier"]),
+    type: DataTypes.ENUM(["ADMIN", "CASHIER"]),
     allowNull: false,
   },
 });
 
-Model.associate = ({ Employee, Product, Token, Image, Log, Transaction, Variant, Category }) => {
-  Model.hasMany(Employee);
-  Model.hasMany(Product);
-  Model.hasMany(Token);
-  Model.hasMany(Log);
-  Model.hasMany(Transaction);
-  Model.hasMany(Variant);
-  Model.hasMany(Category);
+Model.associate = ({
+  Employee,
+  Product,
+  Token,
+  Image,
+  Log,
+  Transaction,
+  Variant,
+  Category,
+  EWallet,
+}) => {
+  Model.hasMany(Employee, { foreignKey: "createdBy" });
+  Model.hasMany(Product, { foreignKey: "createdBy" });
+  Model.hasMany(Token, { foreignKey: "createdBy" });
+  Model.hasMany(Log, { foreignKey: "createdBy" });
+  Model.hasMany(Transaction, { foreignKey: "createdBy" });
+  Model.hasMany(Variant, { foreignKey: "createdBy" });
+  Model.hasMany(Category, { foreignKey: "createdBy" });
+  Model.hasMany(EWallet, { foreignKey: "createdBy" });
+  Model.hasMany(Image, { foreignKey: "createdBy" });
 
-  Model.belongsTo(Image);
-  Model.belongsTo(Employee);
+  Model.belongsTo(Image, { constraints: false, foreignKeyConstraint: false });
+  Model.belongsTo(Employee, { foreignKey: "createdBy" });
 };
 
 Model.registerEvents = ({ Token }) => {
