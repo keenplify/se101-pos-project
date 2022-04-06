@@ -19,4 +19,9 @@ module.exports = {
     }
     next();
   },
+
+  AdminOnly(req, res, next) {
+    if (req.user.type === "ADMIN") return next();
+    return res.status(401).send("This route is only available to admins.");
+  },
 };

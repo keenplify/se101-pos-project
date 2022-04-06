@@ -9,9 +9,11 @@ const Model = sequelize.define("images", {
 });
 
 Model.associate = ({ Employee, Variant, Category }) => {
-  Model.hasMany(Employee);
+  Model.hasMany(Employee, { constraints: false, foreignKeyConstraint: false });
   Model.hasMany(Variant);
   Model.hasMany(Category);
+
+  Model.belongsTo(Employee, { foreignKey: "createdBy" });
 };
 
 module.exports = Model;

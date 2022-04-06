@@ -1,16 +1,19 @@
 const passport = require("passport");
 const BearerStrategy = require("passport-http-bearer").Strategy;
 
-const { Token, Employee } = require("../models");
+const { Token, Employee, Image } = require("../models");
 
-passport.use(
+const Strategy = passport.use(
   new BearerStrategy(async (token, done) => {
     try {
       const exists = await Token.findOne({
         where: {
           hash: token,
         },
-        include: Employee,
+        include: {
+          model: Employee,
+          include: [Image],
+        },
       });
 
       if (!exists) {
@@ -23,4 +26,4 @@ passport.use(
   })
 );
 
-module.exports = passport;
+module.exports = Strategy;
