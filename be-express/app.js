@@ -13,7 +13,14 @@ require("./libraries/createadmin.js");
 const productsRouter = require("./routes/products");
 const employeesRouter = require("./routes/employees");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
