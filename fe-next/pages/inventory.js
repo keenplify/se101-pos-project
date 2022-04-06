@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import {Card} from "react-bootstrap"
-import styles from '../styles/Home.module.css'
+import styles from '../styles/inventory.module.css'
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
+
 
 
 export default function Inventory() {
@@ -15,107 +16,100 @@ export default function Inventory() {
       </Head>
     <NavBar></NavBar>
     
-
-      <div className="container justify-content-center">
-        <div className="row py-3">
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
+      <h1 className="text-center">Heading </h1>
+      <div className="container col-lg-10 justify-content-center ">
+        <div className="row">
+        
+        <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="">
+        <Card  data-aos="fade-down" className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
 
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
+    <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
 
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
+    <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
 
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
+    <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="">
+        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
+          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Text className="text-center p-2">
+            JUICES
+          </Card.Text>
+        </Card>
+      </a>
+    </div>
 
 
 

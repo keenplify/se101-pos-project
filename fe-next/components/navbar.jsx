@@ -1,4 +1,5 @@
 import {Navbar, Container, Nav, NavDropdown} from "react-bootstrap"
+import { useRouter } from 'next/router'
 import styles from "../styles/navbar.module.css" 
 import Image from 'next/image'
 import {FiLogOut} from "react-icons/fi"
@@ -9,6 +10,7 @@ import {AiFillProfile} from "react-icons/ai"
 
 
 export function NavBar(){
+   const router = useRouter()
     return <Navbar collapseOnSelect  sticky="top" bg="dark" variant="dark" expand="lg">
     <Container>
     <Navbar.Brand href="#home">
@@ -17,9 +19,9 @@ export function NavBar(){
     <Navbar.Brand className={styles.NavBrand} href="#home">Vaperous M4ster</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
-        <Nav className={styles.NavLink} activeKey="#home">
-          <Nav.Link href="/fe-next/pages/index.js" className="fw-bold">HOME</Nav.Link>
-          <Nav.Link href="/pages/inventory.js" className="fw-bold">INVENTORY</Nav.Link>
+        <Nav className={styles.NavLink} activeKey={router.asPath}>
+          <Nav.Link href="/" className="fw-bold">HOME</Nav.Link>
+          <Nav.Link href="/inventory" className="fw-bold">INVENTORY</Nav.Link>
           <Nav.Link href="#link" className="fw-bold">SALES</Nav.Link>    
           <Nav.Link href="#link" className="fw-bold">EMPLOYEE</Nav.Link>    
         </Nav>
@@ -31,7 +33,7 @@ export function NavBar(){
         <NavDropdown
           id="nav-dropdown-dark-example"
           title={<span>
-          <FaUserCircle className="fs-3"></FaUserCircle> Crisostomo
+          <FaUserCircle className="fs-3"></FaUserCircle> Admin
           </span>}
           menuVariant="dark"
         >
