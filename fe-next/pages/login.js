@@ -1,38 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Formik, Field, Form } from 'formik';
+import axios from 'axios';
+import { BACKEND } from '../helpers';
+import Router from 'next/router';
 
 
 export default function Login() {
-  return <div>
+  
+ return <div>
   <h1>Sign Up</h1>
   <Formik
     initialValues={{
-      firstName: '',
-      lastName: '',
-      email: '',
+      id: '',
+      password: '',
+      
     }}
-    onSubmit={async (values) => {
-      await new Promise((r) => setTimeout(r, 500));
-      alert(JSON.stringify(values, null, 2));
+    onSubmit={async (values, action) => {
+      axios.post(BACKEND + "/api/employees/login", {
+        id: values.id,
+        password: values.password
+      })
+      .then(function (response) {
+        localStorage.setItem("token",response.data.token)
+        Router.push("/")
+      })
+      .catch(function (error) {
+        console.log(error);
+        action.setStatus("unavailab;e to login")
+
+      });
     }}
   >
-    <Form>
-      <label htmlFor="firstName">First Name</label>
-      <Field id="firstName" name="firstName" placeholder="Jane" />
+    {
+      formik => <Form>
+        {formik.status && <div>{formik.status}</div>}
+      <label htmlFor="id">ID</label>
+      <Field id="id" name="id" placeholder="Jane" />
 
-      <label htmlFor="lastName">Last Name</label>
-      <Field id="lastName" name="lastName" placeholder="Doe" />
+      <label htmlFor="password">Password</label>
+      <Field type="password" id="password" name="password" placeholder="Doe" />
 
-      <label htmlFor="email">Email</label>
-      <Field
-        id="email"
-        name="email"
-        placeholder="jane@acme.com"
-        type="email"
-      />
+      
       <button type="submit">Submit</button>
     </Form>
+
+    }
   </Formik>
 </div>
 
