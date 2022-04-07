@@ -8,19 +8,18 @@ const upload = multer({
       const name = slugify(file.originalname, { lower: true });
       cb(null, `${new Date().getTime()}-${name}`);
     },
-
-    fileFilter: (req, file, cb) => {
-      if (
-        !["image/png", "image/jpeg", "image/jpg", "image/webp"].includes(
-          file.mimetype
-        )
-      ) {
-        return cb(new Error("file is not allowed"));
-      }
-
-      cb(null, true);
-    },
   }),
+  fileFilter: (req, file, cb) => {
+    if (
+      !["image/png", "image/jpeg", "image/jpg", "image/webp"].includes(
+        file.mimetype
+      )
+    ) {
+      return cb(new Error("file is not allowed"));
+    }
+
+    cb(null, true);
+  },
 });
 
 module.exports = upload;
