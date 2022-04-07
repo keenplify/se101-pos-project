@@ -47,8 +47,7 @@ export default function Sales() {
     <NavBar></NavBar>
 
     <h1 className="fs-2 text-center"> Sales Performance</h1>
-    <br></br>
-    <h1 className="fs-2 text-left"> Total Sales: 136, 435.49  </h1> 
+    <h1> Total Sales: 136, 435.49  </h1> 
       
         <ComposedChart width={800} height={450} data={data}>
   <XAxis dataKey="name" />
@@ -61,6 +60,7 @@ export default function Sales() {
   <Line type="monotone" dataKey="uv" stroke="#ff7300" />
 </ComposedChart>
 
+  <h1 className="fs-2 text-center"> Sales Data</h1>
   <Footer></Footer>
 
    
