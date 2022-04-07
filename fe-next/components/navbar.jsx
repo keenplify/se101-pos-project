@@ -41,7 +41,7 @@ export function NavBar(){
           <NavDropdown.Item href="#action/3.2"><AiOutlineSetting className="fs-3 p-1"></AiOutlineSetting>Setting</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.3"><AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity Logs</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4"><FiLogOut className="fs-3 p-1"></FiLogOut> Log Out</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.4"><FiLogOut className="fs-3 p-1"></FiLogOut>Log Out</NavDropdown.Item>
         </NavDropdown>
       </Nav>
     </Navbar.Collapse>
