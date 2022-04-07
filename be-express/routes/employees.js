@@ -105,12 +105,13 @@ router.post(
         firstName,
         lastName,
         password: hashSync(password, 10),
-        employeeId: req.user.dataValues.id,
+        createdBy: req.user.id,
         type,
       });
 
       res.send(newEmployee);
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: error.message });
     }
   }
