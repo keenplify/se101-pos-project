@@ -5,7 +5,6 @@ import { Footer } from '../components/footer'
 import { useEffect, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,ComposedChart, Area, Bar  } from 'recharts';
 
-
 export default function Sales() {
   
   const [data,setData]=useState([
@@ -41,15 +40,18 @@ export default function Sales() {
     
       <Head>
         <title>Vaperous M4ster - POS Website</title>
+     
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
 
     <NavBar></NavBar>
 
     <h1 className="fs-2 text-center"> Sales Performance</h1>
+
     <h1> Total Sales: 136, 435.49  </h1> 
       
         <ComposedChart width={800} height={450} data={data}>
+          
   <XAxis dataKey="name" />
   <YAxis />
   <Tooltip />
