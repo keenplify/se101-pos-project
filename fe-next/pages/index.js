@@ -20,7 +20,7 @@ export default function Home() {
 
       <Container fluid>
         <Row className="p-5">
-          <Col md="9">
+          <Col lg="9" xl="9">
             <Card>
               <Card.Body>
                 <Row>
@@ -171,7 +171,7 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          <Col>
+          <Col lg="3" xl="3">
             <Card>
               <Card.Body>
                 <Row>
