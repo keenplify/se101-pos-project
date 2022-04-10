@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import {Card} from "react-bootstrap"
-import styles from '../styles/Home.module.css'
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 
@@ -14,16 +13,19 @@ export default function Employee() {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
     <NavBar></NavBar>
+    <br></br>
+    <div> 
+        <h1 className="fs-2 text-center"> Employee</h1>
+        </div>
     
-
-      <div className="container justify-content-center">
+      <div className="container justify-content-center text-center">
         <div className="row py-3">
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>ha</Card.Title>
+            <Card.Title>Hala Man</Card.Title>
           </Card.Body>
           </Card>
           </a>
@@ -35,9 +37,9 @@ export default function Employee() {
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>he</Card.Title>
+            <Card.Title>Sige Talon</Card.Title>
           </Card.Body>
           </Card>
           </a>
@@ -47,9 +49,9 @@ export default function Employee() {
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>hi</Card.Title>
+            <Card.Title>Ha Duken</Card.Title>
           </Card.Body>
           </Card>
           </a>
@@ -59,9 +61,9 @@ export default function Employee() {
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>ho</Card.Title>
+            <Card.Title>Ako Lang</Card.Title>
           </Card.Body>
           </Card>
           </a>
@@ -71,9 +73,9 @@ export default function Employee() {
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>hu</Card.Title>
+            <Card.Title>Ewan Ko</Card.Title>
           </Card.Body>
           </Card>
           </a>
@@ -83,9 +85,9 @@ export default function Employee() {
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>da</Card.Title>
+            <Card.Title>Bahag Hari</Card.Title>
           </Card.Body>
           </Card>
           </a>
@@ -96,32 +98,16 @@ export default function Employee() {
         <div className="col-md-3">
           <a className="text-decoration-none text-black" href="">
           <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
+          <Card.Img variant="top" src="/img/ " />
           <Card.Body>
-            <Card.Title>de</Card.Title>
+            <Card.Title>Hay Buhay</Card.Title>
           </Card.Body>
           </Card>
           </a>
         </div>
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Body>
-            <Card.Title>di</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-
-
-
         </div>
       </div>
-
+     
 
     <Footer></Footer>
     </div>
