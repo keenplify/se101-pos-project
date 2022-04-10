@@ -23,7 +23,7 @@ export default function Inventory() {
         <div className="col-md-3 py-3">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
+          <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
           <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -37,7 +37,7 @@ export default function Inventory() {
     <div className="col-md-3 py-3">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
       <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -51,7 +51,7 @@ export default function Inventory() {
     <div className="col-md-3 py-3">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
       <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -65,7 +65,7 @@ export default function Inventory() {
     <div className="col-md-3 py-3">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
       <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -78,7 +78,7 @@ export default function Inventory() {
     <div className="col-md-3 py-2">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
       <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -91,7 +91,7 @@ export default function Inventory() {
     <div className="col-md-3 py-2">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
       <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -104,7 +104,7 @@ export default function Inventory() {
     <div className="col-md-3 py-2">
         <a className="text-decoration-none text-black " href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid ' alt='Sample' />
+      <img src='/img/images.jpg' className='img-fluid ' alt='Sample' />
       <div className='mask ' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
@@ -117,8 +117,8 @@ export default function Inventory() {
     <div className="col-md-3 py-2">
         <a className="text-decoration-none text-black" href="/inventorylist">
         <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/93f895b604a807de99d813ec8a2e53db.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
         <div className='d-flex justify-content-center align-items-center h-100'>
           <p className='text-white mb-0'>Juices</p>
         </div>

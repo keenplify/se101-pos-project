@@ -1,16 +1,23 @@
 import Head from 'next/head'
-import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table} from "react-bootstrap"
+import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
 import styles from '../styles/inventory.module.css'
+import Image from 'next/image'
 import { NavBar } from '../components/navbar'
+import View from '../components/view'
+import Delete from '../components/delete'
+import Edit from '../components/edit'
+import AddItem from '../components/addItem'
 import { Footer } from '../components/footer'
 import {AiOutlineSearch} from "react-icons/ai"
 import {MdGridView} from "react-icons/md"
 import {MdDelete} from "react-icons/md"
 import {AiFillEdit} from "react-icons/ai"
+import { useState } from 'react'
 
 
 
 export default function Inventory() {
+  const [show, setShow] = useState(false);
   return (
     <div>
       <Head>
@@ -19,80 +26,92 @@ export default function Inventory() {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
     <NavBar></NavBar>
-        <Container className="col-lg-11 my-3 rounded-3 shadow-lg">
-       
-  <Row>
-    <Col> 
-
-    
-    <Form className="d-flex col-lg-4 p-2">
-   
+        
+  <Container className="col-lg-12 my-3 rounded-3">  
+    <Row>
+     <Col> 
+    <Form className="d-flex col-lg-8 p-2">
     <InputGroup className="mb-3">
     <InputGroup.Text id="basic-addon1"><AiOutlineSearch></AiOutlineSearch></InputGroup.Text>
     <FormControl
       placeholder="Search"
       aria-label="Search"
-      type="search"
-    /> 
-  </InputGroup>
- 
-      </Form></Col>
+      type="search"/> 
+    </InputGroup>
+    </Form>
+    </Col>
+
+    <Col className='p-2'>
+      <div className="text-end">
+    <AddItem></AddItem>
+      </div>
+    </Col>
   </Row>
     
-  <Table striped bordered hover size="sm">
+
+  <Table striped bordered hover className="table table-image" >
   <thead>
     <tr>
-      <th>Image</th>
-      <th>Product ID</th>
-      <th>Product Name</th>
-      <th>Variants</th>
-      <th>Date Added</th>
-      <th>Action</th>
+      <th scope="col">ID</th>
+      <th scope="col">Image</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Variants</th>
+      <th scope="col">Date Added</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td  className="justify-content-center"  style={{ maxWidth: '4rem' }}><img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg"  className="rounded p-1" width="130" height="120"/></td>
-      <td>1029</td>
+      <th scope="row">1</th>
+      <td className="w-25">
+      <img src="/img/images.jpg"  className="img-fluid img-thumbnail" alt="Sheep"/></td>
       <td>Flex Vape Juice</td>
       <td>Love Potion</td>
-      <td>Date Added</td>
-      <td>
-      <div className="btn-group btn-group-sm" role="group" aria-label="...">
-      <button type="button" className="btn btn-sm btn-secondary"><MdGridView></MdGridView></button>
-    <button type="button" className="btn btn-success"><AiFillEdit></AiFillEdit></button>
-    <button type="button" className="btn btn-danger"><MdDelete></MdDelete></button>
-      </div>
+      <td>03/22/2019</td>
+      <td class="py-2">
+          <View></View>
+         <Edit></Edit>
+          <Delete></Delete>
       </td>
     </tr>
     <tr>
-    <td  className="justify-content-center"  style={{ maxWidth: '4rem' }}><img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg"  className="rounded p-1" width="130" height="120"/></td>
-    <td>1029</td>
+      <th scope="row">2</th>
+      <td className="w-25">
+    <img src="/img/Game-On-Juice-A3-Posters-Landscape-Nic-Salts-web.png" className="img-fluid img-thumbnail" alt="Sheep"/></td>
       <td>Flex Vape Juice</td>
       <td>Love Potion</td>
-      <td>Date Added</td>
+      <td>03/22/2019</td>
+      <td class="py-2">
+      <View></View>
+         <Edit></Edit>
+          <Delete></Delete>
+      </td>
     </tr>
     <tr>
-    <td  className="justify-content-center"  style={{ maxWidth: '4rem' }}><img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg"  className="rounded p-1" width="130" height="120"/></td>
-    <td>1029</td>
+      <th scope="row">3</th>
+      <td className="w-25">
+      <img src="/img/images.jpg"  className="img-fluid img-thumbnail" alt="Sheep"/></td>
       <td>Flex Vape Juice</td>
       <td>Love Potion</td>
-      <td>Date Added</td>
-    </tr>
-
-    <tr>
-    <td  className="justify-content-center"  style={{ maxWidth: '4rem' }}><img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg"  className="rounded p-1" width="130" height="120"/></td>
-    <td>1029</td>
-      <td>Flex Vape Juice</td>
-      <td>Love Potion</td>
-      <td>Date Added</td>
+      <td>03/22/2019</td>
+      <td class="py-2">
+      <View></View>
+         <Edit></Edit>
+          <Delete></Delete>
+      </td>
     </tr>
     <tr>
-    <td  className="justify-content-center"  style={{ maxWidth: '4rem' }}><img variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg"  className="rounded p-1" width="130" height="120"/></td>
-    <td>1029</td>
+      <th scope="row">4</th>
+      <td className="w-25">
+    <img src="/img/Game-On-Juice-A3-Posters-Landscape-Nic-Salts-web.png" className="img-fluid img-thumbnail" alt="Sheep"/></td>
       <td>Flex Vape Juice</td>
       <td>Love Potion</td>
-      <td>Date Added</td>
+      <td>03/22/2019</td>
+      <td class="py-2">
+      <View></View>
+         <Edit></Edit>
+          <Delete></Delete>
+      </td>
     </tr>
   </tbody>
 </Table>
