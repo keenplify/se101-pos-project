@@ -4,8 +4,9 @@ import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 import { useEffect, useState } from 'react'
 import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar } from 'recharts';
+import Dropdown from 'react-bootstrap/Dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function Sales() {
@@ -67,7 +68,21 @@ export default function Sales() {
     <NavBar></NavBar>
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
+    <h2> Week Sales  </h2>  
+
+    <Dropdown>
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Choose Month or Week
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item href="sales">Month</Dropdown.Item>
+    <Dropdown.Item href="WeeklyCharts">Week</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+
     <h2> Total Sales: 34, 435.49  </h2>   <h2> Revenue: 62, 435.49  </h2>  <h2> Profit: 5, 435.49  </h2> 
+
       <Container className="d-flex justify-content-center">
     <ComposedChart  width={1000} height={400} data={data}>
   <XAxis dataKey="name" />
