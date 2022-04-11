@@ -1,11 +1,29 @@
-import Head from 'next/head'
-import { Container, Row, Col, Card, Table, InputGroup, Button, Form, FormControl } from "react-bootstrap"
-import { FaPlusCircle, FaMinusCircle, FaTrashAlt, FaShoppingCart, FaSearch, FaBarcode } from "react-icons/fa"
-import styles from '../styles/Home.module.css'
-import { NavBar } from '../components/navbar'
-import { Footer } from '../components/footer'
-import { useEffect, useState } from 'react'
-import { CheckoutModal } from '../components/home/checkout'
+import Head from "next/head";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Table,
+  InputGroup,
+  Button,
+  Form,
+  FormControl,
+} from "react-bootstrap";
+import Image from "next/image";
+import {
+  FaPlusCircle,
+  FaMinusCircle,
+  FaTrashAlt,
+  FaShoppingCart,
+  FaSearch,
+  FaBarcode,
+} from "react-icons/fa";
+import styles from "../styles/Home.module.css";
+import { NavBar } from "../components/navbar";
+import { Footer } from "../components/footer";
+import { useEffect, useState } from "react";
+import { CheckoutModal } from "../components/home/checkout";
 
 export default function Home() {
   const [modalShow, setModalShow] = useState(false);
@@ -27,31 +45,48 @@ export default function Home() {
                   <Col md="2">
                     <InputGroup className="mb-3">
                       <FormControl placeholder="Search" />
-                      <InputGroup.Text><FaSearch></FaSearch></InputGroup.Text>
+                      <InputGroup.Text>
+                        <FaSearch></FaSearch>
+                      </InputGroup.Text>
                     </InputGroup>
                   </Col>
                   <Col md={{ span: 2, offset: 8 }}>
-                    <FaBarcode className='fs-1'></FaBarcode>
+                    <FaBarcode className="fs-1"></FaBarcode>
                   </Col>
                 </Row>
 
                 {/* vapes */}
-                <p className='px-5'><strong>Vapes</strong></p>
-                <div className='px-5 vapes'>
+                <p className="px-5">
+                  <strong>Vapes</strong>
+                </p>
+                <div className="px-5 vapes">
                   <Row>
                     <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <Image
+                                width="100%"
+                                height="100%"
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -63,15 +98,28 @@ export default function Home() {
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <Image
+                                width="100%"
+                                height="100%"
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -83,35 +131,28 @@ export default function Home() {
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <Image
+                                width="100%"
+                                height="100%"
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
-                                <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -123,8 +164,10 @@ export default function Home() {
                 </div>
 
                 {/* juices */}
-                <p className='px-5 mt-4'><strong>Vapes</strong></p>
-                <div className='px-5 juices'>
+                <p className="px-5 mt-4">
+                  <strong>Vapes</strong>
+                </p>
+                <div className="px-5 juices">
                   <Row>
                     <Col md="3">
                       <Card>
@@ -150,15 +193,28 @@ export default function Home() {
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <Image
+                                width="100%"
+                                height="100%"
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -170,15 +226,28 @@ export default function Home() {
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <Image
+                                width="100%"
+                                height="100%"
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -190,15 +259,28 @@ export default function Home() {
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <Image
+                                width="100%"
+                                height="100%"
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -215,7 +297,7 @@ export default function Home() {
             <Card>
               <Card.Body>
                 <Row>
-                  <Col className='text-center'>
+                  <Col className="text-center">
                     <FaShoppingCart></FaShoppingCart> Cart
                   </Col>
                 </Row>
@@ -236,44 +318,80 @@ export default function Home() {
                           <td>Vape 1</td>
                           <td>
                             <InputGroup>
-                              <InputGroup.Text className={styles.inputGroupText}><FaMinusCircle></FaMinusCircle></InputGroup.Text>
+                              <InputGroup.Text
+                                className={styles.inputGroupText}
+                              >
+                                <FaMinusCircle></FaMinusCircle>
+                              </InputGroup.Text>
                               1
-                              <InputGroup.Text className={styles.inputGroupText}><FaPlusCircle></FaPlusCircle></InputGroup.Text>
+                              <InputGroup.Text
+                                className={styles.inputGroupText}
+                              >
+                                <FaPlusCircle></FaPlusCircle>
+                              </InputGroup.Text>
                             </InputGroup>
                           </td>
                           <td>1,000</td>
-                          <td><FaTrashAlt className={styles.cursorPointer}></FaTrashAlt></td>
+                          <td>
+                            <FaTrashAlt
+                              className={styles.cursorPointer}
+                            ></FaTrashAlt>
+                          </td>
                         </tr>
                         <tr>
                           <td>Vape 1</td>
                           <td>
                             <InputGroup>
-                              <InputGroup.Text className={styles.inputGroupText}><FaMinusCircle></FaMinusCircle></InputGroup.Text>
+                              <InputGroup.Text
+                                className={styles.inputGroupText}
+                              >
+                                <FaMinusCircle></FaMinusCircle>
+                              </InputGroup.Text>
                               1
-                              <InputGroup.Text className={styles.inputGroupText}><FaPlusCircle></FaPlusCircle></InputGroup.Text>
+                              <InputGroup.Text
+                                className={styles.inputGroupText}
+                              >
+                                <FaPlusCircle></FaPlusCircle>
+                              </InputGroup.Text>
                             </InputGroup>
                           </td>
                           <td>1,000</td>
-                          <td><FaTrashAlt className={styles.cursorPointer}></FaTrashAlt></td>
+                          <td>
+                            <FaTrashAlt
+                              className={styles.cursorPointer}
+                            ></FaTrashAlt>
+                          </td>
                         </tr>
                         <tr>
                           <td>Vape 1</td>
                           <td>
                             <InputGroup>
-                              <InputGroup.Text className={styles.inputGroupText}><FaMinusCircle></FaMinusCircle></InputGroup.Text>
+                              <InputGroup.Text
+                                className={styles.inputGroupText}
+                              >
+                                <FaMinusCircle></FaMinusCircle>
+                              </InputGroup.Text>
                               1
-                              <InputGroup.Text className={styles.inputGroupText}><FaPlusCircle></FaPlusCircle></InputGroup.Text>
+                              <InputGroup.Text
+                                className={styles.inputGroupText}
+                              >
+                                <FaPlusCircle></FaPlusCircle>
+                              </InputGroup.Text>
                             </InputGroup>
                           </td>
                           <td>1,000</td>
-                          <td><FaTrashAlt className={styles.cursorPointer}></FaTrashAlt></td>
+                          <td>
+                            <FaTrashAlt
+                              className={styles.cursorPointer}
+                            ></FaTrashAlt>
+                          </td>
                         </tr>
                       </tbody>
                     </Table>
                   </Col>
                 </Row>
                 <hr />
-                <Row className='px-5'>
+                <Row className="px-5">
                   <Col>
                     <strong>Total Amount</strong>
                   </Col>
@@ -283,7 +401,12 @@ export default function Home() {
                 </Row>
                 <Row>
                   <Col className="d-grid gap-2 mt-4">
-                    <Button variant="primary" onClick={() => setModalShow(true)}>Checkout</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => setModalShow(true)}
+                    >
+                      Checkout
+                    </Button>
                   </Col>
                 </Row>
               </Card.Body>
@@ -292,19 +415,9 @@ export default function Home() {
         </Row>
       </Container>
 
-      <CheckoutModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+      <CheckoutModal show={modalShow} onHide={() => setModalShow(false)} />
 
       <Footer></Footer>
-
-
-      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-      <script>
-        AOS.init();
-      </script>
-
     </div>
-  )
+  );
 }

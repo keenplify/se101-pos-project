@@ -34,4 +34,8 @@ yarn-error.log*
 # public gitignore
 /public/workbox-*.js
 /public/sw.js
+*.map
 /public/worker-*.js
+
+#yarn.lock
+yarn.lock

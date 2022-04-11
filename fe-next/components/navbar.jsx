@@ -22,8 +22,8 @@ export function NavBar(){
         <Nav className={styles.NavLink} activeKey={router.asPath}>
           <Nav.Link href="/" className="fw-bold">HOME</Nav.Link>
           <Nav.Link href="/inventory" className="fw-bold">INVENTORY</Nav.Link>
-          <Nav.Link href="#link" className="fw-bold">SALES</Nav.Link>    
-          <Nav.Link href="#link" className="fw-bold">EMPLOYEE</Nav.Link>    
+          <Nav.Link href="/SalesChart" className="fw-bold">SALES</Nav.Link>    
+          <Nav.Link href="/employee" className="fw-bold">EMPLOYEE</Nav.Link>    
         </Nav>
         </Navbar.Collapse>
        
@@ -41,7 +41,7 @@ export function NavBar(){
           <NavDropdown.Item href="#action/3.2"><AiOutlineSetting className="fs-3 p-1"></AiOutlineSetting>Setting</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.3"><AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity Logs</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4"><FiLogOut className="fs-3 p-1"></FiLogOut> Log Out</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.4"><FiLogOut className="fs-3 p-1"></FiLogOut>Log Out</NavDropdown.Item>
         </NavDropdown>
       </Nav>
     </Navbar.Collapse>

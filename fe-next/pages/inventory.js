@@ -21,93 +21,109 @@ export default function Inventory() {
         <div className="row">
         
         <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="">
-        <Card  data-aos="fade-down" className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+          <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
 
     <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
 
     <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
 
     <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
     <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
     <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
     <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black " href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid ' alt='Sample' />
+      <div className='mask ' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 
     <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="">
-        <Card className="shadow-lg rounded-3" border="light" variant="transparent" style={{ width: '15rem' }}>
-          <Card.Img   variant="top" src="/img/93f895b604a807de99d813ec8a2e53db.jpg" />
-          <Card.Text className="text-center p-2">
-            JUICES
-          </Card.Text>
-        </Card>
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
+      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Juices</p>
+        </div>
+      </div>
+    </div>
       </a>
     </div>
 

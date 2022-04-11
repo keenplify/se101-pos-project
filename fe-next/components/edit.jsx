@@ -1,0 +1,37 @@
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import {AiFillEdit} from "react-icons/ai"
+import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
+export default function Edit() {
+    const [show, setShow] = useState(false);
+  
+    return (
+      <>
+     <button type="button" class="btn btn-sm btn-success" onClick={() => setShow(true)}><AiFillEdit></AiFillEdit></button>
+        <Modal
+          show={show}
+          onHide={() => setShow(false)}
+          dialogClassName="modal-90w"
+          aria-labelledby="example-custom-modal-styling-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              Custom Modal Styling
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
+              commodi aspernatur enim, consectetur. Cumque deleniti temporibus
+              ipsam atque a dolores quisquam quisquam adipisci possimus
+              laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
+              accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
+              reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
+              deleniti rem!
+            </p>
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  }
+  
