@@ -3,7 +3,9 @@ import styles from '../styles/Home.module.css'
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 import { useEffect, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,ComposedChart, Area, Bar  } from 'recharts';
+import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
+
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar } from 'recharts';
 
 
 export default function Sales() {
@@ -46,10 +48,10 @@ export default function Sales() {
 
     <NavBar></NavBar>
 
-    <h1 className="fs-2 text-center"> Sales Performance</h1>
-    <h1> Total Sales: 136, 435.49  </h1> 
-      
-        <ComposedChart width={800} height={450} data={data}>
+    <h2 className="fs-2 text-center"> Sales Performance</h2>
+    <h2> Total Sales: 136, 435.49  </h2> 
+      <Container className="d-flex justify-content-center">
+    <ComposedChart  width={1000} height={400} data={data}>
   <XAxis dataKey="name" />
   <YAxis />
   <Tooltip />
@@ -58,8 +60,9 @@ export default function Sales() {
   <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
   <Bar dataKey="weeks" barSize={20} fill="#413ea0" />
   <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+  
 </ComposedChart>
-
+</Container>
   <h1 className="fs-2 text-center"> Sales Data</h1>
   <Footer></Footer>
 
