@@ -18,6 +18,18 @@ router.get(
   }
 );
 
+router.get("/all", async (req, res) => {
+  try {
+    const employees = await Employee.findAll({
+      include: Image,
+    });
+
+    res.send({ employees });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.get(
   "/:id",
   passport.authenticate("bearer", { session: false }),
@@ -182,22 +194,6 @@ router.post(
       );
 
       res.send();
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
-);
-
-router.get(
-  "/all",
-  passport.authenticate("bearer", { session: false }),
-  async (req, res) => {
-    try {
-      const employees = await Employee.findAll({
-        include: Image,
-      });
-
-      res.send({ employees });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
