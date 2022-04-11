@@ -13,29 +13,29 @@ export default function Sales() {
   const [data,setData]=useState([
     {
       name: 'Week 1',
-      uv: 4000,
-      weeks: 2400,
-      amt: 2400,
-      
+      Profit: 5887,
+      TotalSale: 4990,
+      Revenue: 2500,
     },
     {
       name: 'Week 2',
-      uv: 3000,
-      weeks: 1398,
-      amt: 2210,
+      Profit: 3200,
+      TotalSale: 4398,
+      Revenue: 2210,
     },
     {
       name: 'Week 3',
-      uv: 2000,
-      weeks: 9800,
-      amt: 2290,
+      Profit: 5198,
+      TotalSale: 6800,
+      Revenue: 3290,
     },
     {
       name: 'Week 4',
-      uv: 2780,
-      weeks: 3908,
-      amt: 2000,
-    },
+      Profit: 7280,
+      TotalSale: 8708,
+      Revenue: 5000,
+    }
+
   ])
   
   return (
@@ -49,7 +49,7 @@ export default function Sales() {
     <NavBar></NavBar>
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
-    <h2> Total Sales: 136, 435.49  </h2> 
+    <h2> Total Sales: 136, 435.49  </h2>   <h2> Revenue: 250, 435.49  </h2>  <h2> Profit: 20, 435.49  </h2> 
       <Container className="d-flex justify-content-center">
     <ComposedChart  width={1000} height={400} data={data}>
   <XAxis dataKey="name" />
@@ -57,9 +57,9 @@ export default function Sales() {
   <Tooltip />
   <Legend />
   <CartesianGrid stroke="#f5f5f5" />
-  <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
-  <Bar dataKey="weeks" barSize={20} fill="#413ea0" />
-  <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+  <Area type="monotone" dataKey="Profit" fill="#8884d8" stroke="#8884d8" />
+  <Bar dataKey="TotalSale" barSize={20} fill="#413ea0" />
+  <Line type="monotone" dataKey="Revenue" stroke="#ff7300" />
   
 </ComposedChart>
 </Container>
