@@ -304,7 +304,7 @@ export default function Home() {
             </Card>
           </Col>
           <Col lg="3" xl="3" className="position-relative">
-            <Card className="position-fixed">
+            <Card className={styles.cartCard}>
               <Card.Body>
                 <Row>
                   <Col className="text-center">
