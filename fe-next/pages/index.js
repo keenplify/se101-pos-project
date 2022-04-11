@@ -67,7 +67,8 @@ export default function Home() {
                           <Row>
                             <Col className="text-center">
                               <Image
-                                layout="fill"
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -99,7 +100,8 @@ export default function Home() {
                           <Row>
                             <Col className="text-center">
                               <Image
-                                layout="fill"
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -131,7 +133,8 @@ export default function Home() {
                           <Row>
                             <Col className="text-center">
                               <Image
-                                layout="fill"
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -172,7 +175,8 @@ export default function Home() {
                           <Row>
                             <Col className="text-center">
                               <Image
-                                layout="fill"
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -204,7 +208,8 @@ export default function Home() {
                           <Row>
                             <Col className="text-center">
                               <Image
-                                layout="fill"
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -236,7 +241,8 @@ export default function Home() {
                           <Row>
                             <Col className="text-center">
                               <Image
-                                layout="fill"
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
