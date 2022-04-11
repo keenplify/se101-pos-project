@@ -20,7 +20,7 @@ export default function Home() {
 
       <Container fluid>
         <Row className="p-5">
-          <Col lg="9" xl="9">
+          <Col md="9" lg="9">
             <Card>
               <Card.Body>
                 <Row>
@@ -39,13 +39,13 @@ export default function Home() {
                 <p className='px-5'><strong>Vapes</strong></p>
                 <div className='px-5 vapes'>
                   <Row>
-                    <Col md="4">
+                    <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
                             <Col className='text-center'>
                               <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-5'>
+                              <Row className='mt-3 px-3.5'>
                                 <Col className={styles.textLeft}>
                                   <p className='mb-0'><strong>Vape 1</strong></p>
                                   <p>&#8369; 1,000</p>
@@ -59,13 +59,13 @@ export default function Home() {
                         </Card.Body>
                       </Card>
                     </Col>
-                    <Col md="4">
+                    <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
                             <Col className='text-center'>
                               <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-5'>
+                              <Row className='mt-3 px-3.5'>
                                 <Col className={styles.textLeft}>
                                   <p className='mb-0'><strong>Vape 1</strong></p>
                                   <p>&#8369; 1,000</p>
@@ -79,13 +79,33 @@ export default function Home() {
                         </Card.Body>
                       </Card>
                     </Col>
-                    <Col md="4">
+                    <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
                             <Col className='text-center'>
                               <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-5'>
+                              <Row className='mt-3 px-3.5'>
+                                <Col className={styles.textLeft}>
+                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p>&#8369; 1,000</p>
+                                </Col>
+                                <Col className={styles.textRight}>
+                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                    <Col md="3">
+                      <Card>
+                        <Card.Body>
+                          <Row>
+                            <Col className='text-center'>
+                              <img src='/img/vape1.png' className={styles.productImg} />
+                              <Row className='mt-3 px-3.5'>
                                 <Col className={styles.textLeft}>
                                   <p className='mb-0'><strong>Vape 1</strong></p>
                                   <p>&#8369; 1,000</p>
@@ -106,13 +126,13 @@ export default function Home() {
                 <p className='px-5 mt-4'><strong>Vapes</strong></p>
                 <div className='px-5 juices'>
                   <Row>
-                    <Col md="4">
+                    <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
                             <Col className='text-center'>
                               <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-5'>
+                              <Row className='mt-3 px-3.5'>
                                 <Col className={styles.textLeft}>
                                   <p className='mb-0'><strong>Vape 1</strong></p>
                                   <p>&#8369; 1,000</p>
@@ -126,13 +146,13 @@ export default function Home() {
                         </Card.Body>
                       </Card>
                     </Col>
-                    <Col md="4">
+                    <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
                             <Col className='text-center'>
                               <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-5'>
+                              <Row className='mt-3 px-3.5'>
                                 <Col className={styles.textLeft}>
                                   <p className='mb-0'><strong>Vape 1</strong></p>
                                   <p>&#8369; 1,000</p>
@@ -146,13 +166,33 @@ export default function Home() {
                         </Card.Body>
                       </Card>
                     </Col>
-                    <Col md="4">
+                    <Col md="3">
                       <Card>
                         <Card.Body>
                           <Row>
                             <Col className='text-center'>
                               <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-5'>
+                              <Row className='mt-3 px-3.5'>
+                                <Col className={styles.textLeft}>
+                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p>&#8369; 1,000</p>
+                                </Col>
+                                <Col className={styles.textRight}>
+                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                    <Col md="3">
+                      <Card>
+                        <Card.Body>
+                          <Row>
+                            <Col className='text-center'>
+                              <img src='/img/vape1.png' className={styles.productImg} />
+                              <Row className='mt-3 px-3.5'>
                                 <Col className={styles.textLeft}>
                                   <p className='mb-0'><strong>Vape 1</strong></p>
                                   <p>&#8369; 1,000</p>
