@@ -173,15 +173,25 @@ export default function Home() {
                       <Card>
                         <Card.Body>
                           <Row>
-                            <Col className='text-center'>
-                              <img src='/img/vape1.png' className={styles.productImg} />
-                              <Row className='mt-3 px-3.5'>
+                            <Col className="text-center">
+                              <img
+                                src="/img/vape1.png"
+                                className={styles.productImg}
+                              />
+                              <Row className="mt-3 px-3.5">
                                 <Col className={styles.textLeft}>
-                                  <p className='mb-0'><strong>Vape 1</strong></p>
+                                  <p className="mb-0">
+                                    <strong>Vape 1</strong>
+                                  </p>
                                   <p>&#8369; 1,000</p>
                                 </Col>
                                 <Col className={styles.textRight}>
-                                  <input type="checkbox" aria-label="option 1" class="form-check-input" className={styles.productCheck} />
+                                  <input
+                                    type="checkbox"
+                                    aria-label="option 1"
+                                    class="form-check-input"
+                                    className={styles.productCheck}
+                                  />
                                 </Col>
                               </Row>
                             </Col>
@@ -293,8 +303,8 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="3" xl="3">
-            <Card>
+          <Col lg="3" xl="3" className="position-relative">
+            <Card className="position-fixed">
               <Card.Body>
                 <Row>
                   <Col className="text-center">
