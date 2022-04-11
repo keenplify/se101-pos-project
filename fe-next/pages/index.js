@@ -22,6 +22,7 @@ import styles from "../styles/Home.module.css";
 import { NavBar } from "../components/navbar";
 import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { CheckoutModal } from "../components/home/checkout";
 
 export default function Home() {
@@ -65,7 +66,9 @@ export default function Home() {
                         <Card.Body>
                           <Row>
                             <Col className="text-center">
-                              <img
+                              <Image
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -80,8 +83,9 @@ export default function Home() {
                                   <input
                                     type="checkbox"
                                     aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
+                                    className={
+                                      "form-check-input " + styles.productCheck
+                                    }
                                   />
                                 </Col>
                               </Row>
@@ -95,7 +99,9 @@ export default function Home() {
                         <Card.Body>
                           <Row>
                             <Col className="text-center">
-                              <img
+                              <Image
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -110,8 +116,9 @@ export default function Home() {
                                   <input
                                     type="checkbox"
                                     aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
                                   />
                                 </Col>
                               </Row>
@@ -125,7 +132,9 @@ export default function Home() {
                         <Card.Body>
                           <Row>
                             <Col className="text-center">
-                              <img
+                              <Image
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -140,8 +149,9 @@ export default function Home() {
                                   <input
                                     type="checkbox"
                                     aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
+                                    className={
+                                      "form-check-input " + styles.productCheck
+                                    }
                                   />
                                 </Col>
                               </Row>
@@ -164,7 +174,9 @@ export default function Home() {
                         <Card.Body>
                           <Row>
                             <Col className="text-center">
-                              <img
+                              <Image
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -179,8 +191,9 @@ export default function Home() {
                                   <input
                                     type="checkbox"
                                     aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
                                   />
                                 </Col>
                               </Row>
@@ -194,7 +207,9 @@ export default function Home() {
                         <Card.Body>
                           <Row>
                             <Col className="text-center">
-                              <img
+                              <Image
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -209,8 +224,9 @@ export default function Home() {
                                   <input
                                     type="checkbox"
                                     aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
                                   />
                                 </Col>
                               </Row>
@@ -224,7 +240,9 @@ export default function Home() {
                         <Card.Body>
                           <Row>
                             <Col className="text-center">
-                              <img
+                              <Image
+                                width="100%"
+                                height="100%"
                                 src="/img/vape1.png"
                                 className={styles.productImg}
                               />
@@ -239,8 +257,9 @@ export default function Home() {
                                   <input
                                     type="checkbox"
                                     aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
+                                    className={
+                                      "form-check-input" + styles.productCheck
+                                    }
                                   />
                                 </Col>
                               </Row>
