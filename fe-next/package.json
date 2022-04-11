@@ -15,11 +15,14 @@
     "formik": "^2.2.9",
     "next": "12.1.1",
     "next-pwa": "^5.4.6",
+    "next-universal-cookie": "^3.0.1",
     "react": "17.0.2",
     "react-bootstrap": "^2.2.3",
+    "react-cookie": "^4.1.1",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
-    "recharts": "^2.1.9"
+    "recharts": "^2.1.9",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
