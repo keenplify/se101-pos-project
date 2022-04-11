@@ -128,7 +128,7 @@
 }
 
 .productImg {
-  width: 50%;
+  width: 65%;
 }
 
 .productCheck {
@@ -140,5 +140,15 @@
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+}
+
+.cartCard {
+  position: fixed;
+}
+
+@media (max-width: 767px) {
+  .cartCard {
+    position: relative;
   }
 }
