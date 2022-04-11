@@ -21,7 +21,7 @@ export function NavBar({ employee }) {
   const router = useRouter();
   const logout = () => {
     removeCookie("token");
-    router.reload();
+    router.push("/login");
   };
 
   return (
