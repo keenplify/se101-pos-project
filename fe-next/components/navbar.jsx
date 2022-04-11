@@ -22,7 +22,7 @@ export function NavBar(){
         <Nav className={styles.NavLink} activeKey={router.asPath}>
           <Nav.Link href="/" className="fw-bold">HOME</Nav.Link>
           <Nav.Link href="/inventory" className="fw-bold">INVENTORY</Nav.Link>
-          <Nav.Link href="/SalesChart" className="fw-bold">SALES</Nav.Link>    
+          <Nav.Link href="/sales" className="fw-bold">SALES</Nav.Link>    
           <Nav.Link href="/employee" className="fw-bold">EMPLOYEE</Nav.Link>    
         </Nav>
         </Navbar.Collapse>
