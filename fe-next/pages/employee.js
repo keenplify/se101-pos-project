@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import {Card} from "react-bootstrap"
+import { Container, Row, Col, Card, Table, InputGroup, Button, Form, FormControl } from "react-bootstrap"
+import styles from '../styles/Home.module.css'
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 
@@ -14,100 +15,121 @@ export default function Employee() {
       </Head>
     <NavBar></NavBar>
     <br></br>
-    <div> 
-        <h1 className="fs-2 text-center"> Employee</h1>
-        </div>
-    
-      <div className="container justify-content-center text-center">
-        <div className="row py-3">
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Hala Man</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Sige Talon</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Ha Duken</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Ako Lang</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Ewan Ko</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Bahag Hari</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
-
-
-
-        <div className="col-md-3">
-          <a className="text-decoration-none text-black" href="">
-          <Card className="shadow-lg rounded " style={{ width: '16rem' }}>
-          <Card.Img variant="top" src="/img/ " />
-          <Card.Body>
-            <Card.Title>Hay Buhay</Card.Title>
-          </Card.Body>
-          </Card>
-          </a>
-        </div>
+   
+   
+        <Container fluid>
+        <Row className="p-5">
+          <Col md="9" lg="12">
+          <Card>
+              <Card.Body>
+        <h1 className="text-center">Employee </h1>
+      <div className="container col-lg-10 justify-content-center ">
+        <div className="row">
+        
+        <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Hala Man</p>
         </div>
       </div>
-     
+    </div>
+      </a>
+    </div>
+
+
+    <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Sige Talon</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div>
+
+
+    <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Ha Duken</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div>
+
+
+    <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Ako Lang</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div>
+
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Ewan Ko</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div>
+
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Bahag Hari</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div>
+
+    <div className="col-md-3 py-2">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>Hay Buhay</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div>
+
+
+
+
+        </div>
+      </div>
+      </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
     <Footer></Footer>
     </div>

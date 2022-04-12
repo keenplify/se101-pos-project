@@ -1,14 +1,16 @@
 import Head from 'next/head'
-import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
-import { TiUserDelete } from "react-icons/ti"
-import { RiEdit2Line } from "react-icons/ri"
-import { IoMdPersonAdd } from "react-icons/io"
+import { Container, Row, Col, Card, Table, InputGroup, Button, Form, FormControl } from "react-bootstrap"
+import Deleteemp from '../components/deleteemp'
+import Editemp from '../components/editemp'
+import Addemp from '../components/addemp'
+import { useEffect, useState } from 'react'
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 
 
 export default function Empadsee() {
+  const [modalShow, setModalShow] = useState(false, true);
+  
   return (
     <div>
       <Head>
@@ -17,96 +19,122 @@ export default function Empadsee() {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
     <NavBar></NavBar>
-
+    <br></br>
     <div> 
-        <h1 className="fs-2 text-center"> Employee </h1>
+        <h1 className="fs-2 text-center"> Employee</h1>
         </div>
-        <div>
-        <Button variant="success" size="sm" href="#action/3.1"><IoMdPersonAdd className="fs-3 p-1" ></IoMdPersonAdd>New Employee</Button>{' '}
-        </div>
-     
-        <br></br>
-        <Table striped bordered hover variant="dark">
-       
-        <thead >
+    <Container className="col-lg-12 my-3 rounded-3">  
+    <Row>
+    <Col className='p-2'>
+      <div className="text-end">
+    <Addemp></Addemp>
+      </div>
+    </Col>
+  </Row>
+    
+
+  <Table striped bordered hover className="table table-image" >
+  <thead>
     <tr>
-      <th>ID</th>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Role</th>
-      <th>Actions</th>
+      <th scope="col">ID</th>
+      <th scope="col">Image</th>
+      <th scope="col">First Name</th>
+      <th scope="col">LastName</th>
+      <th scope="col">Role</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
+      <th scope="row">1</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>Hala</td>
       <td>Man</td>
       <td>Admin</td>
-      <td>
-        <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+         <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
     <tr>
-    <td>2</td>
+      <th scope="row">2</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>Sige</td>
       <td>Talon</td>
       <td>Employee</td>
-      <td> <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+      <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
     <tr>
-    <td>3</td>
+      <th scope="row">3</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>ha</td>
       <td>Duken</td>
       <td>Employee</td>
-      <td> <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+      <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
     <tr>
-    <td>4</td>
+      <th scope="row">4</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>Ako</td>
       <td>Lang</td>
       <td>Employee</td>
-      <td> <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+      <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
     <tr>
-    <td>5</td>
+      <th scope="row">5</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>Ewan</td>
       <td>ko</td>
       <td>Employee</td>
-      <td> <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+      <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
     <tr>
-    <td>6</td>
+      <th scope="row">6</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>Bahag</td>
       <td>Hari</td>
       <td>Employee</td>
-      <td> <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+      <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
     <tr>
-    <td>7</td>
+      <th scope="row">7</th>
+      <td className="w-25">
+      <img src="/img/tao.jpg"  className="img-fluid img-employee" alt="employ"/></td>
       <td>Hay</td>
       <td>Buhay</td>
       <td>Employee</td>
-      <td> <Button variant="success" href="#action/3.1"><RiEdit2Line className="fs-3 p-1"></RiEdit2Line></Button>{' '}
-        <Button variant="danger" href="#action/3.2"><TiUserDelete className="fs-3 p-1"></TiUserDelete></Button> {' '}
-        </td>
+      <td class="py-2">
+      <Editemp></Editemp>
+          <Deleteemp></Deleteemp>
+      </td>
     </tr>
-
   </tbody>
 </Table>
-  
+
+</Container>   
     <Footer></Footer>
+  
     </div>
   )
 }
