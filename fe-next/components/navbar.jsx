@@ -51,7 +51,7 @@ export function NavBar({ employee }) {
             <Nav.Link href="/inventory" className="fw-bold">
               INVENTORY
             </Nav.Link>
-            <Nav.Link href="/SalesChart" className="fw-bold">
+            <Nav.Link href="/sales" className="fw-bold">
               SALES
             </Nav.Link>
             <Nav.Link href="/employee" className="fw-bold">
