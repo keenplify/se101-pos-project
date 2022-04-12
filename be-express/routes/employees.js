@@ -30,27 +30,6 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.get(
-  "/:id",
-  passport.authenticate("bearer", { session: false }),
-  param("id").notEmpty().isNumeric(),
-  validateResultMiddleware,
-  async (req, res) => {
-    const employee = await Employee.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: Image,
-    });
-
-    if (!employee) {
-      return res.status(404).send("Employee not found!");
-    }
-
-    return res.send(employee);
-  }
-);
-
 router.post(
   "/login",
   [body("id").notEmpty().isNumeric(), body("password").notEmpty().isString()],
@@ -88,6 +67,27 @@ router.post(
     } catch (err) {
       return res.status(500).json({ error: error.message });
     }
+  }
+);
+
+router.get(
+  "/:id",
+  passport.authenticate("bearer", { session: false }),
+  param("id").notEmpty().isNumeric(),
+  validateResultMiddleware,
+  async (req, res) => {
+    const employee = await Employee.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: Image,
+    });
+
+    if (!employee) {
+      return res.status(404).send("Employee not found!");
+    }
+
+    return res.send(employee);
   }
 );
 
