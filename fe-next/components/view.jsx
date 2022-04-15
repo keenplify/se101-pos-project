@@ -25,20 +25,21 @@ export default function View() {
         </Modal.Header>
         <Modal.Body>
         <Container className="col-lg-12 my-3 rounded-3">  
-    <Row>
-     <Col> 
-     <div className="w-100">
-     <img src="/img/images.jpg"  className="img-fluid img-thumbnail" alt="Sheep"/>
+    <Row >
+     <Col className="col-lg-3"> 
+     <div className="w-100 aligned">
+     <img src="/img/images.jpg"  className="img-fluid img-thumbnail shadow"/>
      </div>
     </Col>
 
-    <Col>
-    <div className="me-5">
-      <p><b>Product Name: </b>Flex Vape Juice</p>
+    <Col className="col-lg-7"> 
+     <span><p><b>Product Name: </b>Flex Vape Juice</p>
       <p><b>Product ID: </b>1029</p>
-     <p><b>Description: </b>Flex 100ml Fat Clouds Vape Juice E Liquid Vaping Low Strength High VG Legit ejuice eliquid Dragondrops</p>
-   </div>
+     <p><b>Description: </b>Flex 100ml Fat Clouds Vape Juice E Liquid Vaping Low Strength High VG Legit ejuice eliquid Dragondrops</p></span>
+     
     </Col>
+
+    
 
     <Col>
     <div className="text-end">
@@ -49,8 +50,8 @@ export default function View() {
   
     
 
-  <Table striped bordered hover className="table table-image" >
-  <thead>
+  <Table striped bordered hover className="table table-image mt-3" >
+  <thead >
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Image</th>

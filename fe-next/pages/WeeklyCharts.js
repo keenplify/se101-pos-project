@@ -7,9 +7,10 @@ import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal}
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar } from 'recharts';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
 
 
-export default function Sales() {
+export default function Sales({employee}) {
   
   const [data,setData]=useState([
     {
@@ -65,7 +66,7 @@ export default function Sales() {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
 
-    <NavBar></NavBar>
+      <NavBar employee={employee}></NavBar>
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
     <h2> Week Sales  </h2>  
@@ -107,4 +108,7 @@ export default function Sales() {
 
     </div>
   )
+}
+export async function getServerSideProps(context) {
+  return AuthenticateEmployee(context);
 }

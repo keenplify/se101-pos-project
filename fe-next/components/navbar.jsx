@@ -60,14 +60,16 @@ export function NavBar({ employee }) {
           </Nav>
         </Navbar.Collapse>
 
+
         <Navbar.Collapse className="justify-content-end">
+          
           <Nav>
             <NavDropdown
               id="nav-dropdown-dark-example"
               disabled={!employee}
               class={styles.NavDropdown}
-              title={
-                <span className={styles.dropdownTitle}>
+              title={ 
+                <span className={styles.dropdownTitle}> <FaUserCircle className="fs-2 me-1"></FaUserCircle>
                   {employee ? (
                     <span className={styles.employeeText}>
                       {employee.firstName} {employee.lastName}
@@ -79,17 +81,19 @@ export function NavBar({ employee }) {
               }
               menuVariant="dark"
             >
-              {employee && (
+          
+              {employee && ( 
                 <NavDropdown.Item
                   href="profile"
                   className={styles.employeeContainer}
                 >
                   <div className={styles.employeeAvatar}>
-                    <Image
+                    <Image  
                       src={`${BACKEND}${employee.images[0].location}`}
                       layout="responsive"
                       width="1"
                       height="1"
+                     
                     />
                   </div>
                   <div className={styles.employeeDetails}>
@@ -115,7 +119,9 @@ export function NavBar({ employee }) {
               <NavDropdown.Item onClick={logout}>
                 <FiLogOut className="fs-3 p-1"></FiLogOut>Log Out
               </NavDropdown.Item>
+              
             </NavDropdown>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

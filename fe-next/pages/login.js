@@ -6,14 +6,38 @@ import Router from "next/router";
 import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
 import { useCookies } from "react-cookie";
 import { NavBar } from "../components/navbar";
+import {Card, Button, Container, Row, Col} from "react-bootstrap"
 
-export default function Login({ employee }) {
+
+export default function Login({ employee,allEmployees}) {
   const [, setCookie] = useCookies(["token"]);
-
+  console.log(allEmployees)
   return (
     <div>
       <NavBar employee={employee} />
+      <Container>
+      <Row>
+        
+        <Col xs={12} md={8}>
       <h1>Sign Up</h1>
+      {allEmployees && allEmployees.map(employee=><Card style={{ width: '15rem' }}>
+      {typeof employee.images !== undefined && employee?.images?.length>0 ? 
+    
+    <Card.Img variant="top" src={BACKEND + employee.images[0].location}/>:<span>Hello Aczell</span>}
+ 
+      <Card.Body>
+        
+        <Card.Text className="text-center">
+      {employee.firstName} {employee.lastName}
+        </Card.Text>
+    
+      </Card.Body>
+    </Card>)}
+    </Col>
+
+
+
+<Col xs={6} md={4}>
       <Formik
         initialValues={{
           id: "",
@@ -53,10 +77,22 @@ export default function Login({ employee }) {
           </Form>
         )}
       </Formik>
+      </Col>
+      </Row>
+      </Container>
     </div>
   );
 }
 
+
 export async function getServerSideProps(context) {
-  return AuthenticateEmployee(context);
+   const allEmployees=await axios.get(BACKEND + "/api/employees/all")
+  
+  return{
+    props: {
+      allEmployees:allEmployees.data.employees,
+      ...(await AuthenticateEmployee(context)).props
+    }
+
+  }
 }
