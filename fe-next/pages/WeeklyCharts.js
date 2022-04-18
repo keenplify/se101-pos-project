@@ -97,7 +97,17 @@ export default function Sales({employee}) {
   
 </ComposedChart>
 </Container>
+
+<br></br>
+<br></br>
+<br></br>
+
   <h1 className="fs-2 text-center"> Sales Data</h1>
+
+<br></br>
+<br></br>
+<br></br>
+
   <Footer></Footer>
 
    
