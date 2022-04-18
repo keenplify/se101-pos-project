@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import {MdDelete} from "react-icons/md"
-import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-export default function Delete() {
+import {Card,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
+import { BACKEND } from '../helpers';
+export default function LoginCard({employee}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -10,7 +11,20 @@ export default function Delete() {
   
     return (
       <>
-    <button type="button" class="btn btn-sm btn-danger " onClick={handleShow}><MdDelete></MdDelete></button>
+    <Card style={{ width: '15rem' }} onClick = {handleShow}>
+      {typeof employee.images !== undefined && employee?.images?.length>0 ? 
+    
+    
+    <Card.Img variant="top" src={BACKEND + employee.images[0].location}/>:<span>Hello Aczell</span>}
+ 
+      <Card.Body>
+        
+        <Card.Text className="text-center">
+      {employee.firstName} {employee.lastName}
+        </Card.Text>
+    
+      </Card.Body>
+    </Card> 
     <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"
       centered>
         <Modal.Header closeButton>

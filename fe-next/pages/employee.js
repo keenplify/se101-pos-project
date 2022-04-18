@@ -4,9 +4,13 @@ import styles from '../styles/Home.module.css'
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
+import { useEffect } from 'react'
+import axios from 'axios'
+import { BACKEND } from '../helpers'
 
 
-export default function Employee({employee}) {
+export default function Employee({employee, allEmployees}) {
+  
   return (
     <div>
       <Head>
@@ -26,102 +30,22 @@ export default function Employee({employee}) {
         <h1 className="text-center">Employee </h1>
       <div className="container col-lg-10 justify-content-center ">
         <div className="row">
+        {allEmployees && allEmployees.map(employee => <div className="col-md-3 py-3">
+        <a className="text-decoration-none text-black" href="/inventorylist">
+        <div className='bg-image' style={{ maxWidth: '24rem' }}>
+          <img src={BACKEND + employee.images[0].location} className='img-fluid' alt='emp' />
+          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
+        <div className='d-flex justify-content-center align-items-center h-100'>
+          <p className='text-white mb-0'>{employee.firstName} {employee.lastName}</p>
+        </div>
+      </div>
+    </div>
+      </a>
+    </div> )}
         
-        <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Hala Man</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
 
 
-    <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Sige Talon</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
-    <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Ha Duken</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
-    <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Ako Lang</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Ewan Ko</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Bahag Hari</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/tao.jpg' className='img-fluid' alt='emp' />
-          <div className='mask' style={{ backgroundColor: 'rgba(39, 26, 12)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Hay Buhay</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
+    
 
 
         </div>
@@ -137,5 +61,23 @@ export default function Employee({employee}) {
   )
 }
 export async function getServerSideProps(context) {
-  return AuthenticateEmployee(context);
+   const allEmployees=await axios.get(BACKEND + "/api/employees/all")
+  const employee = await AuthenticateEmployee(context)
+
+  if (employee.props.employee.type == "ADMIN"){ 
+    return {
+      redirect: {
+        destination: "/employeeadmin",
+        permanent: false,
+      },
+      props: {},
+    };
+  }
+  return{
+    props: {
+      allEmployees:allEmployees.data.employees,
+      ...(employee).props
+    }
+
+  }
 }

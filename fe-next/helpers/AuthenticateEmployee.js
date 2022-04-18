@@ -23,6 +23,7 @@ export async function AuthenticateEmployee({ req, res }) {
     return {
       props: {
         employee: me.data,
+        token
       },
     };
   } catch (error) {
