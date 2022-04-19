@@ -104,6 +104,79 @@ export default function Sales({employee}) {
 
   <h1 className="fs-2 text-center"> Sales Data</h1>
 
+
+  <Table striped bordered hover>
+  <thead>
+    <tr>
+      <th>Weeks</th>
+      <th>Total Sales</th>
+      <th>Profit</th>
+      <th>Revenue</th>
+      <th>Date</th>
+      <th>Employee</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Monday</td>
+      <td>4490</td>
+      <td>5887</td>
+      <td>2500</td>
+      <td>01/03/2022</td>
+      <td>Hala Man</td>
+    </tr>
+    <tr>
+      <td>Tuesday</td>
+      <td>4398</td>
+      <td>3200</td>
+      <td>2210</td>
+      <td>01/10/2022</td>
+      <td>Sige Talon</td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>6800</td>
+      <td>5198</td>
+      <td>3290</td>
+      <td>01/17/2022</td>
+      <td>Haduken</td>
+    </tr>
+    <tr>
+      <td>Thursday</td>
+      <td>8708</td>
+      <td>7280</td>
+      <td>5000</td>
+      <td>01/24/2022</td>
+      <td>Ako Lang</td>
+    </tr>
+    <tr>
+      <td>Friday</td>
+      <td>8708</td>
+      <td>7280</td>
+      <td>5000</td>
+      <td>01/24/2022</td>
+      <td>Ako Lang</td>
+    </tr>
+    <tr>
+      <td>Saturday</td>
+      <td>8708</td>
+      <td>7280</td>
+      <td>5000</td>
+      <td>01/24/2022</td>
+      <td>Ako Lang</td>
+    </tr>
+    <tr>
+      <td>Sunday</td>
+      <td>8708</td>
+      <td>7280</td>
+      <td>5000</td>
+      <td>01/24/2022</td>
+      <td>Ako Lang</td>
+    </tr>
+
+  </tbody>
+</Table>
+
 <br></br>
 <br></br>
 <br></br>
