@@ -48,9 +48,8 @@ export function CheckoutModal(props) {
             </Col>
             </Row>
           </div>
-            </Modal.Body>
-            <Modal.Footer>
-            <div className="px-5">
+          <hr/>
+          <div className="px-4">
             <Row>
                   <Col>
                     <Table borderless>
@@ -64,26 +63,45 @@ export function CheckoutModal(props) {
                       </thead>
                       <tbody>
                         <tr>
+                          <td>1</td>
                           <td>Vape 1</td>
-                          <td>1,000</td>
+                          <td>&#8369; 1,000 </td>
+                          <td>&#8369; 1,000 </td>
                         </tr>
                         <tr>
-                          <td>Vape 1</td>
-                          <td>1,000</td>
+                          <td>1</td>
+                          <td>Vape 1 </td>
+                          <td>&#8369; 1,000</td>
+                          <td>&#8369; 1,000 </td>
                         </tr>
                         <tr>
-                          <td>Vape 1</td>
-                          <td>1,000</td>
+                        <td>1</td>
+                          <td>Vape 1 </td>
+                          <td>&#8369; 1,000</td>
+                          <td>&#8369; 1,000 </td>
                         </tr>
                       </tbody>
                     </Table>
                   </Col>
                 </Row>
             </div>
-            <div className="d-grid gap-2">
+
+            </Modal.Body>
+            <Modal.Footer>
+        <div className="px-2">
+          <Row>
+          <Col sm={8}>
+              <strong> TOTAL AMOUNT </strong> 
+          </Col>
+          <Col sm={4}>
+               <strong> &#8369; 3,000</strong>
+          </Col>
+          </Row>
+        </div>
+            <div className="d-grid gap-2 mt-4">
                 <Row>
                 <Button 
-                 variant="success" size="md">
+                 variant="success" size="md" width="50%" onClick={() => setModalShow(true)}>
                     Proceed Transaction
                 </Button>
                 </Row>
