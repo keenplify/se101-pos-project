@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { body, matchedData, param } = require("express-validator");
 const { compareSync, hash, hashSync } = require("bcrypt");
-const Transactedvariants = require("../models/transactedvariants");
+const transactedvariants = require("../models/transactedvariants");
 const {
   randomString,
   validateResultMiddleware,
@@ -23,12 +23,12 @@ router.post(
         locations: ["body"],
       });
       try {
-        const newTransactedvariants = await Transactedvariants.create({
+        const newtransactedvariants = await transactedvariants.create({
           variantid,
           quantity,
         });
   
-        res.send(newTransactedvariants);
+        res.send(newtransactedvariants);
       } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });
@@ -45,7 +45,7 @@ router.post(
     validateResultMiddleware,
     async (req, res) => {
       try {
-        await Transactedvariants.destroy({
+        await transactedvariants.destroy({
           where: {
             id: req.params.id,
           },
@@ -71,11 +71,11 @@ router.post(
         locations: ["body"],
       });
       try {
-        const newTransactedvariants = await Transactedvariants.create({
+        const newtransactedvariants = await transactedvariants.create({
           quantity
         });
   
-        res.send(newTransactedvariants);
+        res.send(newtransactedvariants);
       } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });
