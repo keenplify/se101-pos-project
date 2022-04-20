@@ -17,7 +17,7 @@ router.post(
     body("description").notEmpty().isString()
   ],
   validateResultMiddleware,
-
+  upload.single("image"),
   async (req, res) => {
     const { name, description } = matchedData(req, {
       locations: ["body"],
@@ -28,8 +28,12 @@ router.post(
           name,
           description,
       });
+      const newImage = await Image.create({
+        location: req.file.path,
+        createdBy: req.user.id,
+      });
 
-      res.send(newCategory);
+      res.send(newCategory, newImage);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: error.message });
@@ -94,38 +98,6 @@ async (req, res) => {
 }
 );
 
-
-router.post(
-  "/:id/changePassword",
-  passport.authenticate("bearer", { session: false }),
-  AdminOnly,
-  [body("password").notEmpty().isString()],
-  param("id").notEmpty().isNumeric(),
-  validateResultMiddleware,
-
-  async (req, res) => {
-    const { password } = matchedData(req, {
-      locations: ["body"],
-    });
-
-    try {
-      await Employee.update(
-        {
-          password: hashSync(password, 10),
-        },
-        {
-          where: {
-            id: req.params.id,
-          },
-        }
-      );
-
-      res.send();
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
-);
 
 router.get(
   "/all",
