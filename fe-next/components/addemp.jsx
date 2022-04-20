@@ -59,19 +59,22 @@ export default function AddEmployee({token}) {
       >
         {(formik) => (
           <Modal
+          size="sm"
             show={show}
             onHide={handleClose}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
             backdrop="static"
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Items</Modal.Title>
+              <Modal.Title>New Employee</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Container>
                 <h1>{formik.status}</h1>
                 <Row>
-                  <Col xs={6} md={4}>
+                  <Col xs={6} md={5}>
                     <Form>
                       <Form.Label for="image" className={styles.FormLabel}>
                         <AiOutlinePlus></AiOutlinePlus>
@@ -123,13 +126,14 @@ export default function AddEmployee({token}) {
                       />
                       <div id="my-radio-group">Role:</div>
                       <div role="group" aria-labelledby="my-radio-group">
-                        <label>
-                          <Field type="radio" name="role" value="ADMIN" />
+                      <label>
+                          <Field type="radio" size="small" name="role" value="ADMIN" />
                           Admin
                         </label>
+                        
                         <label>
-                          <Field type="radio" name="role" value="CASHIER" />
-                          Cashier
+                          <Field type="radio" size="small" name="role" value="CASHIER" />
+                         Cashier
                         </label>
                       </div>
                     </Form>
@@ -143,7 +147,7 @@ export default function AddEmployee({token}) {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" type="submit" onClick={formik.handleSubmit}>Add Employee</Button>
+              <Button variant="primary" type="submit" onClick={formik.handleSubmit}>Save</Button>
             </Modal.Footer>
           </Modal>
         )}

@@ -3,20 +3,24 @@ import { useState } from 'react'
 import {MdDelete} from "react-icons/md"
 import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
 export default function Deleteemp() {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
+
   
     return (
       <>
     <button type="button" class="btn btn-sm btn-danger " onClick={() => setShow(true)}><MdDelete></MdDelete></button>
         <Modal
-       
-          show={show}
-          onHide={() => setShow(false)}
+        
+        show={show}
+        onHide={() => setShow(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+         
           dialogClassName="modal-90w"
-          aria-labelledby="example-custom-modal-styling-title"
+          
         >
           <Modal.Header closeButton>
-            <Modal.Title id="example-custom-modal-styling-title">
+            <Modal.Title id="contained-modal-title-vcenter">
             You are about to delete an employee
             </Modal.Title>
           </Modal.Header>
@@ -27,7 +31,7 @@ export default function Deleteemp() {
            
           </Modal.Body>
           <Modal.Footer>
-          <button type="button" class="btn btn-sm btn-danger " onClick={() => setShow(true)}><MdDelete></MdDelete></button>
+          <button type="button" class="btn btn-sm btn-danger " onClick={() => setShow(true)}>Delete</button>
             </Modal.Footer>
         </Modal>
       </>
