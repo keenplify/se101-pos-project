@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import {AiFillEdit} from "react-icons/ai"
-import {AiOutlinePlus} from "react-icons/ai"
-import {Container,Row, Col, Form, Dropdown, Button, DropdownButton, Label, Modal} from "react-bootstrap"
+import {Button, Modal, ModalFooter, ModalHeader} from "react-bootstrap"
+import { Verification } from "../home/verification";
+
 
 export default function Transaction() {
   const [show, setShow] = useState(false);
@@ -12,7 +12,7 @@ export default function Transaction() {
   
     return (
       <>
-     <button type="button" class="btn btn-primary" onClick={handleShow}>Add Item</button>
+     <button type="button" class="btn btn-primary" onClick={handleShow}>Proceed Transaction</button>
      <Modal
         show={show}
         onHide={handleClose}
@@ -22,61 +22,16 @@ export default function Transaction() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Items</Modal.Title>
+
         </Modal.Header>
-        <Modal.Body>
-        <Container>
-          <Row>
-            <Col xs={6} md={4}>
-              
-            <Form.Control type="file" 
-           
-              name="filepond"
-              id="image"
-              accept="image/png, image/jpeg, image/gif"
-              onchange="getImage(this.value);"/>
-              
-              <div id="display-image"></div>
-              
-            </Col>
-            <Col xs={12} md={8}>
-        
-            
+      <Modal.Body closeButton>
+      <h5 className="text-center">  Are you sure you want to proceed?</h5>
+      <Modal.Footer>
+      <Verification></Verification>
+                <Button variant="secondary">No</Button>
+      </Modal.Footer>
 
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Product Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Product Name"
-                autoFocus
-              />
-            </Form.Group>
-            </Form>
-            </Col>
-          </Row>
-            <Col className="py-2">
-            <div className="col-md-12">
-            <Form.Label>Category</Form.Label>
-            <DropdownButton id="dropdown-basic-button" title="Please Select...">
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </DropdownButton>
-          </div>
-            </Col>
-          <Row>
-            
-
-    
-
-          </Row>
-        </Container>
-        </Modal.Body>
-        <Modal.Footer>
-
-          <Button variant="primary">Add Item</Button>
-        </Modal.Footer>
+          </Modal.Body>
       </Modal>
       </>
     );

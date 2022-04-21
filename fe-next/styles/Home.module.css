@@ -136,6 +136,11 @@
   height: 3em !important;
 }
 
+.transactionButton {
+  display: block;
+  padding: 0.85rem 2em 1.5em 2em;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
