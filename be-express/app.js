@@ -12,7 +12,7 @@ require("./libraries/createadmin.js");
 
 const productsRouter = require("./routes/products");
 const employeesRouter = require("./routes/employees");
-
+const categoriesRouter = require("./routes/categories");
 app.use(
   cors({
     origin: "*",
@@ -29,5 +29,5 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/products", productsRouter);
 app.use("/api/employees", employeesRouter);
-
+app.use("/api/categories", categoriesRouter);
 module.exports = app;
