@@ -47,21 +47,28 @@ export default function Sales() {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
 
+      
+    
+
     <NavBar></NavBar>
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
-    <h2> Month Sales  </h2>  
 
-    <Dropdown>
+<Dropdown>
   <Dropdown.Toggle variant="success" id="dropdown-basic">
-    Choose Month or Week
+    Month Sales
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
-    <Dropdown.Item href="sales">Month</Dropdown.Item>
-    <Dropdown.Item href="WeeklyCharts">Week</Dropdown.Item>
+    <Dropdown.Item href="sales">Month Sales</Dropdown.Item>
+    <Dropdown.Item href="WeeklyCharts">Week Sales</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
+
+
+<div>
+ <body> <h6> Here you will see a summary your transaction in a month </h6> </body>
+</div>
 
 <div>
   <Badge bg="primary">Total Sales: 136, 435.49</Badge> <Badge bg="secondary">Revenue: 250, 435.49</Badge>{' '}
