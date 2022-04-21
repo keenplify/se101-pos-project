@@ -1,10 +1,7 @@
 const router = require("express").Router();
 const { Category, Image } = require("../models");
 const { body, matchedData, param } = require("express-validator");
-const {
-  validateResultMiddleware,
-  AdminOnly,
-} = require("../libraries/helpers");
+const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const passport = require("passport");
 const upload = require("../libraries/multer");
 
@@ -14,10 +11,9 @@ router.post(
   AdminOnly,
   [
     body("name").notEmpty().isString(),
-    body("description").notEmpty().isString()
+    body("description").notEmpty().isString(),
   ],
   validateResultMiddleware,
-  upload.single("image"),
   async (req, res) => {
     const { name, description } = matchedData(req, {
       locations: ["body"],
@@ -25,15 +21,11 @@ router.post(
 
     try {
       const newCategory = await Category.create({
-          name,
-          description,
-      });
-      const newImage = await Image.create({
-        location: req.file.path,
-        createdBy: req.user.id,
+        name,
+        description,
       });
 
-      res.send(newCategory, newImage);
+      res.send({ newCategory });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: error.message });
@@ -63,41 +55,41 @@ router.delete(
 );
 
 router.put(
-"/:id",
-passport.authenticate("bearer", { session: false }),
-AdminOnly,
-[
-  body("name").notEmpty().isString(),
-  body("description").notEmpty().isString()
-],
-param("id").notEmpty().isNumeric(),
-validateResultMiddleware,
+  "/:id",
+  passport.authenticate("bearer", { session: false }),
+  AdminOnly,
+  [
+    body("name").notEmpty().isString(),
+    body("description").notEmpty().isString(),
+  ],
+  param("id").notEmpty().isNumeric(),
+  validateResultMiddleware,
 
-async (req, res) => {
-  const { name, description } = matchedData(req, {
-    locations: ["body"],
-  });
+  async (req, res) => {
+    const { name, description } = matchedData(req, {
+      locations: ["body"],
+    });
 
-  try {
-    await Category.update({
-        name,
-        description,
-    },
-    {
-      where: {
-          id: req.params.id,
+    try {
+      await Category.update(
+        {
+          name,
+          description,
         },
-      }
-    );
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
 
-    res.send();
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message });
+      res.send();
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    }
   }
-}
 );
-
 
 router.get(
   "/all",
