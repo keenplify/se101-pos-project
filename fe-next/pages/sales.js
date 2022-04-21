@@ -7,6 +7,7 @@ import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal}
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar } from 'recharts';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Badge from 'react-bootstrap/Badge'
 
 export default function Sales() {
   
@@ -62,7 +63,10 @@ export default function Sales() {
   </Dropdown.Menu>
 </Dropdown>
 
-    <h2> Total Sales: 34, 435.49  </h2>   <h2> Revenue: 62, 435.49  </h2>  <h2> Profit: 5, 435.49  </h2> 
+<div>
+  <Badge bg="primary">Total Sales: 136, 435.49</Badge> <Badge bg="secondary">Revenue: 250, 435.49</Badge>{' '}
+  <Badge bg="warning">Profit: 20, 435.49 </Badge> 
+</div>
 
       <Container className="d-flex justify-content-center">
     <ComposedChart  width={1000} height={400} data={data}>

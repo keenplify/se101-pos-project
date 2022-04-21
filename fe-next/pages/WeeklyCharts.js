@@ -8,6 +8,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, L
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
+import Badge from 'react-bootstrap/Badge'
 
 
 export default function Sales({employee}) {
@@ -23,7 +24,7 @@ export default function Sales({employee}) {
       name: 'Tuesday',
       Profit: 1200,
       TotalSale: 1398,
-      Revenue: 2210,
+      Revenue: 1210,
     },
     {
       name: 'Wednesday',
@@ -82,7 +83,10 @@ export default function Sales({employee}) {
   </Dropdown.Menu>
 </Dropdown>
 
-    <h2> Total Sales: 34, 435.49  </h2>   <h2> Revenue: 62, 435.49  </h2>  <h2> Profit: 5, 435.49  </h2> 
+<div>
+  <Badge bg="primary">Total Sales: 34, 435.49</Badge> <Badge bg="secondary">Revenue: 62, 435.49</Badge>{' '}
+  <Badge bg="warning">Profit: 5, 435.49 </Badge> 
+</div>
 
       <Container className="d-flex justify-content-center">
     <ComposedChart  width={1000} height={400} data={data}>
@@ -119,59 +123,59 @@ export default function Sales({employee}) {
   <tbody>
     <tr>
       <td>Monday</td>
-      <td>4490</td>
-      <td>5887</td>
+      <td>1990</td>
+      <td>887</td>
       <td>2500</td>
       <td>01/03/2022</td>
       <td>Hala Man</td>
     </tr>
     <tr>
       <td>Tuesday</td>
-      <td>4398</td>
-      <td>3200</td>
-      <td>2210</td>
-      <td>01/10/2022</td>
+      <td>1398</td>
+      <td>1200</td>
+      <td>1210</td>
+      <td>01/04/2022</td>
       <td>Sige Talon</td>
     </tr>
     <tr>
       <td>Wednesday</td>
-      <td>6800</td>
-      <td>5198</td>
-      <td>3290</td>
-      <td>01/17/2022</td>
+      <td>1800</td>
+      <td>998</td>
+      <td>1290</td>
+      <td>01/05/2022</td>
       <td>Haduken</td>
     </tr>
     <tr>
       <td>Thursday</td>
-      <td>8708</td>
-      <td>7280</td>
-      <td>5000</td>
-      <td>01/24/2022</td>
+      <td>1708</td>
+      <td>780</td>
+      <td>1000</td>
+      <td>01/06/2022</td>
       <td>Ako Lang</td>
     </tr>
     <tr>
       <td>Friday</td>
-      <td>8708</td>
-      <td>7280</td>
-      <td>5000</td>
-      <td>01/24/2022</td>
-      <td>Ako Lang</td>
+      <td>1908</td>
+      <td>880</td>
+      <td>1400</td>
+      <td>01/07/2022</td>
+      <td>Ewan Ko</td>
     </tr>
     <tr>
       <td>Saturday</td>
-      <td>8708</td>
-      <td>7280</td>
-      <td>5000</td>
-      <td>01/24/2022</td>
-      <td>Ako Lang</td>
+      <td>1908</td>
+      <td>640</td>
+      <td>980</td>
+      <td>01/08/2022</td>
+      <td>Bahag Hari</td>
     </tr>
     <tr>
       <td>Sunday</td>
-      <td>8708</td>
-      <td>7280</td>
-      <td>5000</td>
-      <td>01/24/2022</td>
-      <td>Ako Lang</td>
+      <td>980</td>
+      <td>1240</td>
+      <td>1330</td>
+      <td>01/09/2022</td>
+      <td>Hay Buhay</td>
     </tr>
 
   </tbody>
