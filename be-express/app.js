@@ -14,6 +14,8 @@ const productsRouter = require("./routes/products");
 const employeesRouter = require("./routes/employees");
 const categoriesRouter = require("./routes/categories");
 const variantsRouter = require("./routes/variants")
+const transactedvariantsRouter = require("./routes/transactedvariants");
+
 app.use(
   cors({
     origin: "*",
@@ -32,4 +34,6 @@ app.use("/api/products", productsRouter);
 app.use("/api/employees", employeesRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/variants", variantsRouter);
+app.use("/api/transactedvariants", transactedvariantsRouter);
+
 module.exports = app;
