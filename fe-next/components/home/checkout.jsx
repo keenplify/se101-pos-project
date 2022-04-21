@@ -1,5 +1,5 @@
 import { Modal, Button, Row, Col, Form, Table} from "react-bootstrap"
-import { Transaction } from "../components/home/transaction";
+import Transaction from "./transaction"
 
 export function CheckoutModal(props) {
     return (

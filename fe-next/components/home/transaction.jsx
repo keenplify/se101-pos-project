@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import {AiFillEdit} from "react-icons/ai"
 import {AiOutlinePlus} from "react-icons/ai"
-import styles from "../styles/edit.module.css";
 import {Container,Row, Col, Form, Dropdown, Button, DropdownButton, Label, Modal} from "react-bootstrap"
 
 export default function Transaction() {
@@ -19,6 +18,8 @@ export default function Transaction() {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>Add Items</Modal.Title>
@@ -27,9 +28,9 @@ export default function Transaction() {
         <Container>
           <Row>
             <Col xs={6} md={4}>
-              <Form.Label for="image" className={styles.FormLabel}><AiOutlinePlus></AiOutlinePlus></Form.Label>
+              
             <Form.Control type="file" 
-              className={styles.FormControl} 
+           
               name="filepond"
               id="image"
               accept="image/png, image/jpeg, image/gif"
@@ -73,9 +74,7 @@ export default function Transaction() {
         </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+
           <Button variant="primary">Add Item</Button>
         </Modal.Footer>
       </Modal>
