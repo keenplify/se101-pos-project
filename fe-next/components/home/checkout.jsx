@@ -1,4 +1,5 @@
 import { Modal, Button, Row, Col, Form, Table} from "react-bootstrap"
+import { Transaction } from "../components/home/transaction";
 
 export function CheckoutModal(props) {
     return (
@@ -84,11 +85,13 @@ export function CheckoutModal(props) {
                     </Table>
                   </Col>
                 </Row>
+
             </div>
+      
 
             </Modal.Body>
             <Modal.Footer>
-        <div className="px-2">
+            <div className="px-2">
           <Row>
           <Col sm={8}>
               <strong> TOTAL AMOUNT </strong> 
@@ -98,12 +101,9 @@ export function CheckoutModal(props) {
           </Col>
           </Row>
         </div>
-            <div className="d-grid gap-2 mt-4">
+            <div className="d-grid gap-2 mt-3">
                 <Row>
-                <Button 
-                 variant="success" size="md" width="50%" onClick={() => setModalShow(true)}>
-                    Proceed Transaction
-                </Button>
+                <Transaction></Transaction>
                 </Row>
                 <Row>
                 <Button 
