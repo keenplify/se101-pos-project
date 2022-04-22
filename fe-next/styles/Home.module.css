@@ -108,9 +108,52 @@
   margin-left: 0.5rem;
 }
 
+.inputGroupText {
+  padding: 0 10px !important;
+  background-color: transparent !important;
+  border: none !important;
+  cursor: pointer;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.productImg {
+  width: 65%;
+}
+
+.productCheck {
+  width: 3em !important;
+  height: 3em !important;
+}
+
+.transactionButton {
+  display: block;
+  padding: 0.85rem 2em 1.5em 2em;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+}
+
+.cartCard {
+  position: fixed;
+}
+
+@media (max-width: 767px) {
+  .cartCard {
+    position: relative;
   }
 }
