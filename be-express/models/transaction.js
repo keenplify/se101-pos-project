@@ -18,7 +18,9 @@ const Model = sequelize.define("transactions", {
     allowNull: false,
   },
 });
-Model.associate = ({ Employee, EWallet }) => {
+Model.associate = ({ TransactedVariant, Employee, EWallet }) => {
+  Model.hasMany(TransactedVariant);
+
   Model.belongsTo(EWallet);
 
   Model.belongsTo(Employee, { foreignKey: "createdBy" });

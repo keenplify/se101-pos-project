@@ -65,7 +65,7 @@ router.post(
         token: token.hash,
       });
     } catch (err) {
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ err: err.message });
     }
   }
 );
@@ -116,12 +116,13 @@ router.post(
         firstName,
         lastName,
         password: hashSync(password, 10),
-        employeeId: req.user.dataValues.id,
+        createdBy: req.user.id,
         type,
       });
 
       res.send(newEmployee);
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: error.message });
     }
   }
@@ -249,6 +250,27 @@ router.post(
     );
 
     res.send();
+  }
+);
+
+router.get(
+  "/:id",
+  passport.authenticate("bearer", { session: false }),
+  param("id").notEmpty().isNumeric(),
+  validateResultMiddleware,
+  async (req, res) => {
+    const employee = await Employee.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: Image,
+    });
+
+    if (!employee) {
+      return res.status(404).send("Employee not found!");
+    }
+
+    return res.send(employee);
   }
 );
 
