@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "filepond": "^4.30.3",
-    "react-filepond": "^7.1.1"
-  }
-}
