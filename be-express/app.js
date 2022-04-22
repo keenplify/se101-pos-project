@@ -13,7 +13,7 @@ require("./libraries/createadmin.js");
 const productsRouter = require("./routes/products");
 const employeesRouter = require("./routes/employees");
 const categoriesRouter = require("./routes/categories");
-const variantsRouter = require("./routes/variants")
+const variantsRouter = require("./routes/variants");
 const transactedvariantsRouter = require("./routes/transactedvariants");
 
 app.use(
@@ -29,6 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/products", productsRouter);
 app.use("/api/employees", employeesRouter);
