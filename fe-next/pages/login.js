@@ -11,50 +11,55 @@ import LoginCard from "../components/login";
 
 export default function Login({ employee, allEmployees }) {
   const [, setCookie] = useCookies(["token"]);
-  console.log(allEmployees);
+
+  const handleSubmit = async (values, action) => {
+    console.log(values);
+    axios
+      .post(BACKEND + "/api/employees/login", {
+        id: values.id,
+        password: values.password,
+      })
+      .then(function (response) {
+        setCookie("token", response.data.token);
+        Router.push("/");
+      })
+      .catch(function (error) {
+        console.log(error);
+        action.setStatus("Incorrect Username or Password ");
+      });
+  };
+
   return (
     <div>
       <NavBar employee={employee} />
       <Container>
+        <h1 className="text-center mt-2">Log in</h1>
+
         <Row>
           <Col xs={12} md={7}>
-            <h1>Log in</h1>
-
-            <label>
+            <div className="d-flex align-items-center justify-content-center">
               {allEmployees &&
                 allEmployees.map((employee) => (
-                  <LoginCard employee={employee}></LoginCard>
+                  <LoginCard
+                    employee={employee}
+                    onSubmit={handleSubmit}
+                  ></LoginCard>
                 ))}
-            </label>
+            </div>
           </Col>
 
-          <Col xs={6} md={4}>
+          <Col md={4} className="py-5">
             <Formik
               initialValues={{
                 id: "",
                 password: "",
               }}
-              onSubmit={async (values, action) => {
-                axios
-                  .post(BACKEND + "/api/employees/login", {
-                    id: values.id,
-                    password: values.password,
-                  })
-                  .then(function (response) {
-                    setCookie("token", response.data.token);
-                    Router.push("/");
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                    action.setStatus("Incorrect Username or Password ");
-                  });
-              }}
+              onSubmit={handleSubmit}
             >
               {(formik) => (
                 <Container
                   style={{
-                    width: "60vh",
-                    marginTop: "140px",
+                    width: "100%",
                     padding: "14px 16px",
                     border: "3px solid #DFE1E4",
                     borderRadius: "20px",
@@ -79,7 +84,6 @@ export default function Login({ employee, allEmployees }) {
                           border: "1px solid #AEB1B4",
                           paddingLeft: "10px",
                           outline: "none",
-                          width: "35vh",
                         }}
                         id="id"
                         name="id"
@@ -92,7 +96,6 @@ export default function Login({ employee, allEmployees }) {
                         style={{
                           border: "1px solid #AEB1B4",
                           paddingLeft: "10px",
-                          width: "35vh",
                           outline: "none",
                         }}
                         type="password"
