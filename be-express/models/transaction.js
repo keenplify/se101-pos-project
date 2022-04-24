@@ -15,7 +15,6 @@ const Model = sequelize.define("transactions", {
   },
   type: {
     type: DataTypes.ENUM(["CASH", "EWALLET"]),
-    allowNull: false,
   },
 });
 Model.associate = ({ TransactedVariant, Employee, EWallet }) => {
