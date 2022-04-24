@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Product = require("../models/product");
-const { body, matchedData, param } = require("express-validator");
+const { body, matchedData, param, query } = require("express-validator");
 const passport = require("passport");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const { Image, Variant } = require("../models");
@@ -82,13 +82,13 @@ router.get(
 router.get(
   "/getByCategoryPaginate",
   passport.authenticate("bearer", { session: false }),
-  body("categoryId").notEmpty().isNumeric(),
-  body("limit").notEmpty().isNumeric(),
-  body("lastId").notEmpty().isNumeric(),
+  query("categoryId").notEmpty().isNumeric(),
+  query("limit").notEmpty().isNumeric(),
+  query("lastId").notEmpty().isNumeric(),
   validateResultMiddleware,
   async (req, res) => {
     const { limit, lastId, categoryId } = matchedData(req, {
-      locations: ["body"],
+      locations: ["query"],
     });
     const cursor = lastId || 0;
     try {
@@ -100,6 +100,12 @@ router.get(
           },
           categoryId,
         },
+        include: [
+          {
+            model: Variant,
+            include: Image,
+          },
+        ],
       });
       res.send({
         products,

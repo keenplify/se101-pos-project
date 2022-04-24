@@ -9,6 +9,7 @@ import {
   Button,
   Form,
   FormControl,
+  ButtonGroup,
 } from "react-bootstrap";
 import Image from "next/image";
 import {
@@ -25,9 +26,17 @@ import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
 import { CheckoutModal } from "../components/home/checkout";
 import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
+import { CategoriesQueries } from "../queries/categories";
+import { ProductsQueries } from "../queries/products";
+import { VariantsQueries } from "../queries/variants";
+import { POSCategoryViewer } from "../components/pos/CategoryViewer";
+import { POSCartViewer } from "../components/pos/CartViewer";
 
-export default function Home({employee}) {
+export default function Home({ employee, categories, token }) {
   const [modalShow, setModalShow] = useState(false);
+  const [activeCategoryKey, setActiveCategoryKey] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+
   return (
     <div>
       <Head>
@@ -39,617 +48,30 @@ export default function Home({employee}) {
 
       <Container fluid>
         <Row className="p-5">
-          <Col md="9" lg="9">
-            <Card>
-              <Card.Body>
-                <Row>
-                  <Col md="2">
-                    <InputGroup className="mb-3">
-                      <FormControl placeholder="Search" />
-                      <InputGroup.Text>
-                        <FaSearch></FaSearch>
-                      </InputGroup.Text>
-                    </InputGroup>
-                  </Col>
-                  <Col md={{ span: 2, offset: 8 }}>
-                    <FaBarcode className="fs-1"></FaBarcode>
-                  </Col>
-                </Row>
-
-                {/* vapes */}
-                <p className="px-5">
-                  <strong>Vape Mods</strong>
-                </p>
-                <div className="px-5 vapes">
-                <Row>
-                <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-                <br/>
-                  <Row>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-                </div>
-
-                {/* juices */}
-                <p className="px-5 mt-4">
-                  <strong>60ml JUICES</strong>
-                </p>
-                <div className="px-5 juices">
-                  <Row>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-                  <br/>
-                  <Row>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col md="3">
-                      <Card>
-                        <Card.Body>
-                          <Row>
-                            <Col className="text-center">
-                              <img
-                                src="/img/vape1.png"
-                                className={styles.productImg}
-                              />
-                              <Row className="mt-3 px-3.5">
-                                <Col className={styles.textLeft}>
-                                  <p className="mb-1">
-                                    <strong>Vape 2</strong>
-                                  </p>
-                                  <p>&#8369; 1,000</p>
-                                </Col>
-                                <Col className={styles.textRight}>
-                                  <input
-                                    type="checkbox"
-                                    aria-label="option 1"
-                                    class="form-check-input"
-                                    className={styles.productCheck}
-                                  />
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-                </div>
-              </Card.Body>
-            </Card>
+          <Col xs={{ order: 2 }} md={{ span: 9, order: 1 }}>
+            {/* Column for product view */}
+            <ButtonGroup aria-label="Categories" className="w-100">
+              {categories.map((category, key) => (
+                <Button
+                  variant={key == activeCategoryKey ? "primary" : "secondary"}
+                  onClick={() => setActiveCategoryKey(key)}
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </ButtonGroup>
+            <POSCategoryViewer
+              setCartItems={setCartItems}
+              category={categories[activeCategoryKey]}
+              token={token}
+            />
           </Col>
-          <Col lg="3" xl="3" className="position-relative">
-            <Card className={styles.cartCard}>
-              <Card.Body>
-                <Row>
-                  <Col className="text-center">
-                    <FaShoppingCart></FaShoppingCart> Cart
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col>
-                    <Table borderless>
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Quantity</th>
-                          <th>Price</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Vape 1</td>
-                          <td>
-                            <InputGroup>
-                              <InputGroup.Text
-                                className={styles.inputGroupText}
-                              >
-                                <FaMinusCircle></FaMinusCircle>
-                              </InputGroup.Text>
-                              1
-                              <InputGroup.Text
-                                className={styles.inputGroupText}
-                              >
-                                <FaPlusCircle></FaPlusCircle>
-                              </InputGroup.Text>
-                            </InputGroup>
-                          </td>
-                          <td>1,000</td>
-                          <td>
-                            <FaTrashAlt
-                              className={styles.cursorPointer}
-                            ></FaTrashAlt>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Vape 1</td>
-                          <td>
-                            <InputGroup>
-                              <InputGroup.Text
-                                className={styles.inputGroupText}
-                              >
-                                <FaMinusCircle></FaMinusCircle>
-                              </InputGroup.Text>
-                              1
-                              <InputGroup.Text
-                                className={styles.inputGroupText}
-                              >
-                                <FaPlusCircle></FaPlusCircle>
-                              </InputGroup.Text>
-                            </InputGroup>
-                          </td>
-                          <td>1,000</td>
-                          <td>
-                            <FaTrashAlt
-                              className={styles.cursorPointer}
-                            ></FaTrashAlt>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Vape 1</td>
-                          <td>
-                            <InputGroup>
-                              <InputGroup.Text
-                                className={styles.inputGroupText}
-                              >
-                                <FaMinusCircle></FaMinusCircle>
-                              </InputGroup.Text>
-                              1
-                              <InputGroup.Text
-                                className={styles.inputGroupText}
-                              >
-                                <FaPlusCircle></FaPlusCircle>
-                              </InputGroup.Text>
-                            </InputGroup>
-                          </td>
-                          <td>1,000</td>
-                          <td>
-                            <FaTrashAlt
-                              className={styles.cursorPointer}
-                            ></FaTrashAlt>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Col>
-                </Row>
-                <hr />
-                <Row className="px-5">
-                  <Col>
-                    <strong>Total Amount</strong>
-                  </Col>
-                  <Col className={styles.textRight}>
-                    <strong>&#8369; 3,000</strong>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="d-grid gap-2 mt-4">
-                    <Button
-                      variant="primary"
-                      onClick={() => setModalShow(true)}
-                    >
-                      Checkout
-                    </Button>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
+          <Col
+            xs={{ order: 1 }}
+            md={{ span: 3, order: 2 }}
+            className="position-relative"
+          >
+            <POSCartViewer cartItems={cartItems} setCartItems={setCartItems} />
           </Col>
         </Row>
       </Container>
@@ -661,6 +83,24 @@ export default function Home({employee}) {
   );
 }
 export async function getServerSideProps(context) {
-  return AuthenticateEmployee(context);
-}
+  const { props } = await AuthenticateEmployee(context);
 
+  if (!props.employee) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  //Get all categories
+  let categories = (await CategoriesQueries.getAll(props.token)).data
+    .categories;
+
+  return {
+    props: {
+      ...props,
+      categories,
+    },
+  };
+}
