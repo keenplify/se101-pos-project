@@ -67,7 +67,7 @@ export function NavBar({ employee }) {
             <NavDropdown
               id="nav-dropdown-dark-example"
               disabled={!employee}
-              class={styles.NavDropdown}
+              className={styles.NavDropdown}
               title={ 
                 <span className={styles.dropdownTitle}> <FaUserCircle className="fs-2 me-1"></FaUserCircle>
                   {employee ? (

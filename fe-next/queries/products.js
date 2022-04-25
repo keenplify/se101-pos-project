@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BACKEND } from "../helpers";
-import qs from "qs";
 export const ProductsQueries = {
   route: "/api/products",
 

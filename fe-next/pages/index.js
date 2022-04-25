@@ -10,6 +10,8 @@ import {
   Form,
   FormControl,
   ButtonGroup,
+  Tabs,
+  Tab,
 } from "react-bootstrap";
 import Image from "next/image";
 import {
@@ -31,11 +33,26 @@ import { ProductsQueries } from "../queries/products";
 import { VariantsQueries } from "../queries/variants";
 import { POSCategoryViewer } from "../components/pos/CategoryViewer";
 import { POSCartViewer } from "../components/pos/CartViewer";
+import axios from "axios";
+import { BACKEND } from "../helpers";
+import { TransactionsQueries } from "../queries/transactions";
 
-export default function Home({ employee, categories, token }) {
+export default function Home({
+  employee,
+  categories,
+  token,
+  activeTransaction,
+}) {
   const [modalShow, setModalShow] = useState(false);
-  const [activeCategoryKey, setActiveCategoryKey] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(
+    activeTransaction.transactedvariants ? activeTransaction.transactedvariants.map((transactedVariant) => {
+      return {
+        quantity: transactedVariant.quantity,
+        variant: transactedVariant.variant,
+        transactedVariant,
+      };
+    }) : []
+  );
 
   return (
     <div>
@@ -48,35 +65,45 @@ export default function Home({ employee, categories, token }) {
 
       <Container fluid>
         <Row className="p-5">
-          <Col xs={{ order: 2 }} md={{ span: 9, order: 1 }}>
+          <Col xs={{ order: 2 }} md={{ span: 9, order: 1 }} className="py-2">
             {/* Column for product view */}
-            <ButtonGroup aria-label="Categories" className="w-100">
+            <Tabs defaultActiveKey={0}>
               {categories.map((category, key) => (
-                <Button
-                  variant={key == activeCategoryKey ? "primary" : "secondary"}
-                  onClick={() => setActiveCategoryKey(key)}
-                >
-                  {category.name}
-                </Button>
+                <Tab eventKey={key} title={category.name}>
+                  <POSCategoryViewer
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                    category={category}
+                    token={token}
+                    transaction={activeTransaction}
+                  />
+                </Tab>
               ))}
-            </ButtonGroup>
-            <POSCategoryViewer
-              setCartItems={setCartItems}
-              category={categories[activeCategoryKey]}
-              token={token}
-            />
+            </Tabs>
           </Col>
           <Col
             xs={{ order: 1 }}
             md={{ span: 3, order: 2 }}
             className="position-relative"
           >
-            <POSCartViewer cartItems={cartItems} setCartItems={setCartItems} />
+            <POSCartViewer
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              setModalShow={setModalShow}
+              transaction={activeTransaction}
+              token={token}
+            />
           </Col>
         </Row>
       </Container>
 
-      <CheckoutModal show={modalShow} onHide={() => setModalShow(false)} />
+      <CheckoutModal
+        token={token}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        transaction={activeTransaction}
+        cartItems={cartItems}
+      />
 
       <Footer></Footer>
     </div>
@@ -93,6 +120,33 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  // Check if a transaction is active in localstorage
+  const activeTransactionId = context?.req.cookies?.activeTransactionId;
+
+  // Create new transaction fn
+  const createNewTransaction = async () => {
+    activeTransaction = (await TransactionsQueries.add(props.token)).data
+    .newTransaction;
+    context.res.cookie("activeTransactionId", activeTransaction.id);
+  }
+
+  // If no active transaction is present, create a new active transaction. Else, get active transaction.
+  let activeTransaction;
+  if (!activeTransactionId) {
+    await  createNewTransaction()
+  } else {
+    try {
+      activeTransaction = await (
+        await TransactionsQueries.getById(props.token, activeTransactionId)
+      ).data.transaction;
+    } catch (error) {
+      // Create new transaction if error.
+      await createNewTransaction()
+    }
+    
+  }
+
   //Get all categories
   let categories = (await CategoriesQueries.getAll(props.token)).data
     .categories;
@@ -101,6 +155,7 @@ export async function getServerSideProps(context) {
     props: {
       ...props,
       categories,
+      activeTransaction,
     },
   };
 }

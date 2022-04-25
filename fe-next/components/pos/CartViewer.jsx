@@ -1,13 +1,35 @@
-import { Card, Col, InputGroup, Row, Table, Button } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  InputGroup,
+  Row,
+  Table,
+  Button,
+  Badge,
+  Modal,
+  Form,
+  OverlayTrigger,
+  Tooltip,
+  Accordion,
+} from "react-bootstrap";
 import {
   FaMinusCircle,
   FaPlusCircle,
   FaShoppingCart,
   FaTrashAlt,
 } from "react-icons/fa";
+import { TransactedVariantsQueries } from "../../queries/transactedvariants";
 import styles from "../../styles/Home.module.css";
+import { ChangeTransactionForm } from "./ChangeTransactionForm";
+import { DeleteTransactionModal } from "./DeleteTransactionModal";
 
-export const POSCartViewer = ({ cartItems, setCartItems }) => {
+export const POSCartViewer = ({
+  token,
+  cartItems,
+  setCartItems,
+  setModalShow,
+  transaction,
+}) => {
   const totalPrice =
     Math.round(
       cartItems
@@ -35,13 +57,13 @@ export const POSCartViewer = ({ cartItems, setCartItems }) => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{ fontSize: ".8em" }}>
                 {cartItems.map((item, key) => (
                   <tr key={key}>
                     <td>
                       <div
                         style={{
-                          width: "64px",
+                          width: "58px",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
@@ -50,32 +72,61 @@ export const POSCartViewer = ({ cartItems, setCartItems }) => {
                         {item.variant.name}
                       </div>
                     </td>
-                    <td>
+                    <td
+                      style={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        display: "block",
+                      }}
+                    >
                       <InputGroup>
                         <InputGroup.Text
                           className={styles.inputGroupText}
-                          onClick={() => {
-                            setCartItems((o) => {
-                              const f = o.find(
-                                (e) => e.variant.id == item.variant.id
+                          onClick={async () => {
+                            if (transaction.state !== "PROCESSING") return;
+                            const newCartItems = [...cartItems];
+                            const f = newCartItems.find(
+                              (e) => e.variant.id == item.variant.id
+                            );
+                            if (f.quantity > 1) {
+                              f.quantity--;
+
+                              await TransactedVariantsQueries.editQuantityById(
+                                token,
+                                f.transactedVariant.id,
+                                f.quantity
                               );
-                              if (f.quantity > 1) f.quantity--;
-                              return [...o];
-                            });
+                            }
+
+                            setCartItems(newCartItems);
                           }}
+                          style={{display: transaction.state !== "PROCESSING"?"none":undefined}}
                         >
                           <FaMinusCircle></FaMinusCircle>
                         </InputGroup.Text>
                         {item.quantity}
                         <InputGroup.Text
                           className={styles.inputGroupText}
-                          onClick={() => {
-                            setCartItems((o) => {
-                              o.find((e) => e.variant.id == item.variant.id)
-                                .quantity++;
-                              return [...o];
-                            });
+                          onClick={async () => {
+                            if (transaction.state !== "PROCESSING") return;
+                            const newCartItems = [...cartItems];
+
+                            const f = newCartItems.find(
+                              (e) => e.variant.id == item.variant.id
+                            );
+                            if (f.quantity >= f.variant.stock) return;
+                            f.quantity++;
+
+                            TransactedVariantsQueries.editQuantityById(
+                              token,
+                              f.transactedVariant.id,
+                              f.quantity
+                            );
+
+                            setCartItems(newCartItems);
                           }}
+                          style={{display: transaction.state !== "PROCESSING"?"none":undefined}}
+
                         >
                           <FaPlusCircle></FaPlusCircle>
                         </InputGroup.Text>
@@ -88,15 +139,25 @@ export const POSCartViewer = ({ cartItems, setCartItems }) => {
                     </td>
                     <td>
                       <div
-                        onClick={() => {
-                          console.log("yet");
-                          setCartItems((o) => {
-                            const filtered = o.filter(
-                              (e) => e.variant.id != item.variant.id
-                            );
-                            return [...filtered];
+                        onClick={async () => {
+                          if (transaction.state !== "PROCESSING") return;
+                          const filtered = [...cartItems].filter((e) => {
+                            const filter = e.variant.id != item.variant.id;
+
+                            if (!filter) {
+                              TransactedVariantsQueries.deleteById(
+                                token,
+                                e.transactedVariant.id
+                              ).then();
+                            }
+
+                            return filter;
                           });
+
+                          setCartItems([...filtered]);
                         }}
+                        style={{display: transaction.state !== "PROCESSING"?"none":undefined}}
+
                       >
                         <FaTrashAlt
                           className={styles.cursorPointer}
@@ -123,11 +184,38 @@ export const POSCartViewer = ({ cartItems, setCartItems }) => {
         </Row>
         <Row>
           <Col className="d-grid gap-2 mt-4">
-            <Button variant="primary" onClick={() => setModalShow(true)}>
-              Checkout
-            </Button>
+            <OverlayTrigger
+              placement="top"
+              overlay={transaction.state !== "PROCESSING" ? <Tooltip>
+              You cannot checkout this transaction because it is already{" "}
+              <Badge bg="primary">{transaction.state}</Badge>
+            </Tooltip> : <div></div>}
+            >
+              <span className="d-flex w-100">
+                <Button
+                  variant={transaction.state !== "PROCESSING" ? "outline-dark" : "success"}
+                  onClick={() => setModalShow(true)}
+                  className="w-100"
+                  disabled={transaction.state !== "PROCESSING"}
+                >
+                  Checkout
+                </Button>
+              </span>
+            </OverlayTrigger>
+            <DeleteTransactionModal />
+            <ChangeTransactionForm transaction={transaction} />
           </Col>
         </Row>
+        <div style={{fontSize: ".8em"}}>
+          <Row>
+            <Col xs={6}> <strong>State:</strong> {transaction.state}</Col>
+            <Col xs={6}> <strong>Payment Type:</strong> {transaction.type}</Col>
+          </Row>
+          <div><strong>Remarks:</strong> {transaction.remarks}</div>
+          <Row>
+
+          </Row>
+        </div>
       </Card.Body>
     </Card>
   );

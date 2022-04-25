@@ -5,9 +5,12 @@ const Transaction = require("../models/transaction");
 const {
   randomString,
   validateResultMiddleware,
+  AdminOnly,
 } = require("../libraries/helpers");
 const passport = require("passport");
 const upload = require("../libraries/multer");
+const { TransactedVariant, EWallet, Variant } = require("../models");
+const { Sequelize } = require("sequelize");
 
 router.post(
   "/add",
@@ -16,9 +19,16 @@ router.post(
 
   async (req, res) => {
     try {
-      const newTransaction = await Transaction.create();
+      const newTransaction = await Transaction.create(
+        {
+          createdBy: req.user.id,
+        },
+        {
+          include: [{ model: TransactedVariant, include: [Variant] }, EWallet],
+        }
+      );
 
-      res.send(newTransaction);
+      res.send({ newTransaction });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: error.message });
@@ -53,42 +63,89 @@ router.post(
   }
 );
 
-router.put(
-  "/finalizeTransaction",
+router.post(
+  "/finalizeTransaction/:id",
   passport.authenticate("bearer", { session: false }),
   [
-    body("type").notEmpty().isString(),
-    body("phone_number").notEmpty().isInt(),
-    body("account_name")
+    body("type")
       .notEmpty()
-      .custom((i) => i === "GCASH" || i === "PAYMAYA")
+      .custom((i) => i === "CASH" || i === "EWALLET")
       .isString(),
+    body("phone_number").isString().optional(),
+    body("account_name").isString().optional(),
+    body("eWalletType")
+      .custom((i) => i === "GCASH" || i === "PAYMAYA")
+      .optional(),
+    body("remarks").notEmpty().isString(),
   ],
-  param("state").notEmpty().isNumeric(),
+  param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
 
   async (req, res) => {
-    const { type, phone_number, account_name } = matchedData(req, {
-      locations: ["body"],
+    const { type, phone_number, account_name, eWalletType, remarks } =
+      matchedData(req, {
+        locations: ["body"],
+      });
+
+    // Calculate total price
+    let transactedVariants = await TransactedVariant.findAll({
+      where: {
+        transactionId: req.params.id,
+      },
+      include: [Variant],
     });
 
-    try {
-      await Transaction.update(
-        {
-          type,
-          phone_number,
-          account_name,
+    let total_price = 0
+    transactedVariants.forEach(
+      (tv) => total_price += tv.variant.price * tv.quantity
+    );
+
+    // Set quantity of variant to one lower
+    let variantUpdateIds = [];
+    transactedVariants.forEach(tv => variantUpdateIds.push(tv.variant.id))
+    await Variant.update(
+      {
+        stock: Sequelize.literal("stock - 1"),
+      },
+      {
+        where: {
+          id: variantUpdateIds,
         },
-        {
-          where: {
-            state: req.params.state,
-          },
-        }
-      );
+      }
+    );
+
+    let updateData = {
+      type,
+      remarks,
+      total_price,
+      state: "PAID",
+    };
+
+    // Create new ewallet for consume on finalized transaction
+
+    if (type === "EWALLET") {
+      let newEWallet = EWallet.create({
+        type: eWalletType,
+        phone_number,
+        account_name,
+      });
+      updateData = {
+        ...updateData,
+        eWalletId: newEWallet.id,
+      };
+    }
+
+    try {
+      await Transaction.update(updateData, {
+        where: {
+          id: req.params.id,
+        },
+      });
 
       res.send();
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.log(error)
+      res.status(500).json({ error: "Error!" });
     }
   }
 );
@@ -134,17 +191,18 @@ router.get(
   param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
   async (req, res) => {
-    const product = await Transaction.findOne({
+    const transaction = await Transaction.findOne({
       where: {
         id: req.params.id,
       },
+      include: [{ model: TransactedVariant, include: [Variant] }, EWallet],
     });
 
-    if (!product) {
+    if (!transaction) {
       return res.status(404).send("Transaction does not exist!");
     }
 
-    return res.send(product);
+    return res.send({ transaction });
   }
 );
 

@@ -6,7 +6,7 @@ const Model = sequelize.define("transactions", {
     type: DataTypes.STRING,
   },
   total_price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
   },
   state: {
     type: DataTypes.ENUM(["PROCESSING", "PAID", "CANCELLED"]),
