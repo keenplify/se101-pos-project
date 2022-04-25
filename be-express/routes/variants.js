@@ -124,23 +124,31 @@ router.post(
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   [
-    body("productId").notEmpty().isNumeric(),
-    body("name").notEmpty().isString(),
-    body("stock").notEmpty().isNumeric(),
+    param("id").notEmpty().isNumeric(),
   ],
   validateResultMiddleware,
-
+  upload.single("image"),
+  
   async (req, res) => {
-    const { productId, name, stock } = matchedData(req, {
-      locations: ["body"],
+    if (!req.file) {
+      return res.status(422).send("Image not found");
+    }
+    const newImage = await Image.create({
+      location: req.file.path,
+      createdBy: req.user.id,
     });
 
     try {
       const newVariant = await Variant.create({
-        productId,
-        name,
-        stock,
-      });
+        imageId: newImage.id
+      },
+      {
+        where:{
+          id:req.param.id
+        }
+      }
+      );
+
 
       res.send(newVariant);
     } catch (error) {
