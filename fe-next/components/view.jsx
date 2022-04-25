@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdGridView } from "react-icons/md";
-import AddItem from "../components/addItem";
 import { Container, Row, Col, Button, Table, Modal } from "react-bootstrap";
 import { BACKEND } from "../helpers";
-export default function View({ product }) {
+import AddVariant from "./addVariant";
+export default function View({ product, token }) {
   const [show, setShow] = useState(false);
 
   return (
@@ -56,7 +56,7 @@ export default function View({ product }) {
 
               <Col>
                 <div className="text-end">
-                  <AddItem></AddItem>
+                  <AddVariant token={token} product={product} />
                 </div>
               </Col>
             </Row>

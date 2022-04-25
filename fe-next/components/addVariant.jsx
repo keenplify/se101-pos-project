@@ -2,15 +2,17 @@ import { useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
-import { CategoriesQueries } from "../queries/categories";
 import { useRouter } from "next/router";
+import { ProductsQueries } from "../queries/products";
+import { VariantsQueries } from "../queries/variants";
 
 const schema = Yup.object().shape({
   name: Yup.string().min(3).max(64).required(),
-  description: Yup.string().required(),
+  price: Yup.number().min(0).required(),
+  stock: Yup.number().min(0).required()
 });
 
-export default function AddProduct({ token, category }) {
+export default function AddVariant({ token, product }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
@@ -20,7 +22,7 @@ export default function AddProduct({ token, category }) {
   return (
     <>
       <Button type="button" onClick={handleShow}>
-        Add Product
+        Add Variant
       </Button>
       <Modal
         show={show}
@@ -29,18 +31,22 @@ export default function AddProduct({ token, category }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Product</Modal.Title>
+          <Modal.Title>Add Variant</Modal.Title>
         </Modal.Header>
         <Formik
           initialValues={{
             name: "",
-            description: "",
+            price: 0,
+            stock: 0
           }}
           validationSchema={schema}
-          onSubmit={async ({name, description}, actions) => {
-            console.log("submitting");
-            const result = await CategoriesQueries.add(token, name, description);
-            router.reload();
+          onSubmit={async ({ name, stock, price }, actions) => {
+            try {
+              await VariantsQueries.add(token, product.id, name, stock, price);
+              router.reload();
+            } catch (error) {
+              console.log(error);
+            }
           }}
         >
           {(formik) => (
@@ -60,16 +66,30 @@ export default function AddProduct({ token, category }) {
                   )}
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Description</Form.Label>
+                  <Form.Label>Price</Form.Label>
                   <Field
-                    as="textarea"
-                    className="form-control"
-                    name="description"
-                    placeholder="Product Description"
+                    as={Form.Control}
+                    name="price"
+                    type={"number"}
+                    placeholder="Product Price"
                   />
-                  {formik.errors["description"] && (
+                  {formik.errors["price"] && (
                     <Form.Text className="text-danger text-capitalize">
-                      {formik.errors["description"]}
+                      {formik.errors["price"]}
+                    </Form.Text>
+                  )}
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Stock</Form.Label>
+                  <Field
+                    as={Form.Control}
+                    name="stock"
+                    type="number"
+                    placeholder="Product Stock"
+                  />
+                  {formik.errors["stock"] && (
+                    <Form.Text className="text-danger text-capitalize">
+                      {formik.errors["stock"]}
                     </Form.Text>
                   )}
                 </Form.Group>
@@ -79,11 +99,15 @@ export default function AddProduct({ token, category }) {
                   Close
                 </Button>
                 <Button
-                  variant={formik.isSubmitting || !formik.isValid ? "outline-primary":"primary"}
+                  variant={
+                    formik.isSubmitting || !formik.isValid
+                      ? "outline-primary"
+                      : "primary"
+                  }
                   onClick={formik.handleSubmit}
                   disabled={formik.isSubmitting || !formik.isValid}
                 >
-                  Add Product
+                  Add Variant
                 </Button>
               </Modal.Footer>
             </FormikForm>

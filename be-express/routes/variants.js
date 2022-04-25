@@ -19,12 +19,13 @@ router.post(
   [
     body("productId").notEmpty().isNumeric(),
     body("name").notEmpty().isString(),
+    body("price").notEmpty().isNumeric(),
     body("stock").notEmpty().isNumeric(),
   ],
   validateResultMiddleware,
 
   async (req, res) => {
-    const { productId, name, stock } = matchedData(req, {
+    const { productId, name, stock, price } = matchedData(req, {
       locations: ["body"],
     });
 
@@ -32,6 +33,7 @@ router.post(
       const newVariant = await Variant.create({
         productId,
         name,
+        price,
         stock,
       });
 

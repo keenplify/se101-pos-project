@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 import { CategoriesQueries } from "../../queries/categories";
 import { BACKEND } from "../../helpers";
 import { MdAddToPhotos } from "react-icons/md";
-import styles from "../../styles/inventory.module.css"
+import styles from "../../styles/inventory.module.css";
 
 export default function ProductsViewer({ employee, category, token }) {
   return (
@@ -38,10 +38,19 @@ export default function ProductsViewer({ employee, category, token }) {
       <Container className="col-lg-12 my-3 rounded-3">
         <Row>
           <Col md={3}>
-            <div className={styles.categoryImageContainer + " position-relative bg-dark rounded"}>
+            <div
+              className={
+                styles.categoryImageContainer +
+                " position-relative bg-dark rounded"
+              }
+            >
               <img
                 className={styles.categoryImage + " rounded"}
-                src={category?.image?.location ? BACKEND + category.image.location : "/img/blank.jpg"}
+                src={
+                  category?.image?.location
+                    ? BACKEND + category.image.location
+                    : "/img/blank.jpg"
+                }
               />
               <Button
                 variant="light"
@@ -49,7 +58,7 @@ export default function ProductsViewer({ employee, category, token }) {
                 className="position-absolute"
                 style={{ right: "1em", bottom: "1em" }}
               >
-                <MdAddToPhotos/> Change Photo
+                <MdAddToPhotos /> Change Photo
               </Button>
             </div>
           </Col>
@@ -107,19 +116,28 @@ export default function ProductsViewer({ employee, category, token }) {
                         : "/img/blank.jpg"
                     }
                     className="img-fluid rounded bg-dark"
-                    style={{width:"7em",height:"7em" ,maxHeight: "7em", maxWidth: "7em", objectFit: "contain"}}
+                    style={{
+                      width: "7em",
+                      height: "7em",
+                      maxHeight: "7em",
+                      maxWidth: "7em",
+                      objectFit: "contain",
+                    }}
                     alt={product.name + "'s logo"}
                   />
                 </td>
                 <td>{product.name}</td>
                 <td>
-                  {product.variants.map((variant, key) => (
-                    <small key={key}> {variant.name}</small>
-                  ))}
+                  <ul>
+                    {product.variants.map(
+                      (variant, key) =>
+                        key < 5 && <li key={key}> {variant.name}</li>
+                    )}
+                  </ul>
                 </td>
                 <td>{new Date(product.createdAt).toLocaleString()}</td>
                 <td className="py-2">
-                  <View product={product}></View>
+                  <View product={product} token={token}></View>
                   <Edit></Edit>
                   <Delete></Delete>
                 </td>

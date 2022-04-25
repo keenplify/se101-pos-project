@@ -29,4 +29,19 @@ export const VariantsQueries = {
       },
     });
   },
+
+  add: async function (token, productId, name, stock, price) {
+    return await axios.post(
+      BACKEND + this.route + "/add",
+      {
+        productId,
+        name,
+        stock,
+        price
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  },
 };

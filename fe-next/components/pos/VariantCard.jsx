@@ -5,17 +5,25 @@ import { BACKEND } from "../../helpers";
 import { ProductsQueries } from "../../queries/products";
 import { TransactedVariantsQueries } from "../../queries/transactedvariants";
 
-export function VariantCard({token, variant, TransactedVariantsQueries, cartItems, setCartItems, transaction, windowDimensions}) {
+export function VariantCard({
+  token,
+  variant,
+  TransactedVariantsQueries,
+  cartItems,
+  setCartItems,
+  transaction,
+  windowDimensions,
+}) {
   const calculateStock = () => {
-    const _cartItem = cartItems.find(item => item.variant.id == variant.id);
-    if (_cartItem) return variant.stock - _cartItem.quantity
+    const _cartItem = cartItems.find((item) => item.variant.id == variant.id);
+    if (_cartItem) return variant.stock - _cartItem.quantity;
     else return variant.stock;
-  }
+  };
   const [calcStock, setCalcStock] = useState(calculateStock());
 
-  useEffect(()=> {
-    setCalcStock(calculateStock())
-  }, [cartItems, variant])
+  useEffect(() => {
+    setCalcStock(calculateStock());
+  }, [cartItems, variant]);
 
   return (
     <Col>
@@ -23,19 +31,32 @@ export function VariantCard({token, variant, TransactedVariantsQueries, cartItem
         <div style={{ position: "relative" }}>
           <Card.Img
             variant="top"
-            src={BACKEND + variant.image.location}
-          />
-          <Badge
-            bg={calcStock > 0 ? "info" : "danger"}
+            src={
+              variant.image?.location
+                ? BACKEND + variant.image.location
+                : "/img/blank.jpg"
+            }
+            className="img-fluid rounded bg-dark"
             style={{
-              display: "inline-block",
-              position: "absolute",
-              right: "2%",
-              bottom: "2%",
+              width: "100%",
+              height: "10em",
+              maxHeight: "10em",
+              objectFit: "contain",
             }}
-          >
-            {calcStock} stocks
-          </Badge>
+          />
+          {transaction.state === "PROCESSING" && (
+            <Badge
+              bg={calcStock > 0 ? "info" : "danger"}
+              style={{
+                display: "inline-block",
+                position: "absolute",
+                right: "2%",
+                bottom: "2%",
+              }}
+            >
+              {calcStock} stocks
+            </Badge>
+          )}
         </div>
         <Card.Body>
           <Card.Title
@@ -53,15 +74,11 @@ export function VariantCard({token, variant, TransactedVariantsQueries, cartItem
               ₱{variant.price}
             </span>
             <Button
-              variant={calcStock > 0 ? "primary":"outline-dark"}
+              variant={calcStock > 0 ? "primary" : "outline-dark"}
               className="flex-grow-1 mx-1"
               onClick={async () => {
                 try {
-                  for (
-                    let index = 0;
-                    index < cartItems.length;
-                    index++
-                  ) {
+                  for (let index = 0; index < cartItems.length; index++) {
                     const e = cartItems[index];
                     if (e?.variant?.id == variant?.id) {
                       // Return add quantity when variant is found in the cartItem
@@ -76,21 +93,19 @@ export function VariantCard({token, variant, TransactedVariantsQueries, cartItem
                     }
                   }
                   // If not, create new cartItem.
-                  const transactedVariant =
-                    await TransactedVariantsQueries.add(
-                      token,
-                      variant.id,
-                      1,
-                      transaction.id
-                    );
+                  const transactedVariant = await TransactedVariantsQueries.add(
+                    token,
+                    variant.id,
+                    1,
+                    transaction.id
+                  );
                   setCartItems([
                     ...cartItems,
                     {
                       quantity: 1,
                       variant,
                       transactedVariant:
-                        transactedVariant.data
-                          .newTransactedVariant,
+                        transactedVariant.data.newTransactedVariant,
                     },
                   ]);
                   return;
@@ -100,15 +115,11 @@ export function VariantCard({token, variant, TransactedVariantsQueries, cartItem
               }}
               disabled={calcStock <= 0}
             >
-              {windowDimensions.width <= 576 ? (
-                <FiPlus />
-              ) : (
-                "Add to Cart"
-              )}
+              {windowDimensions.width <= 576 ? <FiPlus /> : "Add to Cart"}
             </Button>
           </div>
         </Card.Body>
       </Card>
     </Col>
-  )
+  );
 }
