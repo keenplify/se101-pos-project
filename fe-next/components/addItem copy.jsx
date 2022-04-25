@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
+import { CategoriesQueries } from "../queries/categories";
 import { useRouter } from "next/router";
-import { ProductsQueries } from "../queries/products";
 
 const schema = Yup.object().shape({
   name: Yup.string().min(3).max(64).required(),
+  description: Yup.string().required(),
 });
 
 export default function AddProduct({ token, category }) {
@@ -36,13 +37,10 @@ export default function AddProduct({ token, category }) {
             description: "",
           }}
           validationSchema={schema}
-          onSubmit={async ({ name }, actions) => {
-            try {
-              await ProductsQueries.add(token, category.id, name);
-              router.reload();
-            } catch (error) {
-              console.log(error);
-            }
+          onSubmit={async ({name, description}, actions) => {
+            console.log("submitting");
+            const result = await CategoriesQueries.add(token, name, description);
+            router.reload();
           }}
         >
           {(formik) => (
@@ -61,17 +59,27 @@ export default function AddProduct({ token, category }) {
                     </Form.Text>
                   )}
                 </Form.Group>
+                <Form.Group>
+                  <Form.Label>Description</Form.Label>
+                  <Field
+                    as="textarea"
+                    className="form-control"
+                    name="description"
+                    placeholder="Product Description"
+                  />
+                  {formik.errors["description"] && (
+                    <Form.Text className="text-danger text-capitalize">
+                      {formik.errors["description"]}
+                    </Form.Text>
+                  )}
+                </Form.Group>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
                 <Button
-                  variant={
-                    formik.isSubmitting || !formik.isValid
-                      ? "outline-primary"
-                      : "primary"
-                  }
+                  variant={formik.isSubmitting || !formik.isValid ? "outline-primary":"primary"}
                   onClick={formik.handleSubmit}
                   disabled={formik.isSubmitting || !formik.isValid}
                 >

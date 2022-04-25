@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Category, Image, Product } = require("../models");
+const { Category, Image, Product, Variant } = require("../models");
 const { body, matchedData, param } = require("express-validator");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const passport = require("passport");
@@ -117,7 +117,13 @@ router.get(
       where: {
         id: req.params.id,
       },
-      include: Image,
+      include: [Image, {
+        model: Product,
+        include: [{
+          model: Variant,
+          include: [Image]
+        }]
+      }]
     });
 
     if (!category) {

@@ -100,7 +100,12 @@ export const POSCartViewer = ({
 
                             setCartItems(newCartItems);
                           }}
-                          style={{display: transaction.state !== "PROCESSING"?"none":undefined}}
+                          style={{
+                            display:
+                              transaction.state !== "PROCESSING"
+                                ? "none"
+                                : undefined,
+                          }}
                         >
                           <FaMinusCircle></FaMinusCircle>
                         </InputGroup.Text>
@@ -125,8 +130,12 @@ export const POSCartViewer = ({
 
                             setCartItems(newCartItems);
                           }}
-                          style={{display: transaction.state !== "PROCESSING"?"none":undefined}}
-
+                          style={{
+                            display:
+                              transaction.state !== "PROCESSING"
+                                ? "none"
+                                : undefined,
+                          }}
                         >
                           <FaPlusCircle></FaPlusCircle>
                         </InputGroup.Text>
@@ -156,8 +165,12 @@ export const POSCartViewer = ({
 
                           setCartItems([...filtered]);
                         }}
-                        style={{display: transaction.state !== "PROCESSING"?"none":undefined}}
-
+                        style={{
+                          display:
+                            transaction.state !== "PROCESSING"
+                              ? "none"
+                              : undefined,
+                        }}
                       >
                         <FaTrashAlt
                           className={styles.cursorPointer}
@@ -186,14 +199,24 @@ export const POSCartViewer = ({
           <Col className="d-grid gap-2 mt-4">
             <OverlayTrigger
               placement="top"
-              overlay={transaction.state !== "PROCESSING" ? <Tooltip>
-              You cannot checkout this transaction because it is already{" "}
-              <Badge bg="primary">{transaction.state}</Badge>
-            </Tooltip> : <div></div>}
+              overlay={
+                transaction.state !== "PROCESSING" ? (
+                  <Tooltip>
+                    You cannot checkout this transaction because it is already{" "}
+                    <Badge bg="primary">{transaction.state}</Badge>
+                  </Tooltip>
+                ) : (
+                  <div></div>
+                )
+              }
             >
               <span className="d-flex w-100">
                 <Button
-                  variant={transaction.state !== "PROCESSING" ? "outline-dark" : "success"}
+                  variant={
+                    transaction.state !== "PROCESSING"
+                      ? "outline-dark"
+                      : "success"
+                  }
                   onClick={() => setModalShow(true)}
                   className="w-100"
                   disabled={transaction.state !== "PROCESSING"}
@@ -206,16 +229,26 @@ export const POSCartViewer = ({
             <ChangeTransactionForm transaction={transaction} />
           </Col>
         </Row>
-        <div style={{fontSize: ".8em"}}>
-          <Row>
-            <Col xs={6}> <strong>State:</strong> {transaction.state}</Col>
-            <Col xs={6}> <strong>Payment Type:</strong> {transaction.type}</Col>
-          </Row>
-          <div><strong>Remarks:</strong> {transaction.remarks}</div>
-          <Row>
-
-          </Row>
-        </div>
+        {transaction.state !== "PROCESSING" && (
+          <div style={{ fontSize: ".8em" }}>
+            <Row>
+              <Col xs={6}>
+                {" "}
+                <strong>State:</strong> {transaction.state}
+              </Col>
+              <Col xs={6}>
+                {" "}
+                <strong>Payment Type:</strong> {transaction.type}
+              </Col>
+            </Row>
+            {transaction?.remarks?.length > 0 && (
+              <div>
+                <strong>Remarks:</strong> {transaction.remarks}
+              </div>
+            )}
+            <Row></Row>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

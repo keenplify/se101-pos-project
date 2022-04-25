@@ -1,13 +1,15 @@
-import Head from 'next/head'
-import {Card} from "react-bootstrap"
-import styles from '../styles/inventory.module.css'
-import { NavBar } from '../components/navbar'
-import { Footer } from '../components/footer'
-import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
+import Head from "next/head";
+import { Card } from "react-bootstrap";
+import styles from "../styles/inventory.module.css";
+import { NavBar } from "../components/navbar";
+import { Footer } from "../components/footer";
+import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
+import { CategoriesQueries } from "../queries/categories";
+import { BACKEND } from "../helpers";
+import Link from "next/link";
 
-
-
-export default function Inventory({employee}) {
+export default function Inventory({ employee, categories }) {
+  console.log(categories);
   return (
     <div>
       <Head>
@@ -16,128 +18,58 @@ export default function Inventory({employee}) {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
       <NavBar employee={employee}></NavBar>
-    
-      <h1 className="text-center">Heading </h1>
-      <div className="container col-lg-10 justify-content-center ">
+
+      <h1 className="text-center">Product Categories </h1>
+      <div className="container col-lg-10 justify-content-center mb-5">
         <div className="row">
-        
-        <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-          <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-          <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
-    <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
-    <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
-    <div className="col-md-3 py-3">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black " href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid ' alt='Sample' />
-      <div className='mask ' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-    <div className="col-md-3 py-2">
-        <a className="text-decoration-none text-black" href="/inventorylist">
-        <div className='bg-image' style={{ maxWidth: '24rem' }}>
-      <img src='/img/images.jpg' className='img-fluid' alt='Sample' />
-      <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
-        <div className='d-flex justify-content-center align-items-center h-100'>
-          <p className='text-white mb-0'>Juices</p>
-        </div>
-      </div>
-    </div>
-      </a>
-    </div>
-
-
-
+          {categories.map((category, key) => (
+            <div className="col-md-3 py-3 d-flex justify-content-center" key={key}>
+              <Link
+                className="text-decoration-none text-black"
+                href={"/inventory/" + category.id}
+              >
+                <a>
+                  <div className="bg-image" style={{ maxWidth: "254px", height: "254px" }}>
+                    <img
+                      src={
+                        category?.image?.location
+                          ? BACKEND + category.image.location
+                          : "/img/blank.jpg"
+                      }
+                      className="img-fluid bg-dark"
+                      style={{width: "100%", height: "100%", maxWidth:"100%", maxHeight: "254px", objectFit: "contain"}}
+                      alt={`${category.name}'s logo`}
+                    />
+                    <div
+                      className="mask"
+                      style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+                    >
+                      <div className="d-flex justify-content-center align-items-center h-100">
+                        <p className="text-white mb-0">{category.name}</p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
 
-
-    <Footer></Footer>
+      <Footer></Footer>
     </div>
-  )
+  );
 }
 export async function getServerSideProps(context) {
-  return AuthenticateEmployee(context);
+  const { props } = await AuthenticateEmployee(context);
+
+  const categories = (await CategoriesQueries.getAll(props.token)).data
+    .categories;
+
+  return {
+    props: {
+      ...props,
+      categories,
+    },
+  };
 }

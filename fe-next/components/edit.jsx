@@ -12,7 +12,7 @@ export default function Edit() {
   
     return (
       <>
-     <button type="button" class="btn btn-sm btn-success" onClick={handleShow}><AiFillEdit></AiFillEdit></button>
+     <button type="button" className="btn btn-sm btn-success mx-1" onClick={handleShow}><AiFillEdit></AiFillEdit></button>
      <Modal
         show={show}
         onHide={handleClose}

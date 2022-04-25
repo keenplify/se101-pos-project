@@ -20,4 +20,19 @@ export const ProductsQueries = {
       },
     });
   },
+
+  add: async function (token, categoryId, name) {
+    return await axios.post(
+      BACKEND + this.route + "/add",
+      {
+        name,
+        categoryId
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
 };

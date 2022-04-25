@@ -27,7 +27,7 @@ export function NavBar({ employee }) {
   return (
     <Navbar collapseOnSelect sticky="top" bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
           <Image
             src="/img/Logo.jpg"
             alt="me"

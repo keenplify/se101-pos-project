@@ -11,4 +11,27 @@ export const CategoriesQueries = {
       },
     });
   },
+
+  getById: async function (token, id) {
+    return await axios.get(BACKEND + this.route + "/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+  },
+
+  add: async function (token, name, description) {
+    return await axios.post(
+      BACKEND + this.route + "/add",
+      {
+        name,
+        description,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
 };

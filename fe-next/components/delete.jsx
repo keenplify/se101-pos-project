@@ -10,7 +10,7 @@ export default function Delete() {
   
     return (
       <>
-    <button type="button" class="btn btn-sm btn-danger " onClick={handleShow}><MdDelete></MdDelete></button>
+    <button type="button" class="btn btn-sm btn-danger mx-1" onClick={handleShow}><MdDelete></MdDelete></button>
     <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"
       centered>
         <Modal.Header closeButton>

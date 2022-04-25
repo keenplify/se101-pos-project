@@ -1,4 +1,15 @@
-.CardImg:hover{
-    transform: scale(1.1) ;
-    box-shadow: 3px 3px 3px gray;
+.CardImg:hover {
+  transform: scale(1.1);
+  box-shadow: 3px 3px 3px gray;
+}
+
+.categoryImage {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.categoryImageContainer {
+  width: 100%;
+  height: 15em;
 }

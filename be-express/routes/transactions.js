@@ -11,6 +11,7 @@ const passport = require("passport");
 const upload = require("../libraries/multer");
 const { TransactedVariant, EWallet, Variant } = require("../models");
 const { Sequelize } = require("sequelize");
+const sequelize = require("../libraries/sequelize");
 
 router.post(
   "/add",
@@ -76,7 +77,7 @@ router.post(
     body("eWalletType")
       .custom((i) => i === "GCASH" || i === "PAYMAYA")
       .optional(),
-    body("remarks").notEmpty().isString(),
+    body("remarks").isString(),
   ],
   param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
@@ -95,24 +96,34 @@ router.post(
       include: [Variant],
     });
 
-    let total_price = 0
-    transactedVariants.forEach(
-      (tv) => total_price += tv.variant.price * tv.quantity
-    );
 
-    // Set quantity of variant to one lower
-    let variantUpdateIds = [];
-    transactedVariants.forEach(tv => variantUpdateIds.push(tv.variant.id))
-    await Variant.update(
-      {
-        stock: Sequelize.literal("stock - 1"),
-      },
-      {
-        where: {
-          id: variantUpdateIds,
-        },
+    // Set quantity of variant to one lower and calculate total price
+    // make sequelize transaction so the cost of update stocks is lower
+    let total_price = 0;
+    const sqlTransaction = await sequelize.transaction();
+
+    try {
+      for (let i=0; i<transactedVariants.length; i++) {
+        const tv = transactedVariants[i];
+        total_price += tv.variant.price * tv.quantity
+        console.log(total_price)
+
+        await Variant.update(
+          {
+            stock: Sequelize.literal("stock - " + tv.quantity)
+          }, {
+            where: {
+              id: tv.variant.id
+            }
+          }
+        )
       }
-    );
+
+      await sqlTransaction.commit();
+    } catch (error) {
+      await sqlTransaction.rollback();
+      console.log(error);
+    }
 
     let updateData = {
       type,
