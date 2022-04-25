@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Category, Image } = require("../models");
+const { Category, Image, Product } = require("../models");
 const { body, matchedData, param } = require("express-validator");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const passport = require("passport");
@@ -97,7 +97,7 @@ router.get(
   async (req, res) => {
     try {
       const categories = await Category.findAll({
-        include: Image,
+        include: [Image, Product],
       });
 
       res.send({ categories });

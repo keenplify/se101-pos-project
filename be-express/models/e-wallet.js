@@ -7,11 +7,8 @@ const Model = sequelize.define("e-wallets", {
     allowNull: false,
   },
   phone_number: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
-    validate: {
-      is: /^[0][1-9]\d{9}$|^[1-9]\d{9}$/i, //Regex for 11 digits phone number only
-    },
   },
   account_name: {
     type: DataTypes.ENUM(["GCASH", "PAYMAYA"]),

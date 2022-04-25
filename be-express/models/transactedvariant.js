@@ -8,9 +8,10 @@ const Model = sequelize.define("transactedvariants", {
   },
 });
 
-Model.associate = ({ Employee, Transaction }) => {
+Model.associate = ({ Employee, Transaction, Variant }) => {
   Model.belongsTo(Employee, { foreignKey: "createdBy" });
   Model.belongsTo(Transaction);
+  Model.belongsTo(Variant);
 };
 
 module.exports = Model;

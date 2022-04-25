@@ -11,6 +11,11 @@ const Model = sequelize.define("variants", {
     allowNull: false,
     defaultValue: 0,
   },
+  price: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+    defaultValue: 0,
+  },
 });
 
 Model.associate = ({ Employee, Product, Image, TransactedVariant }) => {
