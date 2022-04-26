@@ -20,6 +20,7 @@ import {
 } from "react-icons/fa";
 import { TransactedVariantsQueries } from "../../queries/transactedvariants";
 import styles from "../../styles/Home.module.css";
+import { BarcodeScannerModal } from "./BarcodeScannerModal";
 import { ChangeTransactionForm } from "./ChangeTransactionForm";
 import { DeleteTransactionModal } from "./DeleteTransactionModal";
 
@@ -206,7 +207,7 @@ export const POSCartViewer = ({
                     <Badge bg="primary">{transaction.state}</Badge>
                   </Tooltip>
                 ) : (
-                  <div></div>
+                  <Tooltip>Finalize transaction</Tooltip>
                 )
               }
             >
@@ -225,6 +226,12 @@ export const POSCartViewer = ({
                 </Button>
               </span>
             </OverlayTrigger>
+            <BarcodeScannerModal
+              token={token}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              transaction={transaction}
+            />
             <DeleteTransactionModal />
             <ChangeTransactionForm transaction={transaction} />
           </Col>

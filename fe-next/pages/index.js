@@ -45,14 +45,18 @@ export default function Home({
 }) {
   const [modalShow, setModalShow] = useState(false);
   const [cartItems, setCartItems] = useState(
-    activeTransaction.transactedvariants ? activeTransaction.transactedvariants.map((transactedVariant) => {
-      return {
-        quantity: transactedVariant.quantity,
-        variant: transactedVariant.variant,
-        transactedVariant,
-      };
-    }) : []
+    activeTransaction.transactedvariants
+      ? activeTransaction.transactedvariants.map((transactedVariant) => {
+          return {
+            quantity: transactedVariant.quantity,
+            variant: transactedVariant.variant,
+            transactedVariant,
+          };
+        })
+      : []
   );
+
+  console.log("setting tl ci", cartItems);
 
   return (
     <div>
@@ -127,14 +131,14 @@ export async function getServerSideProps(context) {
   // Create new transaction fn
   const createNewTransaction = async () => {
     activeTransaction = (await TransactionsQueries.add(props.token)).data
-    .newTransaction;
+      .newTransaction;
     context.res.cookie("activeTransactionId", activeTransaction.id);
-  }
+  };
 
   // If no active transaction is present, create a new active transaction. Else, get active transaction.
   let activeTransaction;
   if (!activeTransactionId) {
-    await  createNewTransaction()
+    await createNewTransaction();
   } else {
     try {
       activeTransaction = await (
@@ -142,9 +146,8 @@ export async function getServerSideProps(context) {
       ).data.transaction;
     } catch (error) {
       // Create new transaction if error.
-      await createNewTransaction()
+      await createNewTransaction();
     }
-    
   }
 
   //Get all categories

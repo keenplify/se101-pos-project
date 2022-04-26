@@ -2,10 +2,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdGridView } from "react-icons/md";
 import { Container, Row, Col, Button, Table, Modal } from "react-bootstrap";
-import { BACKEND } from "../helpers";
+import { BACKEND, COMPANY_NAME } from "../helpers";
 import AddVariant from "./addVariant";
 import { ChangeableImage } from "./ChangeableImage";
 import { VariantsQueries } from "../queries/variants";
+import QrCode from "react-qr-code";
+
 export default function View({ product, token }) {
   const [show, setShow] = useState(false);
 
@@ -72,7 +74,7 @@ export default function View({ product, token }) {
                   <th scope="col">Image</th>
                   <th scope="col">Product Name</th>
                   <th scope="col">Stock</th>
-                  <th scope="col">Date Added</th>
+                  <th scope="col">Barcode</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -92,7 +94,7 @@ export default function View({ product, token }) {
                     </td>
                     <td>{variant.name}</td>
                     <td>{variant.stock}</td>
-                    <td>{new Date(variant.createdAt).toLocaleString()}</td>
+                    <td> <QrCode value={`${COMPANY_NAME}-.-${variant.id}-.-INVENTORY`} size="128"/> </td>
                     <td className="py-2"></td>
                   </tr>
                 ))}

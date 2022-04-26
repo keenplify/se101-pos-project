@@ -7,7 +7,8 @@ const {
 } = require("../libraries/helpers");
 const passport = require("passport");
 const upload = require("../libraries/multer");
-const { TransactedVariant } = require("../models");
+const { TransactedVariant, Variant, Image } = require("../models");
+const sequelize = require("../libraries/sequelize");
 
 router.post(
   "/add",
@@ -24,12 +25,24 @@ router.post(
       locations: ["body"],
     });
     try {
-      const newTransactedVariant = await TransactedVariant.create({
-        variantId,
-        quantity,
-        transactionId,
-        createdBy: req.user.id,
-      });
+      // Include doenst work :(
+      const sequelizeTransaction = await sequelize.transaction();
+      let newTransactedVariant;
+      try {
+        let newTV = await TransactedVariant.create({
+          variantId,
+          quantity,
+          transactionId,
+          createdBy: req.user.id,
+        });
+        newTransactedVariant = await TransactedVariant.findByPk(newTV.id, {
+          include: [Variant]
+        });
+        sequelizeTransaction.commit();
+      } catch (error) {
+        sequelizeTransaction.rollback();
+        console.error(error);
+      }
 
       res.send({ newTransactedVariant });
     } catch (error) {
