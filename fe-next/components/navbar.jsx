@@ -36,7 +36,7 @@ export function NavBar({ employee }) {
             className="rounded p-0 "
           />
         </Navbar.Brand>
-        <Navbar.Brand className={styles.NavBrand} href="#home">
+        <Navbar.Brand className={styles.NavBrand} href="/">
           Vaperous M4ster
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

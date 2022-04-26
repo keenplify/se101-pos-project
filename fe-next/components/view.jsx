@@ -4,6 +4,8 @@ import { MdGridView } from "react-icons/md";
 import { Container, Row, Col, Button, Table, Modal } from "react-bootstrap";
 import { BACKEND } from "../helpers";
 import AddVariant from "./addVariant";
+import { ChangeableImage } from "./ChangeableImage";
+import { VariantsQueries } from "../queries/variants";
 export default function View({ product, token }) {
   const [show, setShow] = useState(false);
 
@@ -46,10 +48,12 @@ export default function View({ product, token }) {
               <Col className="col-lg-7">
                 <span>
                   <p>
-                    <b>Product Name: </b>{product.name}
+                    <b>Product Name: </b>
+                    {product.name}
                   </p>
                   <p>
-                    <b>Product ID: </b>{product.id}
+                    <b>Product ID: </b>
+                    {product.id}
                   </p>
                 </span>
               </Col>
@@ -73,28 +77,25 @@ export default function View({ product, token }) {
                 </tr>
               </thead>
               <tbody>
-                {
-                  product.variants.map(variant => (
-                    <tr>
-                      <th scope="row">{variant.id}</th>
-                      <td className="w-25">
-                        <img
-                          src={
-                            variant.image?.location
-                              ? BACKEND + variant.image.location
-                              : "/img/blank.jpg"
-                          }
-                          className="img-fluid rounded bg-dark"
-                          style={{width:"7em",height:"7em" ,maxHeight: "7em", maxWidth: "7em", objectFit: "contain"}}
-                        />
-                      </td>
-                      <td>{variant.name}</td>
-                      <td>{variant.stock}</td>
-                      <td>{new Date(variant.createdAt).toLocaleString()}</td>
-                      <td className="py-2"></td>
-                    </tr>
-                  ))
-                }
+                {product.variants.map((variant) => (
+                  <tr>
+                    <th scope="row">{variant.id}</th>
+                    <td className="w-25">
+                      <ChangeableImage
+                        token={token}
+                        query={VariantsQueries.changeImage}
+                        selectorId={variant.id}
+                        image={variant?.image?.location}
+                        width="7em"
+                        height="7em"
+                      />
+                    </td>
+                    <td>{variant.name}</td>
+                    <td>{variant.stock}</td>
+                    <td>{new Date(variant.createdAt).toLocaleString()}</td>
+                    <td className="py-2"></td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </Container>

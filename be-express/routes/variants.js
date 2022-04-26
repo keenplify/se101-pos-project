@@ -120,7 +120,7 @@ router.put(
 );
 
 router.post(
-  "/:id/changeImage",
+  "/changeImage/:id",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   [
@@ -134,27 +134,22 @@ router.post(
       return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
-      location: req.file.path,
+      location: "/" + req.file.path,
       createdBy: req.user.id,
     });
 
-    try {
-      const newVariant = await Variant.create({
-        imageId: newImage.id
+    Variant.update(
+      {
+        imageId: newImage.id,
       },
       {
-        where:{
-          id:req.param.id
-        }
+        where: {
+          id: req.params.id,
+        },
       }
-      );
+    );
 
-
-      res.send(newVariant);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: error.message });
-    }
+    res.send();
   }
 );
 

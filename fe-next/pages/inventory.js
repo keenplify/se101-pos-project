@@ -37,7 +37,7 @@ export default function Inventory({ employee, categories }) {
                           : "/img/blank.jpg"
                       }
                       className="img-fluid bg-dark"
-                      style={{width: "100%", height: "100%", maxWidth:"100%", maxHeight: "254px", objectFit: "contain"}}
+                      style={{width: "254px", height: "254px", objectFit: "contain"}}
                       alt={`${category.name}'s logo`}
                     />
                     <div

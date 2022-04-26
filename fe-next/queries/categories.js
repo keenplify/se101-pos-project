@@ -5,7 +5,7 @@ export const CategoriesQueries = {
   route: "/api/categories",
 
   getAll: async function (token) {
-    return await axios.get(BACKEND + this.route + "/all", {
+    return await axios.get(BACKEND + CategoriesQueries.route + "/all", {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -13,7 +13,7 @@ export const CategoriesQueries = {
   },
 
   getById: async function (token, id) {
-    return await axios.get(BACKEND + this.route + "/" + id, {
+    return await axios.get(BACKEND + CategoriesQueries.route + "/" + id, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -22,11 +22,23 @@ export const CategoriesQueries = {
 
   add: async function (token, name, description) {
     return await axios.post(
-      BACKEND + this.route + "/add",
+      BACKEND + CategoriesQueries.route + "/add",
       {
         name,
         description,
       },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
+
+  changeImage: async function (token, categoryId, formdata) {
+    return await axios.post(
+      BACKEND + CategoriesQueries.route + "/changeImage/" + categoryId,
+      formdata,
       {
         headers: {
           Authorization: "Bearer " + token,

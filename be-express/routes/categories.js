@@ -155,37 +155,6 @@ router.delete(
   }
 );
 
-router.post(
-  "/:id/changeImage/",
-  passport.authenticate("bearer", { session: false }),
-  AdminOnly,
-  param("id").notEmpty().isNumeric(),
-  validateResultMiddleware,
-  upload.single("image"),
-  async (req, res) => {
-    if (!req.file) {
-      return res.status(422).send("Image not found");
-    }
-    const newImage = await Image.create({
-      location: req.file.path,
-      createdBy: req.user.id,
-    });
-
-    Category.update(
-      {
-        imageId: newImage.id,
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-
-    res.send();
-  }
-);
-
 router.get(
   "/:id",
   passport.authenticate("bearer", { session: false }),
@@ -208,7 +177,7 @@ router.get(
 );
 
 router.post(
-  "/:id/changeImage/",
+  "/changeImage/:id",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   param("id").notEmpty().isNumeric(),
@@ -219,7 +188,7 @@ router.post(
       return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
-      location: req.file.path,
+      location: "/" + req.file.path,
       createdBy: req.user.id,
     });
 
