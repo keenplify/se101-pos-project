@@ -18,16 +18,19 @@ export const VariantsQueries = {
     limit = 10,
     lastId = 0
   ) {
-    return await axios.get(BACKEND + VariantsQueries.route + "/getByProductPaginate", {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      data: {
-        productId,
-        limit,
-        lastId,
-      },
-    });
+    return await axios.get(
+      BACKEND + VariantsQueries.route + "/getByProductPaginate",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: {
+          productId,
+          limit,
+          lastId,
+        },
+      }
+    );
   },
 
   add: async function (token, productId, name, stock, price) {
@@ -37,7 +40,7 @@ export const VariantsQueries = {
         productId,
         name,
         stock,
-        price
+        price,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -56,4 +59,27 @@ export const VariantsQueries = {
       }
     );
   },
+
+  update: async function (token, variantId, name, stock, price) {
+    return await axios.put(
+      BACKEND + VariantsQueries.route + "/" + variantId,
+      { name, stock, price },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
+
+  delete: async function (token, variantId) {
+    return await axios.delete(
+      BACKEND + VariantsQueries.route + "/"+variantId,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  }
 };

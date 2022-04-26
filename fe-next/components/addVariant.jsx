@@ -57,7 +57,7 @@ export default function AddVariant({ token, product }) {
                   <Field
                     as={Form.Control}
                     name="name"
-                    placeholder="Product Name"
+                    placeholder="Variant Name"
                   />
                   {formik.errors["name"] && (
                     <Form.Text className="text-danger text-capitalize">
@@ -71,7 +71,7 @@ export default function AddVariant({ token, product }) {
                     as={Form.Control}
                     name="price"
                     type={"number"}
-                    placeholder="Product Price"
+                    placeholder="Variant Price"
                   />
                   {formik.errors["price"] && (
                     <Form.Text className="text-danger text-capitalize">

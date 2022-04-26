@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Modal, Button, Row, Col } from "react-bootstrap";
 import { COMPANY_NAME } from "../../helpers";
 import { TransactedVariantsQueries } from "../../queries/transactedvariants";
@@ -17,8 +17,26 @@ export const BarcodeScannerModal = ({
   transaction,
 }) => {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState("No result");
-  const [debounce, setDebounce] = useState(false);
+
+  // debounce code from:
+  // https://stackoverflow.com/questions/68408715/cancel-previous-requestif-there-are-any-before-making-another-while-using-debo
+  // you the man brother
+  // even I don't know how these debounce/timeouts/useCallback work
+  // ive spent hours debugging this code and this man just came from stack overflow and fucking solved my problem
+  // big pee pee move
+  const debounce = (fn, timer) => {
+    let time;
+    return function () {
+      let arg = arguments;
+      let context = this;
+      if (time) clearTimeout(time);
+      time = setTimeout(() => {
+        fn.apply(context, arg);
+        time = null;
+      }, timer);
+    };
+  };
+
   const handleScan = async (variantId) => {
     setCartItems((_cartItems) => {
       //Check cart
@@ -34,7 +52,7 @@ export const BarcodeScannerModal = ({
               e.transactedVariant.id,
               e.quantity
             );
-            toast("Scanned " + e.variant.name)
+            toast("Updated " + e.variant.name + " in the cart.")
             return [..._cartItems];
           }
         }
@@ -52,7 +70,7 @@ export const BarcodeScannerModal = ({
             variant: transactedVariant.data.newTransactedVariant.variant,
             transactedVariant: transactedVariant.data.newTransactedVariant,
           };
-          toast("Scanned " + newCartItem.variant.name)
+          toast("Added " + newCartItem.variant.name + " in the cart.")
           setCartItems([..._cartItems, newCartItem]);
         })();
 
@@ -62,16 +80,7 @@ export const BarcodeScannerModal = ({
       }
     });
   };
-
-  console.log(debounce)
-
-  useEffect(()=> {
-    let interval = setInterval(()=> {
-      setDebounce(false)
-    }, 3000)
-    
-    return clearInterval(interval);
-  }, [])
+  const cbHandleScan = useCallback(debounce(handleScan, 2000), []);
 
   return (
     <Fragment>
@@ -90,8 +99,6 @@ export const BarcodeScannerModal = ({
           <div className="d-flex w-100 align-items-center justify-content-center flex-column">
             <QrReader
               onResult={async (result, error) => {
-                if (debounce) return;
-
                 if (!!result) {
                   if (!(result?.text.length > 0)) {
                     return;
@@ -104,14 +111,12 @@ export const BarcodeScannerModal = ({
                     return;
                   }
 
-                  setDebounce(true);
-                  handleScan(variantId);
+                  cbHandleScan(variantId);
                 }
               }}
-              scanDelay={3500}
+              scanDelay={1000}
               containerStyle={{ width: "418px" }}
             />
-            {data}
           </div>
         </Modal.Body>
         <Modal.Footer>

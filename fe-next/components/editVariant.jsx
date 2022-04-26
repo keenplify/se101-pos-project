@@ -3,14 +3,16 @@ import { Form, Button, Modal } from "react-bootstrap";
 import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import { VariantsQueries } from "../queries/variants";
 import { AiFillEdit } from "react-icons/ai";
-import { ProductsQueries } from "../queries/products";
 
 const schema = Yup.object().shape({
   name: Yup.string().min(3).max(64).required(),
+  price: Yup.number().min(0).required(),
+  stock: Yup.number().min(0).required(),
 });
 
-export default function EditProduct({ token, product }) {
+export default function EditVariant({ token, variant }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
@@ -33,12 +35,14 @@ export default function EditProduct({ token, product }) {
         </Modal.Header>
         <Formik
           initialValues={{
-            name: product.name,
+            name: variant.name,
+            price: variant.price,
+            stock: variant.stock,
           }}
           validationSchema={schema}
           onSubmit={async ({ name, stock, price }, actions) => {
             try {
-              await ProductsQueries.update(token, product.id, name);
+              await VariantsQueries.update(token, variant.id, name, stock, price);
               router.reload();
             } catch (error) {
               console.log(error);
@@ -53,7 +57,7 @@ export default function EditProduct({ token, product }) {
                   <Field
                     as={Form.Control}
                     name="name"
-                    placeholder="Product Name"
+                    placeholder="Variant Name"
                   />
                   {formik.errors["name"] && (
                     <Form.Text className="text-danger text-capitalize">
@@ -61,7 +65,34 @@ export default function EditProduct({ token, product }) {
                     </Form.Text>
                   )}
                 </Form.Group>
-                
+                <Form.Group>
+                  <Form.Label>Price</Form.Label>
+                  <Field
+                    as={Form.Control}
+                    name="price"
+                    type={"number"}
+                    placeholder="Variant Price"
+                  />
+                  {formik.errors["price"] && (
+                    <Form.Text className="text-danger text-capitalize">
+                      {formik.errors["price"]}
+                    </Form.Text>
+                  )}
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Stock</Form.Label>
+                  <Field
+                    as={Form.Control}
+                    name="stock"
+                    type="number"
+                    placeholder="Variant Stock"
+                  />
+                  {formik.errors["stock"] && (
+                    <Form.Text className="text-danger text-capitalize">
+                      {formik.errors["stock"]}
+                    </Form.Text>
+                  )}
+                </Form.Group>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
@@ -76,7 +107,7 @@ export default function EditProduct({ token, product }) {
                   onClick={formik.handleSubmit}
                   disabled={formik.isSubmitting || !formik.isValid}
                 >
-                  Edit Product
+                  Edit Variant
                 </Button>
               </Modal.Footer>
             </FormikForm>

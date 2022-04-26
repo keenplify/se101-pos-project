@@ -2,8 +2,10 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import {MdDelete} from "react-icons/md"
 import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-export default function Delete() {
+import { ProductsQueries } from '../queries/products';
+export default function DeleteProduct({token, product}) {
   const [show, setShow] = useState(false);
+  const router = useRouter();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,7 +23,14 @@ export default function Delete() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" onClick={async () => {
+            try {
+              await ProductsQueries.delete(token, product.id);
+              router.reload();
+            } catch (error) {
+              console.log(error);
+            }
+          }}>
             Delete
           </Button>
         </Modal.Footer>

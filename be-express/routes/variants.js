@@ -86,24 +86,24 @@ router.put(
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   [
-    body("productId").notEmpty().isNumeric(),
     body("name").notEmpty().isString(),
     body("stock").notEmpty().isNumeric(),
+    body("price").notEmpty().isNumeric(),
   ],
   param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
 
   async (req, res) => {
-    const { productId, name, stock } = matchedData(req, {
+    const { name, stock, price } = matchedData(req, {
       locations: ["body"],
     });
 
     try {
-      await Employee.update(
+      await Variant.update(
         {
-          productId,
           name,
           stock,
+          price
         },
         {
           where: {

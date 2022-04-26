@@ -7,6 +7,8 @@ import AddVariant from "./addVariant";
 import { ChangeableImage } from "./ChangeableImage";
 import { VariantsQueries } from "../queries/variants";
 import QrCode from "react-qr-code";
+import EditVariant from "./editVariant";
+import DeleteVariant from "./deleteVariant";
 
 export default function View({ product, token }) {
   const [show, setShow] = useState(false);
@@ -95,7 +97,10 @@ export default function View({ product, token }) {
                     <td>{variant.name}</td>
                     <td>{variant.stock}</td>
                     <td> <QrCode value={`${COMPANY_NAME}-.-${variant.id}-.-INVENTORY`} size="128"/> </td>
-                    <td className="py-2"></td>
+                    <td className="py-2">
+                      <EditVariant token={token} variant={variant} />
+                      <DeleteVariant token={token} variant={variant} />
+                    </td>
                   </tr>
                 ))}
               </tbody>

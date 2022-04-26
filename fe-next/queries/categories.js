@@ -46,4 +46,16 @@ export const CategoriesQueries = {
       }
     );
   },
+
+  update: async function (token, variantId, name, description) {
+    return await axios.put(
+      BACKEND + CategoriesQueries.route + "/" + variantId,
+      { name, description },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
 };

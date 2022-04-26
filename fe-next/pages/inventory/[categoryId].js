@@ -17,14 +17,13 @@ import Edit from "../../components/edit";
 import AddProduct from "../../components/addItem";
 import { Footer } from "../../components/footer";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useState } from "react";
 import { AuthenticateEmployee } from "../../helpers/AuthenticateEmployee";
-import { useRouter } from "next/router";
 import { CategoriesQueries } from "../../queries/categories";
 import { BACKEND } from "../../helpers";
-import { MdAddToPhotos } from "react-icons/md";
-import styles from "../../styles/inventory.module.css";
 import { ChangeableImage } from "../../components/ChangeableImage";
+import DeleteProduct from "../../components/delete";
+import EditProduct from "../../components/edit";
+import EditCategory from "../../components/editCategory";
 
 export default function ProductsViewer({ employee, category, token }) {
   return (
@@ -39,7 +38,6 @@ export default function ProductsViewer({ employee, category, token }) {
       <Container className="col-lg-12 my-3 rounded-3">
         <Row>
           <Col md={3}>
-           
             <ChangeableImage
               token={token}
               query={CategoriesQueries.changeImage}
@@ -48,13 +46,26 @@ export default function ProductsViewer({ employee, category, token }) {
             />
           </Col>
           <Col className="mt-2">
-            <h3>
-              Category: <Badge>{category.name}</Badge>
-            </h3>
+            <div
+              class="d-flex mt-3"
+              style={{ width: "100%", alignSelf: "center" }}
+            >
+              <label
+                className="text-center"
+                style={{
+                  fontSize: "2em",
+                  fontWeight: "bold",
+                  marginRight: "auto",
+                }}
+              >
+                {category.name}
+              </label>
+              <EditCategory token={token} category={category}/>
+            </div>
             <p>{category.description}</p>
           </Col>
         </Row>
-        <hr/>
+        <hr />
         <Row>
           <Col>
             <Form className="d-flex col-lg-8 p-2">
@@ -124,8 +135,11 @@ export default function ProductsViewer({ employee, category, token }) {
                 <td>{new Date(product.createdAt).toLocaleString()}</td>
                 <td className="py-2">
                   <View product={product} token={token}></View>
-                  <Edit></Edit>
-                  <Delete></Delete>
+                  <EditProduct token={token} product={product} />
+                  <DeleteProduct
+                    token={token}
+                    product={product}
+                  ></DeleteProduct>
                 </td>
               </tr>
             ))}

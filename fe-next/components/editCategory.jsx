@@ -4,13 +4,14 @@ import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { AiFillEdit } from "react-icons/ai";
-import { ProductsQueries } from "../queries/products";
+import { CategoriesQueries } from "../queries/categories";
 
 const schema = Yup.object().shape({
   name: Yup.string().min(3).max(64).required(),
+  description: Yup.string().min(3).max(512).required(),
 });
 
-export default function EditProduct({ token, product }) {
+export default function EditCategory({ token, category }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
@@ -20,7 +21,7 @@ export default function EditProduct({ token, product }) {
   return (
     <>
       <Button size="sm" type="button" variant="success" onClick={handleShow}>
-        <AiFillEdit></AiFillEdit>
+        <AiFillEdit></AiFillEdit> Edit Category
       </Button>
       <Modal
         show={show}
@@ -29,16 +30,22 @@ export default function EditProduct({ token, product }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Variant</Modal.Title>
+          <Modal.Title>Edit Category</Modal.Title>
         </Modal.Header>
         <Formik
           initialValues={{
-            name: product.name,
+            name: category.name,
+            description: category.description,
           }}
           validationSchema={schema}
-          onSubmit={async ({ name, stock, price }, actions) => {
+          onSubmit={async ({ name, description }, actions) => {
             try {
-              await ProductsQueries.update(token, product.id, name);
+              await CategoriesQueries.update(
+                token,
+                category.id,
+                name,
+                description
+              );
               router.reload();
             } catch (error) {
               console.log(error);
@@ -53,7 +60,7 @@ export default function EditProduct({ token, product }) {
                   <Field
                     as={Form.Control}
                     name="name"
-                    placeholder="Product Name"
+                    placeholder="Variant Name"
                   />
                   {formik.errors["name"] && (
                     <Form.Text className="text-danger text-capitalize">
@@ -61,7 +68,20 @@ export default function EditProduct({ token, product }) {
                     </Form.Text>
                   )}
                 </Form.Group>
-                
+                <Form.Group>
+                  <Form.Label>Description</Form.Label>
+                  <Field
+                    as="textarea"
+                    className="form-control"
+                    name="description"
+                    placeholder="Category Description"
+                  />
+                  {formik.errors["description"] && (
+                    <Form.Text className="text-danger text-capitalize">
+                      {formik.errors["description"]}
+                    </Form.Text>
+                  )}
+                </Form.Group>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
@@ -76,7 +96,7 @@ export default function EditProduct({ token, product }) {
                   onClick={formik.handleSubmit}
                   disabled={formik.isSubmitting || !formik.isValid}
                 >
-                  Edit Product
+                  Edit Category
                 </Button>
               </Modal.Footer>
             </FormikForm>
