@@ -85,6 +85,15 @@ export default function Inventory({ token, employee, categories }) {
 export async function getServerSideProps(context) {
   const { props } = await AuthenticateEmployee(context);
 
+  if (!props.employee) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
   const categories = (await CategoriesQueries.getAll(props.token)).data
     .categories;
 

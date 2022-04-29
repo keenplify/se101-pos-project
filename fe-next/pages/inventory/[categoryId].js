@@ -24,6 +24,7 @@ import { ChangeableImage } from "../../components/ChangeableImage";
 import DeleteProduct from "../../components/delete";
 import EditProduct from "../../components/edit";
 import EditCategory from "../../components/editCategory";
+import DeleteCategory from "../../components/deleteCategory";
 
 export default function ProductsViewer({ employee, category, token }) {
   return (
@@ -60,7 +61,10 @@ export default function ProductsViewer({ employee, category, token }) {
               >
                 {category.name}
               </label>
-              <EditCategory token={token} category={category}/>
+              <div class="d-flex flex-column">
+                <EditCategory token={token} category={category} />
+                <DeleteCategory token={token} category={category} />
+              </div>
             </div>
             <p>{category.description}</p>
           </Col>
@@ -153,6 +157,15 @@ export default function ProductsViewer({ employee, category, token }) {
 }
 export async function getServerSideProps(context) {
   const { props } = await AuthenticateEmployee(context);
+
+  if (!props.employee) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   const category = (
     await CategoriesQueries.getById(props.token, context.query.categoryId)

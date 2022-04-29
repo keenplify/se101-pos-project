@@ -32,6 +32,7 @@ export default function LoginCard({ employee, onSubmit }) {
             placeItems: "center",
             padding: "8px 1px",
             maxWidth: "192px",
+            margin: "0 1em",
             border: "3px solid #DFE1E4",
             borderRadius: "20px",
             fontSize: "1em",
@@ -55,7 +56,15 @@ export default function LoginCard({ employee, onSubmit }) {
               src={BACKEND + employee.images[0].location}
             />
           ) : (
-            <span>No Image!</span>
+            <Card.Img
+              style={{
+                borderRadius: "50%",
+                width: "70%",
+                height: "70%",
+                border: "3px solid #DFE1E4",
+              }}
+              variant="top"
+              src="img/tao.jpg"/>
           )}
 
           <Card.Body>

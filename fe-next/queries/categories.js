@@ -47,9 +47,9 @@ export const CategoriesQueries = {
     );
   },
 
-  update: async function (token, variantId, name, description) {
+  update: async function (token, categoryId, name, description) {
     return await axios.put(
-      BACKEND + CategoriesQueries.route + "/" + variantId,
+      BACKEND + CategoriesQueries.route + "/" + categoryId,
       { name, description },
       {
         headers: {
@@ -58,4 +58,15 @@ export const CategoriesQueries = {
       }
     );
   },
+
+  delete: async function (token, categoryId) {
+    return await axios.delete(
+      BACKEND + CategoriesQueries.route + "/"+categoryId,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  }
 };

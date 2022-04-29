@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { body, matchedData, param } = require("express-validator");
+const { body, matchedData, param, query } = require("express-validator");
 const { compareSync, hash, hashSync } = require("bcrypt");
 const Transaction = require("../models/transaction");
 const {
@@ -10,7 +10,7 @@ const {
 const passport = require("passport");
 const upload = require("../libraries/multer");
 const { TransactedVariant, EWallet, Variant } = require("../models");
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
 
 router.post(
@@ -162,12 +162,20 @@ router.post(
 );
 
 router.get(
-  "/generateReceipt",
+  "/generateReceipt/:id",
+  param("id").notEmpty().isNumeric(),
+  validateResultMiddleware,
   passport.authenticate("bearer", { session: false }),
   async (req, res) => {
     try {
-      const transactions = await Transaction.findAll({
-        include: receiptpdf,
+      const transactions = await Transaction.findByPk(req.params.id, {
+        include: [
+          {
+            model: TransactedVariant,
+            include: [Variant]
+          },
+          [EWallet]
+        ]
       });
 
       res.send({ transactions });
@@ -181,15 +189,37 @@ router.get(
   "/generateSalesData",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
-  param("startDate, endDate").notEmpty().isNumeric(),
+  query("startDate").notEmpty().isISO8601(),
+  query("endDate").notEmpty().isISO8601(),
   validateResultMiddleware,
-
   async (req, res) => {
-    try {
-      const transactions = await Transaction.findAll({});
+    const { startDate, endDate } = matchedData(req, {
+      locations: ["query"],
+    });
 
-      res.send({ transactions });
+    let _startDate = new Date(startDate);
+    let _endDate = new Date(endDate);
+
+    try {
+      
+
+      const weekdata = await Transaction.findAll({
+        attributes: [
+          [sequelize.fn('sum', sequelize.col('total_price')), 'total_amount']
+        ],
+        where: {
+          "createdAt": {
+            [Op.and]: {
+              [Op.gte]: _startDate,
+              [Op.lte]: _endDate
+            }
+          }
+        }
+      });
+
+      res.send({ weekdata });
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error.message });
     }
   }

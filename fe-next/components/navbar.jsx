@@ -89,7 +89,7 @@ export function NavBar({ employee }) {
                 >
                   <div className={styles.employeeAvatar}>
                     <Image  
-                      src={`${BACKEND}${employee.images[0].location}`}
+                      src={employee?.images[0] ? `${BACKEND}${employee.images[0].location}` : "/img/tao.jpg"}
                       layout="responsive"
                       width="1"
                       height="1"
