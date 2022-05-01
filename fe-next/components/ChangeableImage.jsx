@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
@@ -33,10 +34,16 @@ export const ChangeableImage = ({
     setShow(true);
   };
 
+  const imgSrc=previewImage
+  ? previewImage
+  : image
+  ? BACKEND + image
+  : "/img/blank.jpg";
+
   return (
     <Fragment>
       <div
-        className={"position-relative bg-dark rounded"}
+        className={"position-relative bg-light rounded shadow-sm"}
         style={{ width, height }}
       >
         <img
@@ -62,17 +69,15 @@ export const ChangeableImage = ({
           <h6>Current Image</h6>
           <div
             style={{ width: "256px", height: "256px" }}
-            className="bg-dark rounded align-self-center"
+            className="bg-light rounded align-self-center shadow-lg mb-3"
           >
-            <img
-              className={"img-changeable rounded mb-2 bg-dark"}
-              src={
-                previewImage
-                  ? previewImage
-                  : image
-                  ? BACKEND + image
-                  : "/img/blank.jpg"
-              }
+            <Image
+              loader={() => imgSrc}
+              className={"img-changeable rounded"}
+              src={imgSrc}
+              width={width}
+              height={height}
+              layout="responsive"
             />
           </div>
           <Form.Group className="mb-3">

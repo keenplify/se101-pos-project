@@ -23,6 +23,7 @@ export function NavBar({ employee }) {
     removeCookie("token");
     router.push("/login");
   };
+  const imageSrc = employee?.image_location ? `${BACKEND}${employee.image_location}` : "/img/tao.jpg";
 
   return (
     <Navbar collapseOnSelect sticky="top" bg="dark" variant="dark" expand="lg">
@@ -89,8 +90,10 @@ export function NavBar({ employee }) {
                 >
                   <div className={styles.employeeAvatar}>
                     <Image  
-                      src={employee?.images[0] ? `${BACKEND}${employee.images[0].location}` : "/img/tao.jpg"}
+                      loader={()=> imageSrc}
+                      src={imageSrc}
                       layout="responsive"
+                      className="rounded-circle"
                       width="1"
                       height="1"
                      

@@ -25,7 +25,7 @@ export default function Login({ employee, allEmployees }) {
       })
       .catch(function (error) {
         console.log(error);
-        action.setStatus("Incorrect Username or Password ");
+        action.setStatus("Incorrect login credentials. ");
       });
   };
 
@@ -37,15 +37,17 @@ export default function Login({ employee, allEmployees }) {
 
         <Row>
           <Col xs={12} md={7}>
-            <div className="d-flex align-items-center justify-content-center">
+            <Row>
               {allEmployees &&
-                allEmployees.map((employee) => (
-                  <LoginCard
-                    employee={employee}
-                    onSubmit={handleSubmit}
-                  ></LoginCard>
+                allEmployees.map((employee, key) => (
+                  <Col md={4} key={key}>
+                    <LoginCard
+                      employee={employee}
+                      onSubmit={handleSubmit}
+                    ></LoginCard>
+                  </Col>
                 ))}
-            </div>
+            </Row>
           </Col>
 
           <Col md={4} className="py-5">

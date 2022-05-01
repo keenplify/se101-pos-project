@@ -24,15 +24,14 @@ export default function LoginCard({ employee, onSubmit }) {
 
   return (
     <>
-      <br />
       <div>
         <Card
           style={{
             justifyContent: "center",
             placeItems: "center",
-            padding: "8px 1px",
-            maxWidth: "192px",
-            margin: "0 1em",
+            padding: "8px 0",
+            width: "90%",
+            margin: ".5em 5%",
             border: "3px solid #DFE1E4",
             borderRadius: "20px",
             fontSize: "1em",
@@ -43,17 +42,16 @@ export default function LoginCard({ employee, onSubmit }) {
           }}
           onClick={handleShow}
         >
-          {typeof employee.images !== undefined &&
-          employee?.images?.length > 0 ? (
+          {typeof employee.image_location !== undefined ? (
             <Card.Img
               style={{
                 borderRadius: "50%",
-                width: "70%",
-                height: "70%",
+                width: "8em",
+                height: "8em",
                 border: "3px solid #DFE1E4",
               }}
               variant="top"
-              src={BACKEND + employee.images[0].location}
+              src={BACKEND + employee.image_location}
             />
           ) : (
             <Card.Img
