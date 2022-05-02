@@ -25,6 +25,7 @@ import DeleteProduct from "../../components/delete";
 import EditProduct from "../../components/edit";
 import EditCategory from "../../components/editCategory";
 import DeleteCategory from "../../components/deleteCategory";
+import { Fragment } from "react";
 
 export default function ProductsViewer({ employee, category, token }) {
   return (
@@ -41,6 +42,7 @@ export default function ProductsViewer({ employee, category, token }) {
           <Col md={3}>
             <ChangeableImage
               token={token}
+              employee={employee}
               query={CategoriesQueries.changeImage}
               selectorId={category.id}
               image={category?.image?.location}
@@ -62,8 +64,12 @@ export default function ProductsViewer({ employee, category, token }) {
                 {category.name}
               </label>
               <div class="d-flex flex-column">
-                <EditCategory token={token} category={category} />
-                <DeleteCategory token={token} category={category} />
+                {employee.type === "ADMIN" && (
+                  <Fragment>
+                    <EditCategory token={token} category={category} />
+                    <DeleteCategory token={token} category={category} />
+                  </Fragment>
+                )}
               </div>
             </div>
             <p>{category.description}</p>
@@ -87,9 +93,11 @@ export default function ProductsViewer({ employee, category, token }) {
           </Col>
 
           <Col className="p-2">
-            <div className="text-end">
-              <AddProduct token={token} category={category}></AddProduct>
-            </div>
+            {employee.type === "ADMIN" && (
+              <div className="text-end">
+                <AddProduct token={token} category={category}></AddProduct>
+              </div>
+            )}
           </Col>
         </Row>
 
@@ -101,7 +109,7 @@ export default function ProductsViewer({ employee, category, token }) {
               <th scope="col">Product Name</th>
               <th scope="col">Variants</th>
               <th scope="col">Date Added</th>
-              <th scope="col">Action</th>
+              {employee.type === "ADMIN" && <th scope="col">Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -137,14 +145,16 @@ export default function ProductsViewer({ employee, category, token }) {
                   </ul>
                 </td>
                 <td>{new Date(product.createdAt).toLocaleString()}</td>
-                <td className="py-2">
-                  <View product={product} token={token}></View>
-                  <EditProduct token={token} product={product} />
-                  <DeleteProduct
-                    token={token}
-                    product={product}
-                  ></DeleteProduct>
-                </td>
+                {employee.type === "ADMIN" && (
+                  <td className="py-2">
+                    <View product={product} token={token}></View>
+                    <EditProduct token={token} product={product} />
+                    <DeleteProduct
+                      token={token}
+                      product={product}
+                    ></DeleteProduct>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

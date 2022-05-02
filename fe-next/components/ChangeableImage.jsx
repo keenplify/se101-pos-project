@@ -7,6 +7,7 @@ import { BACKEND } from "../helpers";
 
 export const ChangeableImage = ({
   token,
+  employee,
   selectorId,
   query,
   image,
@@ -56,6 +57,7 @@ export const ChangeableImage = ({
           className="position-absolute"
           style={{ right: "1em", bottom: "1em", fontSize: ".5em" }}
           onClick={handleShow}
+          disabled={employee.type !== "ADMIN"}
         >
           <MdAddToPhotos /> Change Photo
         </Button>

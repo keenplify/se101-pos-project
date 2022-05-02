@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { Modal, Button, Row, Col } from "react-bootstrap";
 import { COMPANY_NAME } from "../../helpers";
 import { TransactedVariantsQueries } from "../../queries/transactedvariants";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const QrReader = dynamic(
   () => import("react-qr-reader").then((v) => v.QrReader),
@@ -45,37 +45,55 @@ export const BarcodeScannerModal = ({
           const e = _cartItems[index];
           const b = parseInt(e?.variant?.id) === parseInt(variantId);
           if (b) {
+            const newStock = e.quantity + 1;
             // Return add quantity when variant is found in the cartItem
-            e.quantity = e.quantity + 1;
-            TransactedVariantsQueries.editQuantityById(
+            const result = TransactedVariantsQueries.editQuantityById(
               token,
               e.transactedVariant.id,
-              e.quantity
+              newStock
             );
-            toast("Updated " + e.variant.name + " in the cart.")
+
+            if (!(newStock <= e.variant.stock)) {
+              throw "Not enough stocks";
+            }
+
+            e.quantity = newStock;
+            toast("Updated " + e.variant.name + " in the cart.");
             return [..._cartItems];
           }
         }
 
         (async () => {
           // If not, create new cartItem.
-          const transactedVariant = await TransactedVariantsQueries.add(
-            token,
-            variantId,
-            1,
-            transaction.id
-          );
-          const newCartItem = {
-            quantity: 1,
-            variant: transactedVariant.data.newTransactedVariant.variant,
-            transactedVariant: transactedVariant.data.newTransactedVariant,
-          };
-          toast("Added " + newCartItem.variant.name + " in the cart.")
-          setCartItems([..._cartItems, newCartItem]);
+          let transactedVariant;
+
+          try {
+            transactedVariant = await TransactedVariantsQueries.add(
+              token,
+              variantId,
+              1,
+              transaction.id
+            );
+
+            const newCartItem = {
+              quantity: 1,
+              variant: transactedVariant.data.newTransactedVariant.variant,
+              transactedVariant: transactedVariant.data.newTransactedVariant,
+            };
+            toast("Added " + newCartItem.variant.name + " in the cart.");
+            setCartItems([..._cartItems, newCartItem]);
+          } catch (error) {
+            toast(
+              "Unable to add to cart! Maybe there's not enough stock or internal server error!"
+            );
+          }
         })();
 
         return [..._cartItems];
       } catch (error) {
+        toast(
+          "Unable to add to cart! Maybe there's not enough stock or internal server error!"
+        );
         return [..._cartItems];
       }
     });

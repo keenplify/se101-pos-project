@@ -19,7 +19,7 @@ export default function Inventory({ token, employee, categories }) {
       </Head>
       <NavBar employee={employee}></NavBar>
 
-      <div class="d-flex mt-3" style={{width:"90%", alignSelf:"center"}}>
+      <div class="d-flex mt-3" style={{ width: "90%", alignSelf: "center" }}>
         <label
           className="text-center"
           style={{
@@ -30,7 +30,7 @@ export default function Inventory({ token, employee, categories }) {
         >
           Product Categories{" "}
         </label>
-        <AddCategory token={token} />
+        {employee.type === "ADMIN" && <AddCategory token={token} />}
       </div>
       <div className="container col-lg-10 justify-content-center mb-5">
         <div className="row">

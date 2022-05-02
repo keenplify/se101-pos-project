@@ -87,6 +87,7 @@ export default function View({ product, token }) {
                     <td className="w-25">
                       <ChangeableImage
                         token={token}
+                        employee={employee}
                         query={VariantsQueries.changeImage}
                         selectorId={variant.id}
                         image={variant?.image?.location}

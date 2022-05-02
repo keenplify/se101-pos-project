@@ -29,6 +29,11 @@ router.post(
       const sequelizeTransaction = await sequelize.transaction();
       let newTransactedVariant;
       try {
+        let variant = await Variant.findByPk(variantId);
+
+        if (variant.stock <= 0) {
+          throw "Not enough stock!";
+        }
         let newTV = await TransactedVariant.create({
           variantId,
           quantity,
@@ -36,7 +41,7 @@ router.post(
           createdBy: req.user.id,
         });
         newTransactedVariant = await TransactedVariant.findByPk(newTV.id, {
-          include: [Variant]
+          include: [Variant],
         });
         sequelizeTransaction.commit();
       } catch (error) {
@@ -82,7 +87,19 @@ router.post(
       locations: ["body"],
     });
     try {
-      const query = await TransactedVariant.update(
+      const transactedvariant = await TransactedVariant.findByPk(
+        req.params.id,
+        {
+          include: [Variant],
+        }
+      );
+
+      console.log(quantity <= transactedvariant.variant.stock)
+      if (!(quantity <= transactedvariant.variant.stock)) {
+        throw "Not enough stocks!";
+      }
+
+      await TransactedVariant.update(
         {
           quantity,
         },
