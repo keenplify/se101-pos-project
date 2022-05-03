@@ -10,7 +10,7 @@ import QrCode from "react-qr-code";
 import EditVariant from "./editVariant";
 import DeleteVariant from "./deleteVariant";
 
-export default function View({ product, token }) {
+export default function View({ product, employee, token }) {
   const [show, setShow] = useState(false);
 
   return (

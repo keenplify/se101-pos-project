@@ -147,7 +147,7 @@ export default function ProductsViewer({ employee, category, token }) {
                 <td>{new Date(product.createdAt).toLocaleString()}</td>
                 {employee.type === "ADMIN" && (
                   <td className="py-2">
-                    <View product={product} token={token}></View>
+                    <View product={product} token={token} employee={employee}></View>
                     <EditProduct token={token} product={product} />
                     <DeleteProduct
                       token={token}
