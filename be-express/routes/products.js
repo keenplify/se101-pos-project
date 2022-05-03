@@ -152,15 +152,18 @@ router.post(
       locations: ["body"],
     });
 
+    console.log(req.user)
+
     try {
       const newProduct = await Product.create({
         name,
-        createdBy: req.user.dataValues.id,
+        createdBy: req?.user?.id || req?.user?.dataValues?.id,
         categoryId,
       });
 
       res.send(newProduct);
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error.message });
     }
   }

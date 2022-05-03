@@ -41,7 +41,7 @@ export default function AddProduct({ token, category }) {
               await ProductsQueries.add(token, category.id, name);
               router.reload();
             } catch (error) {
-              console.log(error);
+              console.log(error.response);
             }
           }}
         >
