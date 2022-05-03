@@ -54,6 +54,7 @@ export default function Empadsee({employee,allEmployees, token}) {
           <th scope="row">{employee.id}</th>
           <td className="w-25">
             <ChangeableImage
+              employee={employee}
               token={token}
               selectorId={employee.id}
               query={EmployeesQueries.changeImage}
