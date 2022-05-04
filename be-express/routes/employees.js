@@ -2,11 +2,13 @@ const router = require("express").Router();
 const { body, matchedData, param } = require("express-validator");
 const { compareSync, hash, hashSync } = require("bcrypt");
 const { Token, Image, Employee } = require("../models");
+const { QueryTypes } = require('sequelize');
 const {
   randomString,
   validateResultMiddleware,
   AdminOnly,
 } = require("../libraries/helpers");
+const sequelize = require("../libraries/sequelize");
 const passport = require("passport");
 const upload = require("../libraries/multer");
 
@@ -14,18 +16,23 @@ router.get(
   "/me",
   passport.authenticate("bearer", { session: false }),
   async (req, res) => {
+    console.log(req.user)
     return res.send(req.user);
   }
 );
 
 router.get("/all", async (req, res) => {
   try {
-    const employees = await Employee.findAll({
-      include: Image,
-    });
-
+    const employees = await sequelize.query(
+      `SELECT * FROM employees LEFT JOIN (SELECT id as "image_id", location AS "image_location" FROM images)images ON "employees"."imageId" = "images"."image_id"`,
+      {
+        type: QueryTypes.SELECT
+      }
+      )
+    
     res.send({ employees });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 });
@@ -223,7 +230,7 @@ router.delete(
 );
 
 router.post(
-  "/:id/changeImage/",
+  "/changeImage/:id",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   param("id").notEmpty().isNumeric(),
@@ -234,11 +241,11 @@ router.post(
       return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
-      location: req.file.path,
+      location: "/" + req.file.path,
       createdBy: req.user.id,
     });
 
-    Employee.update(
+    await Employee.update(
       {
         imageId: newImage.id,
       },

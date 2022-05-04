@@ -1,16 +1,25 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Button, Modal, ModalHeader} from "react-bootstrap"
+import Cookies from 'universal-cookie';
 
-export function Verification() {
+export function Verification({onProceed}) {
+  const router = useRouter();
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    const cookies = new Cookies();
+    cookies.remove("activeTransactionId");
+    router.reload();
+  };
   const handleShow = () => setShow(true);
   
     return (
       <>
-     <button type="button" class="btn btn-primary" onClick={handleShow}>Yes</button>
+     <button type="button" className="btn btn-primary" onClick={()=> {
+       onProceed();
+       handleShow();
+     }}>Yes</button>
      <Modal 
         show={show}
         onHide={handleClose}
@@ -27,6 +36,7 @@ export function Verification() {
       <Modal.Footer>
             <div className='px-5'>
               <Button variant="primary">Print Receipt</Button>
+              <Button variant="success" onClick={handleClose}>New Transaction</Button>
             </div>
       </Modal.Footer>
 

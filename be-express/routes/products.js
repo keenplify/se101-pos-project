@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Product = require("../models/product");
-const { body, matchedData, param } = require("express-validator");
+const { body, matchedData, param, query } = require("express-validator");
 const passport = require("passport");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const { Image, Variant } = require("../models");
@@ -82,13 +82,13 @@ router.get(
 router.get(
   "/getByCategoryPaginate",
   passport.authenticate("bearer", { session: false }),
-  body("categoryId").notEmpty().isNumeric(),
-  body("limit").notEmpty().isNumeric(),
-  body("lastId").notEmpty().isNumeric(),
+  query("categoryId").notEmpty().isNumeric(),
+  query("limit").notEmpty().isNumeric(),
+  query("lastId").notEmpty().isNumeric(),
   validateResultMiddleware,
   async (req, res) => {
     const { limit, lastId, categoryId } = matchedData(req, {
-      locations: ["body"],
+      locations: ["query"],
     });
     const cursor = lastId || 0;
     try {
@@ -100,6 +100,12 @@ router.get(
           },
           categoryId,
         },
+        include: [
+          {
+            model: Variant,
+            include: Image,
+          },
+        ],
       });
       res.send({
         products,
@@ -146,15 +152,18 @@ router.post(
       locations: ["body"],
     });
 
+    console.log(req.user)
+
     try {
       const newProduct = await Product.create({
         name,
-        createdBy: req.user.dataValues.id,
+        createdBy: req?.user?.id || req?.user?.dataValues?.id,
         categoryId,
       });
 
       res.send(newProduct);
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error.message });
     }
   }
@@ -188,21 +197,19 @@ router.put(
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   [
-    body("categoryId").notEmpty().isNumeric(),
     body("name").notEmpty().isString(),
   ],
   param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
 
   async (req, res) => {
-    const { categoryId, name } = matchedData(req, {
+    const { name } = matchedData(req, {
       locations: ["body"],
     });
 
     try {
       await Product.update(
         {
-          categoryId,
           name,
         },
         {

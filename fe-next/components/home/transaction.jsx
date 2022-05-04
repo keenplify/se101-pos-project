@@ -4,7 +4,7 @@ import {Button, Modal, ModalFooter, ModalHeader} from "react-bootstrap"
 import { Verification } from "../home/verification";
 
 
-export default function Transaction() {
+export default function Transaction({onProceed, canProceed}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -12,7 +12,7 @@ export default function Transaction() {
   
     return (
       <>
-     <button type="button" class="btn btn-primary" onClick={handleShow}>Proceed Transaction</button>
+     <button type="button" className="btn btn-primary" onClick={handleShow} disabled={!canProceed}>Proceed Transaction</button>
      <Modal
         show={show}
         onHide={handleClose}
@@ -24,11 +24,11 @@ export default function Transaction() {
         <Modal.Header closeButton>
 
         </Modal.Header>
-      <Modal.Body closeButton>
+      <Modal.Body>
       <h5 className="text-center">  Are you sure you want to proceed?</h5>
       <Modal.Footer>
-      <Verification></Verification>
-                <Button variant="secondary">No</Button>
+      <Verification onProceed={onProceed}></Verification>
+                <Button variant="secondary" onClick={handleClose}>No</Button>
       </Modal.Footer>
 
           </Modal.Body>

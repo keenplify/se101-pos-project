@@ -1,46 +1,152 @@
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import {MdDelete} from "react-icons/md"
-import {Card,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-import { BACKEND } from '../helpers';
-export default function LoginCard({employee}) {
+import { useRouter } from "next/router";
+import { Fragment, useState } from "react";
+import { MdDelete } from "react-icons/md";
+import {
+  Card,
+  Row,
+  Col,
+  Form,
+  FormControl,
+  Button,
+  InputGroup,
+  Table,
+  Modal,
+  Container,
+} from "react-bootstrap";
+import { BACKEND } from "../helpers";
+import { Field, Formik, Form as FormikForm } from "formik";
+
+export default function LoginCard({ employee, onSubmit }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
-    return (
-      <>
-    <Card style={{ width: '15rem' }} onClick = {handleShow}>
-      {typeof employee.images !== undefined && employee?.images?.length>0 ? 
-    
-    
-    <Card.Img variant="top" src={BACKEND + employee.images[0].location}/>:<span>Hello Aczell</span>}
- 
-      <Card.Body>
-        
-        <Card.Text className="text-center">
-      {employee.firstName} {employee.lastName}
-        </Card.Text>
-    
-      </Card.Body>
-    </Card> 
-    <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"
-      centered>
-        <Modal.Header closeButton>
-          <Modal.Title>You are about to delete a product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="text-center">This will delete your product permanently removed and you won't be able to see them again.</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="danger" onClick={handleClose}>
-            Delete
-          </Button>
-        </Modal.Footer>
+
+  return (
+    <>
+      <div>
+        <Card
+          style={{
+            justifyContent: "center",
+            placeItems: "center",
+            padding: "8px 0",
+            width: "90%",
+            margin: ".5em 5%",
+            border: "3px solid #DFE1E4",
+            borderRadius: "20px",
+            fontSize: "1em",
+            fontWeight: "bold",
+            overflow: "auto",
+            boxShadow: "5px 5px 10px grey",
+            cursor: "pointer",
+          }}
+          onClick={handleShow}
+        >
+          {typeof employee.image_location !== undefined ? (
+            <Card.Img
+              style={{
+                borderRadius: "50%",
+                width: "8em",
+                height: "8em",
+                border: "3px solid #DFE1E4",
+              }}
+              variant="top"
+              src={BACKEND + employee.image_location}
+            />
+          ) : (
+            <Card.Img
+              style={{
+                borderRadius: "50%",
+                width: "70%",
+                height: "70%",
+                border: "3px solid #DFE1E4",
+              }}
+              variant="top"
+              src="img/tao.jpg"/>
+          )}
+
+          <Card.Body>
+            <Card.Text className="text-center">
+              {employee.firstName} {employee.lastName}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </div>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Formik
+          initialValues={{
+            id: employee.id,
+            password: "",
+          }}
+          onSubmit={onSubmit}
+        >
+          {(formik) => (
+            <Fragment>
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  You are about to log in as{" "}
+                  <b>
+                    {employee.firstName} {employee.lastName}
+                  </b>
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="text-center">
+                {formik.status && (
+                  <div class="alert alert-danger">{formik.status}</div>
+                )}
+                <FormikForm>
+                  <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="2">
+                      <b>Password</b>
+                    </Form.Label>
+                    <Col sm="10">
+                      <Field
+                        as={Form.Control}
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        type="password"
+                      />
+                    </Col>
+                  </Form.Group>
+                </FormikForm>
+              </Modal.Body>
+
+              <Modal.Footer>
+                <Button
+                  style={{
+                    borderRadius: "20px",
+                    padding: "8px 14px",
+                    fontWeight: "bold",
+                  }}
+                  variant="secondary"
+                  onClick={handleClose}
+                >
+                  Close
+                </Button>
+                <Button
+                  style={{
+                    borderRadius: "20px",
+                    padding: "8px 14px",
+                    fontWeight: "bold",
+                  }}
+                  variant="primary"
+                  type="submit"
+                  onClick={formik.handleSubmit}
+                >
+                  Login
+                </Button>
+              </Modal.Footer>
+            </Fragment>
+          )}
+        </Formik>
       </Modal>
-      </>
-    );
-  }
-  
+    </>
+  );
+}

@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { Button, Modal } from "react-bootstrap";
-import { EmployeesQueries } from "../queries/employees";
-export default function DeleteEmployee({ token, employee }) {
+import { VariantsQueries } from "../queries/variants";
+export default function DeleteVariant({ token, variant }) {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -26,10 +26,10 @@ export default function DeleteEmployee({ token, employee }) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>You are about to delete a employee</Modal.Title>
+          <Modal.Title>You are about to delete a variant</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          This will delete your employee permanently removed and you won't be
+          This will delete your variant permanently removed and you won't be
           able to see them again.
         </Modal.Body>
         <Modal.Footer>
@@ -40,7 +40,7 @@ export default function DeleteEmployee({ token, employee }) {
             variant="danger"
             onClick={async () => {
               try {
-                await EmployeesQueries.delete(token, employee.id);
+                await VariantsQueries.delete(token, variant.id);
                 router.reload();
               } catch (error) {
                 console.log(error);

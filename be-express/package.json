@@ -19,6 +19,7 @@
     "passport-http-bearer": "^1.0.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
+    "revoice": "^0.1.15",
     "sequelize": "^6.17.0",
     "slugify": "^1.6.5"
   }

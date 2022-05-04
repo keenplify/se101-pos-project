@@ -23,11 +23,12 @@ export function NavBar({ employee }) {
     removeCookie("token");
     router.push("/login");
   };
+  const imageSrc = employee?.image_location ? `${BACKEND}${employee.image_location}` : "/img/tao.jpg";
 
   return (
     <Navbar collapseOnSelect sticky="top" bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
           <Image
             src="/img/Logo.jpg"
             alt="me"
@@ -36,7 +37,7 @@ export function NavBar({ employee }) {
             className="rounded p-0 "
           />
         </Navbar.Brand>
-        <Navbar.Brand className={styles.NavBrand} href="#home">
+        <Navbar.Brand className={styles.NavBrand} href="/">
           Vaperous M4ster
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -67,7 +68,7 @@ export function NavBar({ employee }) {
             <NavDropdown
               id="nav-dropdown-dark-example"
               disabled={!employee}
-              class={styles.NavDropdown}
+              className={styles.NavDropdown}
               title={ 
                 <span className={styles.dropdownTitle}> <FaUserCircle className="fs-2 me-1"></FaUserCircle>
                   {employee ? (
@@ -89,8 +90,10 @@ export function NavBar({ employee }) {
                 >
                   <div className={styles.employeeAvatar}>
                     <Image  
-                      src={`${BACKEND}${employee.images[0].location}`}
+                      loader={()=> imageSrc}
+                      src={imageSrc}
                       layout="responsive"
+                      className="rounded-circle"
                       width="1"
                       height="1"
                      

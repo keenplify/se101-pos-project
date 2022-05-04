@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { Button, Modal } from "react-bootstrap";
-import { EmployeesQueries } from "../queries/employees";
-export default function DeleteEmployee({ token, employee }) {
+import { CategoriesQueries } from "../queries/categories";
+export default function DeleteCategory({ token, category }) {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -14,10 +14,10 @@ export default function DeleteEmployee({ token, employee }) {
     <>
       <button
         type="button"
-        class="btn btn-sm btn-danger mx-1"
+        class="btn btn-sm btn-danger mt-1 w-100"
         onClick={handleShow}
       >
-        <MdDelete></MdDelete>
+        <MdDelete></MdDelete> Delete Category
       </button>
       <Modal
         show={show}
@@ -26,10 +26,10 @@ export default function DeleteEmployee({ token, employee }) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>You are about to delete a employee</Modal.Title>
+          <Modal.Title>You are about to delete a category</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          This will delete your employee permanently removed and you won't be
+          This will delete your category permanently removed and you won't be
           able to see them again.
         </Modal.Body>
         <Modal.Footer>
@@ -40,7 +40,7 @@ export default function DeleteEmployee({ token, employee }) {
             variant="danger"
             onClick={async () => {
               try {
-                await EmployeesQueries.delete(token, employee.id);
+                await CategoriesQueries.delete(token, category.id);
                 router.reload();
               } catch (error) {
                 console.log(error);
