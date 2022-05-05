@@ -9,11 +9,12 @@ const {
 } = require("../libraries/helpers");
 const passport = require("passport");
 const upload = require("../libraries/multer");
-const { TransactedVariant, EWallet, Variant } = require("../models");
+const { TransactedVariant, EWallet, Variant, Product } = require("../models");
 const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
 const Revoice = require("revoice");
 const helpers = require("../libraries/helpers");
+const path = require("path");
 
 router.post(
   "/add",
@@ -174,7 +175,10 @@ router.get(
         include: [
           {
             model: TransactedVariant,
-            include: [Variant],
+            include: [{
+              model: Variant,
+              include: [Product]
+            }],
           },
           EWallet,
         ],
@@ -183,7 +187,7 @@ router.get(
       const items = transaction.transactedvariants.map(tv => {
         return {
           id: tv.variant.id.toString(),
-          title: tv.variant.name,
+          title: `${tv.variant.product.name} - ${tv.variant.name}`,
           date: tv.variant.createdAt.toISOString().slice(0, 10),
           amount: tv.variant.price,
           tax: 0,
@@ -192,7 +196,9 @@ router.get(
         }
       })
 
-      const invoice = await Revoice.default.generateHTMLInvoice({
+      const destination = "/public/generated-receipts/"
+
+      const invoicePath = await Revoice.default.generateHTMLInvoice({
         id: transaction.id.toString(),
         date: transaction.updatedAt.toISOString().slice(0, 10),
         issuer: helpers.company,
@@ -204,11 +210,13 @@ router.get(
         comments: transaction.remarks
       }, {
         template: "./public/receipt/index.html",
-        destination: "./public/generated-receipts/",
+        destination: "." + destination,
         name: "receipt-" + new Date().getTime().toString(),
       });
+      const extension = path.extname(invoicePath);
+      const invoiceFileName = path.basename(invoicePath, extension)
 
-      res.send({ transaction, invoice });
+      res.redirect(req.protocol + "://" + req.headers.host + destination + invoiceFileName + ".html");
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
