@@ -216,7 +216,7 @@ router.get(
       const extension = path.extname(invoicePath);
       const invoiceFileName = path.basename(invoicePath, extension)
 
-      res.redirect(req.protocol + "://" + req.headers.host + destination + invoiceFileName + ".html");
+      res.send({location: req.protocol + "://" + req.headers.host + destination + invoiceFileName + ".html"});
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
