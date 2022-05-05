@@ -24,4 +24,16 @@ module.exports = {
     if (req.user.type === "ADMIN") return next();
     return res.status(401).send("This route is only available to admins.");
   },
+  
+  company: {
+    name: "V4perous M4ster",
+    logo: "https://i.ibb.co/VNr0q93/logo1.png",
+    address: ["Address Line 1", "Address Line 2"],
+    contact: {
+      name: "Tupe",
+      position: "CEO",
+      tel: "09123456789",
+      email: "tupe@gmail.com"
+    }
+  }
 };

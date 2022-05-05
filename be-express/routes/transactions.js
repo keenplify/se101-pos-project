@@ -12,6 +12,8 @@ const upload = require("../libraries/multer");
 const { TransactedVariant, EWallet, Variant } = require("../models");
 const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
+const Revoice = require("revoice");
+const helpers = require("../libraries/helpers");
 
 router.post(
   "/add",
@@ -96,27 +98,27 @@ router.post(
       include: [Variant],
     });
 
-
     // Set quantity of variant to one lower and calculate total price
     // make sequelize transaction so the cost of update stocks is lower
     let total_price = 0;
     const sqlTransaction = await sequelize.transaction();
 
     try {
-      for (let i=0; i<transactedVariants.length; i++) {
+      for (let i = 0; i < transactedVariants.length; i++) {
         const tv = transactedVariants[i];
-        total_price += tv.variant.price * tv.quantity
-        console.log(total_price)
+        total_price += tv.variant.price * tv.quantity;
+        console.log(total_price);
 
         await Variant.update(
           {
-            stock: Sequelize.literal("stock - " + tv.quantity)
-          }, {
+            stock: Sequelize.literal("stock - " + tv.quantity),
+          },
+          {
             where: {
-              id: tv.variant.id
-            }
+              id: tv.variant.id,
+            },
           }
-        )
+        );
       }
 
       await sqlTransaction.commit();
@@ -155,7 +157,7 @@ router.post(
 
       res.send();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(500).json({ error: "Error!" });
     }
   }
@@ -168,17 +170,45 @@ router.get(
   passport.authenticate("bearer", { session: false }),
   async (req, res) => {
     try {
-      const transactions = await Transaction.findByPk(req.params.id, {
+      const transaction = await Transaction.findByPk(req.params.id, {
         include: [
           {
             model: TransactedVariant,
-            include: [Variant]
+            include: [Variant],
           },
-          [EWallet]
-        ]
+          EWallet,
+        ],
       });
 
-      res.send({ transactions });
+      const items = transaction.transactedvariants.map(tv => {
+        return {
+          id: tv.variant.id.toString(),
+          title: tv.variant.name,
+          date: tv.variant.createdAt.toISOString().slice(0, 10),
+          amount: tv.variant.price,
+          tax: 0,
+          quantity: tv.quantity,
+          total: tv.variant.price*tv.quantity
+        }
+      })
+
+      const invoice = await Revoice.default.generateHTMLInvoice({
+        id: transaction.id.toString(),
+        date: transaction.updatedAt.toISOString().slice(0, 10),
+        issuer: helpers.company,
+        type: transaction.type,
+        invoicee: {
+          name: transaction.type == "EWALLET" ? transaction['e-wallet'].account_name + " (" + transaction['e-wallet'].phone_number + ")" : "",
+        },
+        items,
+        comments: transaction.remarks
+      }, {
+        template: "./public/receipt/index.html",
+        destination: "./public/generated-receipts/",
+        name: "receipt-" + new Date().getTime().toString(),
+      });
+
+      res.send({ transaction, invoice });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -201,25 +231,23 @@ router.get(
     let _endDate = new Date(endDate);
 
     try {
-      
-
       const weekdata = await Transaction.findAll({
         attributes: [
-          [sequelize.fn('sum', sequelize.col('total_price')), 'total_amount']
+          [sequelize.fn("sum", sequelize.col("total_price")), "total_amount"],
         ],
         where: {
-          "createdAt": {
+          createdAt: {
             [Op.and]: {
               [Op.gte]: _startDate,
-              [Op.lte]: _endDate
-            }
-          }
-        }
+              [Op.lte]: _endDate,
+            },
+          },
+        },
       });
 
       res.send({ weekdata });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(500).json({ error: error.message });
     }
   }
