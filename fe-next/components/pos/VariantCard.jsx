@@ -34,7 +34,7 @@ export function VariantCard({
             src={
               variant.image?.location
                 ? BACKEND + variant.image.location
-                : "/img/blank.jpg"
+                : "/img/blank.png"
             }
             className="img-fluid rounded bg-transparent"
             style={{

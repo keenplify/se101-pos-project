@@ -27,8 +27,8 @@ export default function LoginCard({ employee, onSubmit }) {
     <>
       <div className="mb-3">
         <Card
-        hover
-         className="shadow rounded"
+          hover
+          className="shadow rounded"
           style={{
             cursor: "pointer",
           }}
@@ -36,26 +36,16 @@ export default function LoginCard({ employee, onSubmit }) {
         >
           {typeof employee.image_location !== undefined ? (
             <Card.Img
-            className="img-fluid"
+              className="img-fluid"
               style={{
-                borderRadius: "50%",
-                width: "8em",
-                height: "8em",
-                border: "3px solid #DFE1E4",
+                height: "12em",
+                objectFit: "contain",
               }}
               variant="top"
               src={BACKEND + employee.image_location}
             />
           ) : (
-            <Card.Img
-              style={{
-                borderRadius: "50%",
-                width: "70%",
-                height: "70%",
-                border: "3px solid #DFE1E4",
-              }}
-              variant="top"
-              src="img/tao.jpg"/>
+            <Card.Img variant="top" src="img/tao.jpg" />
           )}
 
           <Card.Body>
@@ -67,7 +57,7 @@ export default function LoginCard({ employee, onSubmit }) {
       </div>
 
       <Modal
-         size="sm"
+        size="sm"
         show={show}
         onHide={handleClose}
         aria-labelledby="contained-modal-title-vcenter"
@@ -82,24 +72,32 @@ export default function LoginCard({ employee, onSubmit }) {
         >
           {(formik) => (
             <Fragment>
-              <Modal.Header closeButton className="border-0 text-center">
-                
-              </Modal.Header> 
+              <Modal.Header
+                closeButton
+                className="border-0 text-center"
+              ></Modal.Header>
               <Modal.Body className="text-center">
                 {formik.status && (
                   <div class="alert alert-danger">{formik.status}</div>
                 )}
                 <FormikForm>
-              <img  className="img-thumbnail rounded-circle w-75" src={BACKEND + employee.image_location}/>
-                        <Card.Text className="text-center">
-              {employee.firstName} {employee.lastName}
-            </Card.Text>  
+                  <img
+                    className="img-thumbnail rounded-circle w-75"
+                    style={{ height: "12em", objectFit: "contain" }}
+                    src={BACKEND + employee.image_location}
+                  />
+                  <Card.Text className="text-center">
+                    {employee.firstName} {employee.lastName}
+                  </Card.Text>
                   <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="2">
-                    
-                    </Form.Label>
+                    <Form.Label column sm="2"></Form.Label>
                     <Col className="input-group" sm="5">
-                    <span class="input-group-text bg-transparent border" id="basic-addon1"><FiLock></FiLock></span>
+                      <span
+                        class="input-group-text bg-transparent border"
+                        id="basic-addon1"
+                      >
+                        <FiLock></FiLock>
+                      </span>
                       <Field
                         as={Form.Control}
                         id="password"
@@ -111,15 +109,14 @@ export default function LoginCard({ employee, onSubmit }) {
                   </Form.Group>
                 </FormikForm>
                 <div class="d-grid gap-2 col-8 mx-auto">
-                <Button
-            
-            variant="primary"
-            type="submit"
-            onClick={formik.handleSubmit}
-          >
-            Login
-          </Button>
-          </div>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={formik.handleSubmit}
+                  >
+                    Login
+                  </Button>
+                </div>
               </Modal.Body>
             </Fragment>
           )}

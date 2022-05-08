@@ -35,9 +35,9 @@ export default function View({ product, employee, token }) {
                       product?.variants[0] &&
                       product.variants[0].image?.location
                         ? BACKEND + product.variants[0].image.location
-                        : "/img/blank.jpg"
+                        : "/img/blank.png"
                     }
-                    className="img-fluid rounded bg-dark"
+                    className="img-fluid rounded bg-white"
                     style={{
                       width: "12em",
                       height: "12em",

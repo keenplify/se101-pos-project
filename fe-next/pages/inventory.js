@@ -50,16 +50,16 @@ export default function Inventory({ token, employee, categories }) {
               >
                 <a>
                   <div
-                    className="bg-image"
+                    className="bg-image shadow"
                     style={{ maxWidth: "254px", height: "254px" }}
                   >
                     <img
                       src={
                         category?.image?.location
                           ? BACKEND + category.image.location
-                          : "/img/blank.jpg"
+                          : "/img/blank.png"
                       }
-                      className="img-fluid bg-dark"
+                      className="img-fluid bg-white"
                       style={{
                         width: "254px",
                         height: "254px",

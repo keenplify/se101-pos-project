@@ -12,6 +12,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FiLock } from "react-icons/fi";
 import styles from "../styles/login.module.css";
 import Image from "react-bootstrap/Image";
+
 export default function Login({ employee, allEmployees }) {
   const [, setCookie] = useCookies(["token"]);
 
@@ -35,36 +36,6 @@ export default function Login({ employee, allEmployees }) {
     <div>
       <NavBar employee={employee} />
       <Container>
-        <Row>
-          <Col xs={12} md={7}>
-            <Row>
-              {allEmployees &&
-                allEmployees.map((employee, key) => (
-                  <Col md={4} key={key}>
-                    <LoginCard
-                      employee={employee}
-                      onSubmit={handleSubmit}
-                    ></LoginCard>
-                  </Col>
-                ))}
-            </Row>
-          </Col>
-
-            <label htmlFor="password">Password</label>
-            <Field
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Doe"
-            />
-
-            <button type="submit">Submit</button>
-          </Form>
-        )}
-      </Formik>
-      </Col>
-      </Row>
-
 
         <Row>
   
@@ -93,7 +64,7 @@ export default function Login({ employee, allEmployees }) {
               onSubmit={handleSubmit}
             >
               {(formik) => (
-<Container className="border shadow p-4">
+                <Container className="border shadow p-4">
               <h1 className={styles.NavBrand}>Account LogIn</h1>
               <Image src="/img/tao.jpg" className="img-fluid rounded-circle mx-auto d-flex mb-3" style={{
                          width: "40%",
@@ -151,13 +122,15 @@ export default function Login({ employee, allEmployees }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const allEmployees = await axios.get(BACKEND + "/api/employees/all");
 
-  return {
+export async function getServerSideProps(context) {
+   const allEmployees=await axios.get(BACKEND + "/api/employees/all")
+  
+  return{
     props: {
-      allEmployees: allEmployees.data.employees,
-      ...(await AuthenticateEmployee(context)).props,
-    },
-  };
+      allEmployees:allEmployees.data.employees,
+      ...(await AuthenticateEmployee(context)).props
+    }
+
+  }
 }

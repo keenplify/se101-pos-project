@@ -39,7 +39,7 @@ export const ChangeableImage = ({
   ? previewImage
   : image
   ? BACKEND + image
-  : "/img/blank.jpg";
+  : "/img/blank.png";
 
   return (
     <Fragment>
@@ -49,7 +49,7 @@ export const ChangeableImage = ({
       >
         <img
           className={"img-changeable rounded"}
-          src={image ? BACKEND + image : "/img/blank.jpg"}
+          src={image ? BACKEND + image : "/img/blank.png"}
         />
         <Button
           variant="info "
