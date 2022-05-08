@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
+const withPagination = require('sequelize-cursor-pagination');
 
 const Model = sequelize.define("logs", {
   description: {
@@ -15,5 +16,10 @@ Model.associate = ({ Employee, Product, Category, Variant, Transaction }) => {
   Model.belongsTo(Variant);
   Model.belongsTo(Transaction);
 };
+
+withPagination({
+  methodName: "paginate",
+  primaryKeyField: "id"
+})(Model)
 
 module.exports = Model;

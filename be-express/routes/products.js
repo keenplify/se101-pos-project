@@ -3,7 +3,7 @@ const Product = require("../models/product");
 const { body, matchedData, param, query } = require("express-validator");
 const passport = require("passport");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
-const { Image, Variant } = require("../models");
+const { Image, Variant, Category } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -180,14 +180,20 @@ router.post(
       locations: ["body"],
     });
 
-    console.log(req.user);
-
     try {
       const newProduct = await Product.create({
         name,
         createdBy: req?.user?.id || req?.user?.dataValues?.id,
         categoryId,
+      }, {
+        include: [Category]
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        productId: newProduct.id,
+        description: `Created new product named "${name}" with category of "${newProduct.category.name}" (ID#${newProduct.category.id})`
+      })
 
       res.send(newProduct);
     } catch (error) {
@@ -211,6 +217,13 @@ router.delete(
           id: req.params.id,
         },
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        productId: req.params.id,
+        description: `Deleted product with ID ${req.params.id}`
+      })
+
       res.send();
     } catch (error) {
       console.log(error);
@@ -244,6 +257,12 @@ router.put(
           },
         }
       );
+
+      await Log.create({
+        createdBy: req.user.id,
+        productId: req.params.id,
+        description: `Edited product ID#${req.params.id}'s name to "${name}"`
+      })
 
       res.send();
     } catch (error) {

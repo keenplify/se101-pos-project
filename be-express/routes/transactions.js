@@ -9,7 +9,7 @@ const {
 } = require("../libraries/helpers");
 const passport = require("passport");
 const upload = require("../libraries/multer");
-const { TransactedVariant, EWallet, Variant, Product } = require("../models");
+const { TransactedVariant, EWallet, Variant, Product, Log } = require("../models");
 const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
 const Revoice = require("revoice");
@@ -31,6 +31,12 @@ router.post(
           include: [{ model: TransactedVariant, include: [Variant] }, EWallet],
         }
       );
+
+      await Log.create({
+        createdBy: req.user.id,
+        transactionId: newTransaction.id,
+        description: `A new transaction has been added.`
+      })
 
       res.send({ newTransaction });
     } catch (error) {
@@ -156,6 +162,12 @@ router.post(
         },
       });
 
+      await Log.create({
+        createdBy: req.user.id,
+        transactionId: req.params.id,
+        description: `Transaction ID#${req.params.id} was finalized.`
+      })
+
       res.send();
     } catch (error) {
       console.log(error);
@@ -216,7 +228,15 @@ router.get(
       const extension = path.extname(invoicePath);
       const invoiceFileName = path.basename(invoicePath, extension)
 
-      res.send({location: req.protocol + "://" + req.headers.host + destination + invoiceFileName + ".html"});
+      const link = req.protocol + "://" + req.headers.host + destination + invoiceFileName + ".html"
+
+      await Log.create({
+        createdBy: req.user.id,
+        transactionId: req.params.id,
+        description: `Transaction ID#${req.params.id} receipt was generated. Link: "${link}"`
+      })
+
+      res.send({location: link});
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

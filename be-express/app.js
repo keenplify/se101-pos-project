@@ -16,6 +16,8 @@ const categoriesRouter = require("./routes/categories");
 const variantsRouter = require("./routes/variants");
 const transactionsRouter = require("./routes/transactions");
 const transactedvariantsRouter = require("./routes/transactedvariants");
+const logsRouter = require("./routes/logs");
+
 
 app.use(
   cors({
@@ -36,6 +38,7 @@ app.use("/api/employees", employeesRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/variants", variantsRouter);
 app.use("/api/transactions", transactionsRouter);
+app.use("/api/logs", logsRouter);
 app.use("/api/transactedvariants", transactedvariantsRouter);
 
 module.exports = app;

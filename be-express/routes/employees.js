@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { body, matchedData, param } = require("express-validator");
 const { compareSync, hash, hashSync } = require("bcrypt");
-const { Token, Image, Employee } = require("../models");
+const { Token, Image, Employee, Log } = require("../models");
 const { QueryTypes } = require('sequelize');
 const {
   randomString,
@@ -16,7 +16,6 @@ router.get(
   "/me",
   passport.authenticate("bearer", { session: false }),
   async (req, res) => {
-    console.log(req.user)
     return res.send(req.user);
   }
 );
@@ -62,6 +61,11 @@ router.post(
           errors: ["Password is incorrect."],
         });
       }
+
+      await Log.create({
+        createdBy: id,
+        description: `Employee "${employee.firstName} ${employee.lastName}" has logged in.`
+      })
 
       const token = await Token.create({
         hash: randomString(60),
@@ -127,6 +131,11 @@ router.post(
         type,
       });
 
+      await Log.create({
+        createdBy: req.user.id,
+        description: `New employee named "${firstName} ${lastName}" has been added.`
+      })
+
       res.send(newEmployee);
     } catch (error) {
       console.log(error);
@@ -169,6 +178,11 @@ router.put(
         }
       );
 
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Employee ID#${req.params.id} has been updated into "${firstName} ${lastName}" with type of ${type}.`
+      })
+
       res.send();
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -201,6 +215,11 @@ router.post(
         }
       );
 
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Employee ID#${req.params.id}'s password has been changed.`
+      })
+
       res.send();
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -221,6 +240,12 @@ router.delete(
           id: req.params.id,
         },
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Employee ID#${req.params.id} has been deleted.`
+      })
+
       res.send();
     } catch (error) {
       console.log(error);
@@ -255,6 +280,11 @@ router.post(
         },
       }
     );
+
+    await Log.create({
+      createdBy: req.user.id,
+      description: `Employee ID#${req.params.id}'s image has been changed.`
+    })
 
     res.send();
   }

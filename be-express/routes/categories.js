@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Category, Image, Product, Variant } = require("../models");
+const { Category, Image, Product, Variant, Log } = require("../models");
 const { body, matchedData, param } = require("express-validator");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const passport = require("passport");
@@ -23,7 +23,14 @@ router.post(
       const newCategory = await Category.create({
         name,
         description,
+        createdBy: req.user.id,
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        categoryId: newCategory.id,        
+        description: `A new category named "${name}" has been added. (ID#${newCategory.id})`
+      })
 
       res.send({ newCategory });
     } catch (error) {
@@ -46,6 +53,12 @@ router.delete(
           id: req.params.id,
         },
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Category ID#${req.params.id} has been deleted.`
+      })
+
       res.send();
     } catch (error) {
       console.log(error);
@@ -82,6 +95,12 @@ router.put(
           },
         }
       );
+
+      await Log.create({
+        createdBy: req.user.id,
+        categoryId: req.params.id,
+        description: `Category ID#${req.params.id} has been updated to "${name}" with description of "${description}".`
+      })
 
       res.send();
     } catch (error) {
@@ -147,6 +166,12 @@ router.delete(
           id: req.params.id,
         },
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Category ID#${req.params.id} has been deleted.`
+      })
+
       res.send();
     } catch (error) {
       console.log(error);
@@ -202,6 +227,12 @@ router.post(
         },
       }
     );
+
+    await Log.create({
+      createdBy: req.user.id,
+      categoryId: req.params.id,
+      description: `Category ID#${req.params.id}'s image has been changed.`
+    })
 
     res.send();
   }

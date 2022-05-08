@@ -7,6 +7,7 @@ const {
   Variant,
   Product,
   Category,
+  Log,
 } = require("../models");
 const {
   randomString,
@@ -42,7 +43,16 @@ router.post(
         name,
         price,
         stock,
+        createdBy: req.user.id
+      }, {
+        include: [Product]
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        variantId: newVariant.id,
+        description: `Created variant "${name}" for product "${newVariant.product.name}".`
+      })
 
       res.send(newVariant);
     } catch (error) {
@@ -88,6 +98,12 @@ router.delete(
           id: req.params.id,
         },
       });
+
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Deleted a variant with ID ${req.params.id}.`
+      })
+
       res.send();
     } catch (error) {
       console.log(error);
@@ -127,6 +143,12 @@ router.put(
         }
       );
 
+      await Log.create({
+        createdBy: req.user.id,
+        variantId: req.params.id,
+        description: `Updated variant ID#${req.params.id}.`
+      })
+
       res.send();
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -161,6 +183,12 @@ router.post(
         },
       }
     );
+
+    await Log.create({
+      createdBy: req.user.id,
+      variantId: req.params.id,
+      description: `Changed the image of variant ID#${req.params.id}.`
+    })
 
     res.send();
   }

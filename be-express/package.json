@@ -22,6 +22,7 @@
     "pg-hstore": "^2.3.4",
     "revoice": "^0.1.15",
     "sequelize": "^6.17.0",
+    "sequelize-cursor-pagination": "^2.3.0",
     "slugify": "^1.6.5"
   }
 }
