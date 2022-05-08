@@ -65,7 +65,6 @@ export function VariantCard({
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
-  
             }}
           >
             {variant.name}

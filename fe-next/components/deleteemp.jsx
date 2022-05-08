@@ -1,40 +1,57 @@
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import {MdDelete} from "react-icons/md"
-import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-export default function Deleteemp() {
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { MdDelete } from "react-icons/md";
+import { Button, Modal } from "react-bootstrap";
+import { EmployeesQueries } from "../queries/employees";
+export default function DeleteEmployee({ token, employee }) {
   const [show, setShow] = useState(false);
+  const router = useRouter();
 
-  
-    return (
-      <>
-    <button type="button" class="btn btn-sm btn-danger " onClick={() => setShow(true)}><MdDelete></MdDelete></button>
-        <Modal
-        
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <button
+        type="button"
+        className="btn btn-sm btn-danger mx-1"
+        onClick={handleShow}
+      >
+        <MdDelete></MdDelete>
+      </button>
+      <Modal
         show={show}
-        onHide={() => setShow(false)}
+        onHide={handleClose}
         aria-labelledby="contained-modal-title-vcenter"
         centered
-         
-          dialogClassName="modal-90w"
-          
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-            You are about to delete an employee
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-            This will delete an employee permanently and  you won't be able to see them again.
-            </p>
-           
-          </Modal.Body>
-          <Modal.Footer>
-          <button type="button" class="btn btn-sm btn-danger " onClick={() => setShow(true)}>Delete</button>
-            </Modal.Footer>
-        </Modal>
-      </>
-    );
-  }
-  
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>You are about to delete a employee</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          This will delete your employee permanently removed and you won't be
+          able to see them again.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="danger"
+            onClick={async () => {
+              try {
+                await EmployeesQueries.delete(token, employee.id);
+                router.reload();
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}

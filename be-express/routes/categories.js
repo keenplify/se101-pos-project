@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Category, Image } = require("../models");
+const { Category, Image, Product, Variant } = require("../models");
 const { body, matchedData, param } = require("express-validator");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
 const passport = require("passport");
@@ -97,7 +97,7 @@ router.get(
   async (req, res) => {
     try {
       const categories = await Category.findAll({
-        include: Image,
+        include: [Image, Product],
       });
 
       res.send({ categories });
@@ -117,7 +117,13 @@ router.get(
       where: {
         id: req.params.id,
       },
-      include: Image,
+      include: [Image, {
+        model: Product,
+        include: [{
+          model: Variant,
+          include: [Image]
+        }]
+      }]
     });
 
     if (!category) {
@@ -149,37 +155,6 @@ router.delete(
   }
 );
 
-router.post(
-  "/:id/changeImage/",
-  passport.authenticate("bearer", { session: false }),
-  AdminOnly,
-  param("id").notEmpty().isNumeric(),
-  validateResultMiddleware,
-  upload.single("image"),
-  async (req, res) => {
-    if (!req.file) {
-      return res.status(422).send("Image not found");
-    }
-    const newImage = await Image.create({
-      location: req.file.path,
-      createdBy: req.user.id,
-    });
-
-    Category.update(
-      {
-        imageId: newImage.id,
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-
-    res.send();
-  }
-);
-
 router.get(
   "/:id",
   passport.authenticate("bearer", { session: false }),
@@ -202,7 +177,7 @@ router.get(
 );
 
 router.post(
-  "/:id/changeImage/",
+  "/changeImage/:id",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   param("id").notEmpty().isNumeric(),
@@ -213,7 +188,7 @@ router.post(
       return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
-      location: req.file.path,
+      location: "/" + req.file.path,
       createdBy: req.user.id,
     });
 

@@ -6,11 +6,6 @@ import Router from "next/router";
 import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
 import { useCookies } from "react-cookie";
 import { NavBar } from "../components/navbar";
-<<<<<<< Updated upstream
-import {Card, Button, Container, Row, Col} from "react-bootstrap"
-import LoginCard from "../components/login";
-
-=======
 import {Button, Container, Row, Col, Form, Img} from "react-bootstrap";
 import LoginCard from "../components/login";
 import { FaRegUser } from "react-icons/fa";
@@ -21,7 +16,6 @@ export default function Login({ employee, allEmployees }) {
   const [, setCookie] = useCookies(["token"]);
 
   const handleSubmit = async (values, action) => {
-    console.log(values);
     axios
       .post(BACKEND + "/api/employees/login", {
         id: values.id,
@@ -36,52 +30,25 @@ export default function Login({ employee, allEmployees }) {
         action.setStatus("Incorrect login credentials. ");
       });
   };
->>>>>>> Stashed changes
 
-export default function Login({ employee,allEmployees}) {
-  const [, setCookie] = useCookies(["token"]);
-  console.log(allEmployees)
   return (
     <div>
       <NavBar employee={employee} />
       <Container>
-<<<<<<< Updated upstream
-      <Row>
-        
-        <Col xs={12} md={8}>
-      <h1>Sign Up</h1>
-      {allEmployees && allEmployees.map(employee=><LoginCard employee={employee}></LoginCard>)}
-    </Col>
-
-
-
-<Col xs={6} md={4}>
-      <Formik
-        initialValues={{
-          id: "",
-          password: "",
-        }}
-        onSubmit={async (values, action) => {
-          axios
-            .post(BACKEND + "/api/employees/login", {
-              id: values.id,
-              password: values.password,
-            })
-            .then(function (response) {
-              setCookie("token", response.data.token);
-              Router.push("/");
-            })
-            .catch(function (error) {
-              console.log(error);
-              action.setStatus("unavailable to login. Error: " + error.message);
-            });
-        }}
-      >
-        {(formik) => (
-          <Form>
-            {formik.status && <div>{formik.status}</div>}
-            <label htmlFor="id">ID</label>
-            <Field id="id" name="id" placeholder="Jane" />
+        <Row>
+          <Col xs={12} md={7}>
+            <Row>
+              {allEmployees &&
+                allEmployees.map((employee, key) => (
+                  <Col md={4} key={key}>
+                    <LoginCard
+                      employee={employee}
+                      onSubmit={handleSubmit}
+                    ></LoginCard>
+                  </Col>
+                ))}
+            </Row>
+          </Col>
 
             <label htmlFor="password">Password</label>
             <Field
@@ -97,7 +64,7 @@ export default function Login({ employee,allEmployees}) {
       </Formik>
       </Col>
       </Row>
-=======
+
 
         <Row>
   
@@ -126,7 +93,7 @@ export default function Login({ employee,allEmployees}) {
               onSubmit={handleSubmit}
             >
               {(formik) => (
-                <Container className="border shadow p-4">
+<Container className="border shadow p-4">
               <h1 className={styles.NavBrand}>Account LogIn</h1>
               <Image src="/img/tao.jpg" className="img-fluid rounded-circle mx-auto d-flex mb-3" style={{
                          width: "40%",
@@ -179,21 +146,18 @@ export default function Login({ employee,allEmployees}) {
             </Formik>
           </Col>
         </Row>
->>>>>>> Stashed changes
       </Container>
     </div>
   );
 }
 
-
 export async function getServerSideProps(context) {
-   const allEmployees=await axios.get(BACKEND + "/api/employees/all")
-  
-  return{
-    props: {
-      allEmployees:allEmployees.data.employees,
-      ...(await AuthenticateEmployee(context)).props
-    }
+  const allEmployees = await axios.get(BACKEND + "/api/employees/all");
 
-  }
+  return {
+    props: {
+      allEmployees: allEmployees.data.employees,
+      ...(await AuthenticateEmployee(context)).props,
+    },
+  };
 }

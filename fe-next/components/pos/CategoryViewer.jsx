@@ -6,7 +6,6 @@ import { ProductsQueries } from "../../queries/products";
 import { TransactedVariantsQueries } from "../../queries/transactedvariants";
 import { VariantCard } from "./VariantCard";
 
-
 function getWindowDimensions() {
   if (typeof window == "undefined") return { width: 0, height: 0 };
   const { innerWidth: width, innerHeight: height } = window;

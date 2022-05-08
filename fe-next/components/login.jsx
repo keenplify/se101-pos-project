@@ -26,14 +26,11 @@ export default function LoginCard({ employee, onSubmit }) {
   return (
     <>
       <div className="mb-3">
-
-    
         <Card
         hover
          className="shadow rounded"
           style={{
             cursor: "pointer",
-            
           }}
           onClick={handleShow}
         >
@@ -41,12 +38,22 @@ export default function LoginCard({ employee, onSubmit }) {
             <Card.Img
             className="img-fluid"
               style={{
+                borderRadius: "50%",
+                width: "8em",
+                height: "8em",
+                border: "3px solid #DFE1E4",
               }}
               variant="top"
               src={BACKEND + employee.image_location}
             />
           ) : (
             <Card.Img
+              style={{
+                borderRadius: "50%",
+                width: "70%",
+                height: "70%",
+                border: "3px solid #DFE1E4",
+              }}
               variant="top"
               src="img/tao.jpg"/>
           )}
@@ -114,13 +121,10 @@ export default function LoginCard({ employee, onSubmit }) {
           </Button>
           </div>
               </Modal.Body>
-
-  
             </Fragment>
           )}
         </Formik>
       </Modal>
-      </>
-    );
-  }
-  
+    </>
+  );
+}

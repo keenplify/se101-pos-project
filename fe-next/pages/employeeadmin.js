@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Container, Row, Col, Card, Table, InputGroup, Button, Form, FormControl } from "react-bootstrap"
 import Deleteemp from '../components/deleteemp'
-import Editemp from '../components/editemp'
+import Editemp from '../components/editEmp'
 import Addemp from '../components/addemp'
 import { useEffect, useState } from 'react'
 import { NavBar } from '../components/navbar'
@@ -10,11 +10,11 @@ import { Footer } from '../components/footer'
 import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
 import axios from 'axios'
 import { BACKEND } from '../helpers'
+import { ChangeableImage } from '../components/ChangeableImage'
+import { EmployeesQueries } from '../queries/employees'
 
 
 export default function Empadsee({employee,allEmployees, token}) {
-  const [modalShow, setModalShow] = useState(false, true);
-  
   return (
     <div>
       <Head>
@@ -49,17 +49,24 @@ export default function Empadsee({employee,allEmployees, token}) {
     </tr>
   </thead>
   <tbody>
-    { allEmployees && allEmployees.map ((employee) => (
-          <tr>
-          <th scope="row">{employee.id}</th>
+    { allEmployees && allEmployees.map ((_employee, key) => (
+          <tr key={key}>
+          <th scope="row">{_employee.id}</th>
           <td className="w-25">
-          {employee.images && employee.images.length > 0 && <img src={BACKEND + employee.images[0].location}  className="img-fluid img-employee" alt="employ"/>}</td>
-          <td>{employee.firstName}</td>
-          <td>{employee.lastName}</td>
-          <td>{employee.type}</td>
-          <td class="py-2">
-             <Editemp></Editemp>
-              <Deleteemp></Deleteemp>
+            <ChangeableImage
+              employee={employee}
+              token={token}
+              selectorId={_employee.id}
+              query={EmployeesQueries.changeImage}
+              image={_employee?.image_location}
+            />
+          </td>
+          <td>{_employee.firstName}</td>
+          <td>{_employee.lastName}</td>
+          <td>{_employee.type}</td>
+          <td className="py-2">
+             <Editemp token={token} employee={_employee}></Editemp>
+              <Deleteemp token={token} employee={_employee}></Deleteemp>
           </td>
         </tr>
     ))}
@@ -85,6 +92,16 @@ export async function getServerSideProps(context) {
      props: {},
    };
  }
+
+ if (!employee?.props?.employee) {
+  return {
+    redirect: {
+      destination: "/login",
+      permanent: false,
+    },
+  };
+}
+
  return{
    props: {
      allEmployees:allEmployees.data.employees,
