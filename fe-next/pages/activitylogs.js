@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import {Table} from "react-bootstrap"
-
+import { Container } from "react-bootstrap";
 import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 
@@ -15,8 +15,10 @@ export default function activitylogs() {
         <h1 className="fs-2 text-center"> Activity Logs </h1>
         </div>
         <div>
-        <h1>Vaperous Master's Activity Logs</h1>
+        <h3 className='text-center py-3'>Vaperous Master's Activity Logs</h3>
         </div>
+
+        <Container>
    <Table striped bordered hover variant="dark">
   <thead>
     <tr>
@@ -71,6 +73,7 @@ export default function activitylogs() {
     </tr>
   </tbody>
 </Table>
+</Container>
 </>
 <Footer></Footer></>
    

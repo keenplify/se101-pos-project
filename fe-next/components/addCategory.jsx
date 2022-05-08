@@ -4,6 +4,7 @@ import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { CategoriesQueries } from "../queries/categories";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 const schema = Yup.object().shape({
   name: Yup.string().min(3).max(64).required(),
@@ -19,8 +20,8 @@ export default function AddCategory({ token }) {
 
   return (
     <>
-      <Button type="button" onClick={handleShow}>
-        Add Category
+      <Button className="btn-sm" type="button" onClick={handleShow}>
+      <AiOutlineAppstoreAdd className="me-2" ></AiOutlineAppstoreAdd>Add Category
       </Button>
       <Modal
         show={show}

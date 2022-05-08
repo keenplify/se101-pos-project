@@ -150,10 +150,17 @@
 
 .cartCard {
   position: fixed;
+  background-color: whitesmoke;
+
 }
 
 @media (max-width: 767px) {
   .cartCard {
     position: relative;
   }
+}
+
+.head{
+  font-family: 'Roboto', sans-serif;
+
 }

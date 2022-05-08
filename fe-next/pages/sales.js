@@ -54,7 +54,7 @@ export default function Sales() {
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
 
-<Dropdown>
+<Dropdown className='text-center'>
   <Dropdown.Toggle variant="success" id="dropdown-basic">
     Month Sales
   </Dropdown.Toggle>
@@ -67,10 +67,10 @@ export default function Sales() {
 
 
 <div>
- <body> <h6> Here you will see a summary your transaction in a month </h6> </body>
+ <body> <h6 className='text-center'> Here you will see a summary your transaction in a month </h6> </body>
 </div>
 
-<div>
+<div className='text-center'>
   <Badge bg="primary">Total Sales: 136, 435.49</Badge> <Badge bg="secondary">Revenue: 250, 435.49</Badge>{' '}
   <Badge bg="warning">Profit: 20, 435.49 </Badge> 
 </div>
@@ -94,6 +94,7 @@ export default function Sales() {
 <br></br>
   <h1 className="fs-2 text-center"> Sales Data</h1>
 
+<Container>
   <Table striped bordered hover>
   <thead>
     <tr>
@@ -142,7 +143,7 @@ export default function Sales() {
 
   </tbody>
 </Table>
-
+</Container>
 <br></br>
 <br></br>
 <br></br>

@@ -39,7 +39,7 @@ export const ChangeableImage = ({
   ? previewImage
   : image
   ? BACKEND + image
-  : "/img/blank.jpg";
+  : "/img/blank.png";
 
   return (
     <Fragment>
@@ -49,13 +49,13 @@ export const ChangeableImage = ({
       >
         <img
           className={"img-changeable rounded"}
-          src={image ? BACKEND + image : "/img/blank.jpg"}
+          src={image ? BACKEND + image : "/img/blank.png"}
         />
         <Button
           variant="info "
           size="sm"
           className="position-absolute"
-          style={{ right: "1em", bottom: "1em", fontSize: ".5em" }}
+          style={{ right: "1em", bottom: "1em", fontSize: ".5em", display: employee.type !== "ADMIN" ? "none" : "initial" }}
           onClick={handleShow}
           disabled={employee.type !== "ADMIN"}
         >

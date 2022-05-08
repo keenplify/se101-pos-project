@@ -25,9 +25,29 @@ import DeleteProduct from "../../components/delete";
 import EditProduct from "../../components/edit";
 import EditCategory from "../../components/editCategory";
 import DeleteCategory from "../../components/deleteCategory";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
+import { ProductsQueries } from "../../queries/products";
 
 export default function ProductsViewer({ employee, category, token }) {
+  const [keyword, setKeyword] = useState("");
+  const [products, setProducts] = useState(category.products); // Use SSRed data as products default
+  const [debouncedKeyword] = useDebounce(keyword, 1000); // Wait 1000 before searching (debounced search)
+
+  useEffect(()=> {
+    if (debouncedKeyword.length > 0) {
+      //Get data from search then set it as products state
+      ProductsQueries.searchByCategory(token, category.id, debouncedKeyword).then((res)=> {
+        if (res.data?.products) {
+          setProducts(res.data.products)
+        }
+      });
+    } else {
+      // If no keyword is typed, show original SSRed data
+      setProducts(category.products);
+    }
+  }, [debouncedKeyword])
+
   return (
     <div>
       <Head>
@@ -78,7 +98,7 @@ export default function ProductsViewer({ employee, category, token }) {
         <hr />
         <Row>
           <Col>
-            <Form className="d-flex col-lg-8 p-2">
+            <div className="d-flex col-lg-8 p-2">
               <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon1">
                   <AiOutlineSearch></AiOutlineSearch>
@@ -87,9 +107,11 @@ export default function ProductsViewer({ employee, category, token }) {
                   placeholder="Search"
                   aria-label="Search"
                   type="search"
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
                 />
               </InputGroup>
-            </Form>
+            </div>
           </Col>
 
           <Col className="p-2">
@@ -113,7 +135,7 @@ export default function ProductsViewer({ employee, category, token }) {
             </tr>
           </thead>
           <tbody>
-            {category.products.map((product, key) => (
+            {products.map((product, key) => (
               <tr key={key}>
                 <th scope="row">{product.id}</th>
                 <td className="w-25">
@@ -122,9 +144,9 @@ export default function ProductsViewer({ employee, category, token }) {
                       product?.variants[0] &&
                       product.variants[0].image?.location
                         ? BACKEND + product.variants[0].image.location
-                        : "/img/blank.jpg"
+                        : "/img/blank.png"
                     }
-                    className="img-fluid rounded bg-dark"
+                    className="img-fluid rounded bg-white"
                     style={{
                       width: "7em",
                       height: "7em",

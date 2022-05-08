@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { Button, Modal } from "react-bootstrap";
 import { EmployeesQueries } from "../queries/employees";
 export default function DeleteEmployee({ token, employee }) {
   const [show, setShow] = useState(false);
   const router = useRouter();
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -14,7 +15,7 @@ export default function DeleteEmployee({ token, employee }) {
     <>
       <button
         type="button"
-        class="btn btn-sm btn-danger mx-1"
+        className="btn btn-sm btn-danger mx-1"
         onClick={handleShow}
       >
         <MdDelete></MdDelete>

@@ -1,6 +1,13 @@
 const router = require("express").Router();
 const { body, matchedData, param } = require("express-validator");
-const { Token, Image, Employee, Variant } = require("../models");
+const {
+  Token,
+  Image,
+  Employee,
+  Variant,
+  Product,
+  Category,
+} = require("../models");
 const {
   randomString,
   validateResultMiddleware,
@@ -51,7 +58,15 @@ router.get(
   passport.authenticate("bearer", { session: false }),
   async (req, res) => {
     try {
-      const variants = await Variant.findAll();
+      const variants = await Variant.findAll({
+        include: [
+          {
+            model: Product,
+            include: [Category],
+          },
+          Image,
+        ],
+      });
 
       res.send({ variants });
     } catch (error) {
@@ -103,7 +118,7 @@ router.put(
         {
           name,
           stock,
-          price
+          price,
         },
         {
           where: {
@@ -123,12 +138,10 @@ router.post(
   "/changeImage/:id",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
-  [
-    param("id").notEmpty().isNumeric(),
-  ],
+  [param("id").notEmpty().isNumeric()],
   validateResultMiddleware,
   upload.single("image"),
-  
+
   async (req, res) => {
     if (!req.file) {
       return res.status(422).send("Image not found");
@@ -195,6 +208,66 @@ router.get(
       console.log(error);
       res.status(500).json({ error: error.message });
     }
+  }
+);
+
+router.get(
+  "/search/:keyword",
+  passport.authenticate("bearer", { session: false }),
+  param("keyword").notEmpty().isString(),
+  validateResultMiddleware,
+  async (req, res) => {
+    const query = `%${req.params.keyword}%`;
+
+    let output = [];
+
+    const variants = await Variant.findAll({
+      where: {
+        name: {
+          [Op.iLike]: query,
+        },
+      },
+      include: [
+        {
+          model: Product,
+          include: [Category],
+        },
+        Image,
+      ],
+    });
+
+    console.log(variants);
+
+    output = [...variants];
+
+    const products = await Product.findAll({
+      where: {
+        name: {
+          [Op.iLike]: query,
+        },
+      },
+      include: [
+        {
+          model: Variant,
+          include: [
+            {
+              model: Product,
+              include: [Category],
+            },
+            Image,
+          ],
+        },
+      ],
+    });
+
+    products.forEach((product) => {
+      product.variants.forEach((variant) => {
+        if (output.find((v1) => v1.id == variant.id)) return;
+        output.push(variant);
+      });
+    });
+
+    res.send({ variants: output });
   }
 );
 

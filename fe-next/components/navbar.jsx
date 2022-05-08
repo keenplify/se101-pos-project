@@ -15,6 +15,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { AiFillProfile } from "react-icons/ai";
 import { BACKEND } from "../helpers";
 import { useCookies } from "react-cookie";
+import { Fragment, useEffect } from "react";
 
 export function NavBar({ employee }) {
   const [, , removeCookie] = useCookies(["token"]);
@@ -23,6 +24,17 @@ export function NavBar({ employee }) {
     removeCookie("token");
     router.push("/login");
   };
+
+  
+  useEffect(()=> {
+    if (!employee) return;
+
+    // Restrict genesis admin from opening other pages other than employeeadmin
+    console.log(employee.id == 1 && !router.route.includes("/employeeadmin"))
+    if (employee.id == 1 && !router.route.includes("/employeeadmin"))
+      router.replace("/employeeadmin");
+  }, [router.route])
+
   const imageSrc = employee?.image_location ? `${BACKEND}${employee.image_location}` : "/img/tao.jpg";
 
   return (
@@ -46,15 +58,21 @@ export function NavBar({ employee }) {
           className="justify-content-center"
         >
           <Nav className={styles.NavLink} activeKey={router.asPath}>
-            <Nav.Link href="/" className="fw-bold">
-              HOME
-            </Nav.Link>
-            <Nav.Link href="/inventory" className="fw-bold">
-              INVENTORY
-            </Nav.Link>
-            <Nav.Link href="/sales" className="fw-bold">
-              SALES
-            </Nav.Link>
+            {
+              employee?.id != 1 && (
+                <Fragment>
+                  <Nav.Link href="/" className="fw-bold">
+                    HOME
+                  </Nav.Link>
+                  <Nav.Link href="/inventory" className="fw-bold">
+                    INVENTORY
+                  </Nav.Link>
+                  <Nav.Link href="/sales" className="fw-bold">
+                    SALES
+                  </Nav.Link>
+                </Fragment>
+              )
+            }
             <Nav.Link href="/employee" className="fw-bold">
               EMPLOYEE
             </Nav.Link>
@@ -85,6 +103,7 @@ export function NavBar({ employee }) {
           
               {employee && ( 
                 <NavDropdown.Item
+                disabled
                   href="profile"
                   className={styles.employeeContainer}
                 >
@@ -114,7 +133,7 @@ export function NavBar({ employee }) {
                 <AiOutlineSetting className="fs-3 p-1"></AiOutlineSetting>
                 Setting
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">
+              <NavDropdown.Item href="/activitylogs">
                 <AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity
                 Logs
               </NavDropdown.Item>

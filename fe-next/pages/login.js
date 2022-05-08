@@ -1,19 +1,22 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form as FormikForm} from "formik";
 import axios from "axios";
 import { BACKEND } from "../helpers";
 import Router from "next/router";
 import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
 import { useCookies } from "react-cookie";
 import { NavBar } from "../components/navbar";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import {Button, Container, Row, Col, Form, Img} from "react-bootstrap";
 import LoginCard from "../components/login";
+import { FaRegUser } from "react-icons/fa";
+import { FiLock } from "react-icons/fi";
+import styles from "../styles/login.module.css";
+import Image from "react-bootstrap/Image";
 
 export default function Login({ employee, allEmployees }) {
   const [, setCookie] = useCookies(["token"]);
 
   const handleSubmit = async (values, action) => {
-    console.log(values);
     axios
       .post(BACKEND + "/api/employees/login", {
         id: values.id,
@@ -33,10 +36,12 @@ export default function Login({ employee, allEmployees }) {
     <div>
       <NavBar employee={employee} />
       <Container>
-        <h1 className="text-center mt-2">Log in</h1>
 
         <Row>
-          <Col xs={12} md={7}>
+  
+          <Col xs={12} md={7} className="py-5">
+          <h3 className={styles.header}>Recent Logins</h3>
+          <p>Click your picture or add an account.</p>
             <Row>
               {allEmployees &&
                 allEmployees.map((employee, key) => (
@@ -44,13 +49,13 @@ export default function Login({ employee, allEmployees }) {
                     <LoginCard
                       employee={employee}
                       onSubmit={handleSubmit}
-                    ></LoginCard>
+                    ></LoginCard> 
                   </Col>
                 ))}
             </Row>
           </Col>
 
-          <Col md={4} className="py-5">
+          <Col md={4} className="py-5 ms-5">
             <Formik
               initialValues={{
                 id: "",
@@ -59,71 +64,51 @@ export default function Login({ employee, allEmployees }) {
               onSubmit={handleSubmit}
             >
               {(formik) => (
-                <Container
-                  style={{
-                    width: "100%",
-                    padding: "14px 16px",
-                    border: "3px solid #DFE1E4",
-                    borderRadius: "20px",
-                    fontWeight: "bold",
-                    overflow: "auto",
-                    boxShadow: "5px 5px 10px grey",
-                  }}
-                >
-                  <center>Vaperous Master</center>
-                  <Form
-                    className
-                    style={{
-                      margin: "auto",
-                      width: "70%",
-                      padding: "10px",
-                    }}
-                  >
-                    <label htmlFor="id">User ID</label>
-                    <Col>
+                <Container className="border shadow p-4">
+              <h1 className={styles.NavBrand}>Account LogIn</h1>
+              <Image src="/img/tao.jpg" className="img-fluid rounded-circle mx-auto d-flex mb-3" style={{
+                         width: "40%",
+                        }}/>
+
+                  <FormikForm>
+
+                  
+                    <Col className="input-group py-2">
+                    <span class="input-group-text bg-transparent" id="basic-addon1"><FaRegUser></FaRegUser></span>
                       <Field
-                        style={{
-                          border: "1px solid #AEB1B4",
-                          paddingLeft: "10px",
-                          outline: "none",
-                        }}
+                      className="form-control border-start-0"
                         id="id"
                         name="id"
                         placeholder="User ID"
+                        required
                       />
+                      
                     </Col>
-                    <label htmlFor="password">Password</label>
-                    <Col>
+                  
+             
+                    <Col className="input-group py-2">
+                    <span class="input-group-text bg-transparent border" id="basic-addon1"><FiLock></FiLock></span>
                       <Field
-                        style={{
-                          border: "1px solid #AEB1B4",
-                          paddingLeft: "10px",
-                          outline: "none",
-                        }}
+                       className="form-control border-start-0"
                         type="password"
                         id="password"
                         name="password"
                         placeholder="Password"
+                        required
                       />
-                    </Col>
-                    <button
-                      style={{
-                        backgroundColor: "#2274E1",
-                        fontWeight: "bold",
-                        color: "white",
-                        borderRadius: "20px",
-                        width: "35vh",
-                        outline: "none",
-                        border: "none",
-                        padding: "8px 14px",
-                      }}
+                      
+                    </Col >
+                    <div class="d-grid gap-2">
+                    <Button
                       variant="primary"
                       type="submit"
-                      className="my-3"
+                      className="btn my-3"
                     >
                       Login
-                    </button>
-                  </Form>{" "}
+                    </Button>
+                    </div>
+                   
+                  </FormikForm>{" "}
                   {formik.status && (
                     <div style={{ color: "red" }}>{formik.status}</div>
                   )}
@@ -137,13 +122,15 @@ export default function Login({ employee, allEmployees }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const allEmployees = await axios.get(BACKEND + "/api/employees/all");
 
-  return {
+export async function getServerSideProps(context) {
+   const allEmployees=await axios.get(BACKEND + "/api/employees/all")
+  
+  return{
     props: {
-      allEmployees: allEmployees.data.employees,
-      ...(await AuthenticateEmployee(context)).props,
-    },
-  };
+      allEmployees:allEmployees.data.employees,
+      ...(await AuthenticateEmployee(context)).props
+    }
+
+  }
 }

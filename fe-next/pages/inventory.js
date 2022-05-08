@@ -31,6 +31,11 @@ export default function Inventory({ token, employee, categories }) {
           Product Categories{" "}
         </label>
         {employee.type === "ADMIN" && <AddCategory token={token} />}
+        <Link href="/inventoryall">
+          <a className=" mx-1 btn btn-dark text-white d-flex align-items-center justify-content-center shadow-sm" style={{fontWeight: "bolder"}}>
+          All Variants
+          </a>
+        </Link>
       </div>
       <div className="container col-lg-10 justify-content-center mb-5">
         <div className="row">
@@ -45,16 +50,16 @@ export default function Inventory({ token, employee, categories }) {
               >
                 <a>
                   <div
-                    className="bg-image"
+                    className="bg-image shadow"
                     style={{ maxWidth: "254px", height: "254px" }}
                   >
                     <img
                       src={
                         category?.image?.location
                           ? BACKEND + category.image.location
-                          : "/img/blank.jpg"
+                          : "/img/blank.png"
                       }
-                      className="img-fluid bg-dark"
+                      className="img-fluid bg-white"
                       style={{
                         width: "254px",
                         height: "254px",
