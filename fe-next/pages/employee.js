@@ -9,12 +9,7 @@ import axios from 'axios'
 import { BACKEND } from '../helpers'
 
 
-<<<<<<< Updated upstream
-export default function Employee({employee, allEmployees}) {
-  
-=======
 export default function Employee({ employee, allEmployees }) {
->>>>>>> Stashed changes
   return (
     <div>
       <Head>
