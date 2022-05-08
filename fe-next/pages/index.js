@@ -36,6 +36,7 @@ import { POSCartViewer } from "../components/pos/CartViewer";
 import axios from "axios";
 import { BACKEND } from "../helpers";
 import { TransactionsQueries } from "../queries/transactions";
+import { POSSearch } from "../components/pos/POSSearch";
 
 export default function Home({
   employee,
@@ -83,6 +84,14 @@ export default function Home({
                   />
                 </Tab>
               ))}
+              <Tab eventKey="search" title="Search">
+                <POSSearch
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                  transaction={activeTransaction}
+                  token={token}
+                />
+              </Tab>
             </Tabs>
           </Col>
           <Col

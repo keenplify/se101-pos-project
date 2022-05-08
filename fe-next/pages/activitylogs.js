@@ -42,7 +42,7 @@ export default function activitylogs({ token, _logs, employee }) {
               {logs.edges.map((edge, key) => (
                 <tr key={key}>
                   <td>{edge.node.id}</td>
-                  <td>{edge.node.createdAt}</td>
+                  <td>{new Date(edge.node.createdAt).toLocaleString()}</td>
                   <td>
                     {edge.node.employee.firstName} {edge.node.employee.lastName}
                   </td>

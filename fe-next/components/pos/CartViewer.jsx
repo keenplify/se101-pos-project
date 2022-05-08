@@ -203,7 +203,7 @@ export const POSCartViewer = ({
               overlay={
                 transaction.state !== "PROCESSING" ? (
                   <Tooltip>
-                    You cannot checkout this transaction because it is already{" "}
+                    You cannot modify this transaction because it is already{" "}
                     <Badge bg="primary">{transaction.state}</Badge>
                   </Tooltip>
                 ) : (
@@ -211,7 +211,7 @@ export const POSCartViewer = ({
                 )
               }
             >
-              <span className="d-flex w-100">
+              <span className="d-flex w-100 flex-column">
                 <Button
                   variant={
                     transaction.state !== "PROCESSING"
@@ -219,19 +219,20 @@ export const POSCartViewer = ({
                       : "success"
                   }
                   onClick={() => setModalShow(true)}
-                  className="w-100"
+                  className="w-100 mb-2"
                   disabled={transaction.state !== "PROCESSING"}
                 >
                   Checkout
                 </Button>
+                <BarcodeScannerModal
+                  token={token}
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                  transaction={transaction}
+                  disabled={transaction.state !== "PROCESSING"}
+                />
               </span>
             </OverlayTrigger>
-            <BarcodeScannerModal
-              token={token}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              transaction={transaction}
-            />
             <DeleteTransactionModal />
             <ChangeTransactionForm transaction={transaction} />
           </Col>

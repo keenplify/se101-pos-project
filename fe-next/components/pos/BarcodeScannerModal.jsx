@@ -15,6 +15,7 @@ export const BarcodeScannerModal = ({
   cartItems,
   setCartItems,
   transaction,
+  disabled
 }) => {
   const [show, setShow] = useState(false);
 
@@ -106,6 +107,7 @@ export const BarcodeScannerModal = ({
         variant="secondary"
         onClick={() => setShow(true)}
         className="w-100"
+        disabled={disabled}
       >
         Barcode Scanner
       </Button>
