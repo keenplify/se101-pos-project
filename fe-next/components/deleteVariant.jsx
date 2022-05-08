@@ -14,7 +14,7 @@ export default function DeleteVariant({ token, variant }) {
     <>
       <button
         type="button"
-        class="btn btn-sm btn-danger mx-1"
+        className="btn btn-sm btn-danger mx-1"
         onClick={handleShow}
       >
         <MdDelete></MdDelete>

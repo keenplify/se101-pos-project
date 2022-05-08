@@ -74,12 +74,23 @@ export const VariantsQueries = {
 
   delete: async function (token, variantId) {
     return await axios.delete(
-      BACKEND + VariantsQueries.route + "/"+variantId,
+      BACKEND + VariantsQueries.route + "/" + variantId,
       {
         headers: {
           Authorization: "Bearer " + token,
         },
       }
     );
-  }
+  },
+
+  search: async function (token, keyword) {
+    return await axios.get(
+      BACKEND + VariantsQueries.route + "/search/" + keyword,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
 };

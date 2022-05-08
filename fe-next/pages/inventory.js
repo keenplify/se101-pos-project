@@ -31,6 +31,11 @@ export default function Inventory({ token, employee, categories }) {
           Product Categories{" "}
         </label>
         {employee.type === "ADMIN" && <AddCategory token={token} />}
+        <Link href="/inventoryall">
+          <a className=" mx-1 btn btn-dark text-white d-flex align-items-center justify-content-center shadow-sm" style={{fontWeight: "bolder"}}>
+          All Variants
+          </a>
+        </Link>
       </div>
       <div className="container col-lg-10 justify-content-center mb-5">
         <div className="row">

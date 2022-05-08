@@ -78,6 +78,34 @@ router.get(
   }
 );
 
+// SEARCH BY KEYWORD AND CATEGORY
+router.get(
+  "/searchByCategory",
+  passport.authenticate("bearer", { session: false }),
+  query("categoryId").notEmpty().isNumeric(),
+  query("keyword").notEmpty().isString(),
+  validateResultMiddleware,
+  async (req, res) => {
+    const { keyword, categoryId } = matchedData(req, {
+      locations: ["query"],
+    });
+
+    try {
+      const products = await Product.findAll({
+        where: { name: { [Op.iLike]: `%${keyword}%` }, categoryId },
+
+        include: [{ model: Variant, include: [Image] }],
+      });
+
+      res.send({
+        products,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
 // GET PRODUCT BY CATEGORY
 router.get(
   "/getByCategoryPaginate",
@@ -152,7 +180,7 @@ router.post(
       locations: ["body"],
     });
 
-    console.log(req.user)
+    console.log(req.user);
 
     try {
       const newProduct = await Product.create({
@@ -163,7 +191,7 @@ router.post(
 
       res.send(newProduct);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(500).json({ error: error.message });
     }
   }
@@ -196,9 +224,7 @@ router.put(
   "/:id",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
-  [
-    body("name").notEmpty().isString(),
-  ],
+  [body("name").notEmpty().isString()],
   param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
 

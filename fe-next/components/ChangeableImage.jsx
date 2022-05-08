@@ -55,7 +55,7 @@ export const ChangeableImage = ({
           variant="info "
           size="sm"
           className="position-absolute"
-          style={{ right: "1em", bottom: "1em", fontSize: ".5em" }}
+          style={{ right: "1em", bottom: "1em", fontSize: ".5em", display: employee.type !== "ADMIN" ? "none" : "initial" }}
           onClick={handleShow}
           disabled={employee.type !== "ADMIN"}
         >

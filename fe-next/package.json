@@ -27,6 +27,7 @@
     "react-toastify": "^8.2.0",
     "recharts": "^2.1.9",
     "universal-cookie": "^4.0.4",
+    "use-debounce": "^8.0.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
