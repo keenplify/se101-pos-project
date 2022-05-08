@@ -27,7 +27,7 @@ export function VariantCard({
 
   return (
     <Col>
-      <Card>
+      <Card className="shadow">
         <div style={{ position: "relative" }}>
           <Card.Img
             variant="top"
@@ -36,7 +36,7 @@ export function VariantCard({
                 ? BACKEND + variant.image.location
                 : "/img/blank.jpg"
             }
-            className="img-fluid rounded bg-dark"
+            className="img-fluid rounded bg-transparent"
             style={{
               width: "100%",
               height: "10em",
@@ -46,7 +46,7 @@ export function VariantCard({
           />
           {transaction.state === "PROCESSING" && (
             <Badge
-              bg={calcStock > 0 ? "info" : "danger"}
+              bg={calcStock > 0 ? "dark" : "danger"}
               style={{
                 display: "inline-block",
                 position: "absolute",
@@ -59,7 +59,7 @@ export function VariantCard({
           )}
         </div>
         <Card.Body>
-          <Card.Title
+          <Card.Title 
             style={{
               width: "100%",
               overflow: "hidden",
@@ -70,12 +70,12 @@ export function VariantCard({
             {variant.name}
           </Card.Title>
           <div className="d-flex">
-            <span className="btn btn-outline-secondary mx-1">
+            <span className="text-dark btn btn-outline-secondary mx-1">
               ₱{variant.price}
             </span>
             <Button
               variant={calcStock > 0 ? "primary" : "outline-dark"}
-              className="flex-grow-1 mx-1"
+              className="btn-sm flex-grow-1 mx-1"
               onClick={async () => {
                 try {
                   for (let index = 0; index < cartItems.length; index++) {

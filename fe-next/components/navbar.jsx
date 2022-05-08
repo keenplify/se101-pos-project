@@ -103,6 +103,7 @@ export function NavBar({ employee }) {
           
               {employee && ( 
                 <NavDropdown.Item
+                disabled
                   href="profile"
                   className={styles.employeeContainer}
                 >
@@ -132,7 +133,7 @@ export function NavBar({ employee }) {
                 <AiOutlineSetting className="fs-3 p-1"></AiOutlineSetting>
                 Setting
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">
+              <NavDropdown.Item href="/activitylogs">
                 <AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity
                 Logs
               </NavDropdown.Item>

@@ -15,6 +15,7 @@ import {
 } from "react-bootstrap";
 import { BACKEND } from "../helpers";
 import { Field, Formik, Form as FormikForm } from "formik";
+import { FiLock } from "react-icons/fi";
 
 export default function LoginCard({ employee, onSubmit }) {
   const [show, setShow] = useState(false);
@@ -24,26 +25,18 @@ export default function LoginCard({ employee, onSubmit }) {
 
   return (
     <>
-      <div>
+      <div className="mb-3">
         <Card
+        hover
+         className="shadow rounded"
           style={{
-            justifyContent: "center",
-            placeItems: "center",
-            padding: "8px 0",
-            width: "90%",
-            margin: ".5em 5%",
-            border: "3px solid #DFE1E4",
-            borderRadius: "20px",
-            fontSize: "1em",
-            fontWeight: "bold",
-            overflow: "auto",
-            boxShadow: "5px 5px 10px grey",
             cursor: "pointer",
           }}
           onClick={handleShow}
         >
           {typeof employee.image_location !== undefined ? (
             <Card.Img
+            className="img-fluid"
               style={{
                 borderRadius: "50%",
                 width: "8em",
@@ -74,6 +67,7 @@ export default function LoginCard({ employee, onSubmit }) {
       </div>
 
       <Modal
+         size="sm"
         show={show}
         onHide={handleClose}
         aria-labelledby="contained-modal-title-vcenter"
@@ -88,24 +82,24 @@ export default function LoginCard({ employee, onSubmit }) {
         >
           {(formik) => (
             <Fragment>
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  You are about to log in as{" "}
-                  <b>
-                    {employee.firstName} {employee.lastName}
-                  </b>
-                </Modal.Title>
-              </Modal.Header>
+              <Modal.Header closeButton className="border-0 text-center">
+                
+              </Modal.Header> 
               <Modal.Body className="text-center">
                 {formik.status && (
                   <div class="alert alert-danger">{formik.status}</div>
                 )}
                 <FormikForm>
+              <img  className="img-thumbnail rounded-circle w-75" src={BACKEND + employee.image_location}/>
+                        <Card.Text className="text-center">
+              {employee.firstName} {employee.lastName}
+            </Card.Text>  
                   <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="2">
-                      <b>Password</b>
+                    
                     </Form.Label>
-                    <Col sm="10">
+                    <Col className="input-group" sm="5">
+                    <span class="input-group-text bg-transparent border" id="basic-addon1"><FiLock></FiLock></span>
                       <Field
                         as={Form.Control}
                         id="password"
@@ -116,33 +110,17 @@ export default function LoginCard({ employee, onSubmit }) {
                     </Col>
                   </Form.Group>
                 </FormikForm>
+                <div class="d-grid gap-2 col-8 mx-auto">
+                <Button
+            
+            variant="primary"
+            type="submit"
+            onClick={formik.handleSubmit}
+          >
+            Login
+          </Button>
+          </div>
               </Modal.Body>
-
-              <Modal.Footer>
-                <Button
-                  style={{
-                    borderRadius: "20px",
-                    padding: "8px 14px",
-                    fontWeight: "bold",
-                  }}
-                  variant="secondary"
-                  onClick={handleClose}
-                >
-                  Close
-                </Button>
-                <Button
-                  style={{
-                    borderRadius: "20px",
-                    padding: "8px 14px",
-                    fontWeight: "bold",
-                  }}
-                  variant="primary"
-                  type="submit"
-                  onClick={formik.handleSubmit}
-                >
-                  Login
-                </Button>
-              </Modal.Footer>
             </Fragment>
           )}
         </Formik>

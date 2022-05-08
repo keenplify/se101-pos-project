@@ -51,7 +51,7 @@ export const POSCategoryViewer = ({
           product.variants.length > 0 && (
             <div className="my-2" key={key}>
               <h4>
-                <Badge bg="info">{product.name}</Badge>
+                <Badge bg="dark ">{product.name}</Badge>
               </h4>
               <Row xs={2} md={3} className="g-4">
                 {product.variants.map((variant, key) => (
