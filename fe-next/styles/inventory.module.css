@@ -1,4 +1,32 @@
+<<<<<<< Updated upstream
 .CardImg:hover{
     transform: scale(1.1) ;
     box-shadow: 3px 3px 3px gray;
+=======
+
+
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Anton&family=BIZ+UDPMincho&family=Bebas+Neue&family=Fjalla+One&family=Heebo:wght@700&family=Inter:wght@600&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@200&family=PT+Sans+Narrow:wght@700&family=Roboto:ital,wght@0,300;1,900&family=Teko:wght@300&display=swap');
+
+
+.CardImg:hover {
+  transform: scale(1.1);
+  box-shadow: 3px 3px 3px gray;
+}
+
+.head{
+  font-size:2em ;
+  font-weight: bold;
+  margin-right: auto;
+  font-family: "Roboto", sans-serif;
+
+
+
+}
+.mask{
+  font-family: "Roboto", sans-serif;
+  font-size: 120%;
+  background-color: rgb(255, 255, 255);
+
+
+>>>>>>> Stashed changes
 }

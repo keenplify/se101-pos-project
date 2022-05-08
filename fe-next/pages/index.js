@@ -39,6 +39,7 @@ export default function Home({employee}) {
 
       <Container fluid>
         <Row className="p-5">
+<<<<<<< Updated upstream
           <Col md="9" lg="9">
             <Card>
               <Card.Body>
@@ -531,6 +532,23 @@ export default function Home({employee}) {
                 </div>
               </Card.Body>
             </Card>
+=======
+          <Col xs={{ order: 2 }} md={{ span: 9, order: 1 }} className="py-2">
+            {/* Column for product view */}
+            <Tabs  defaultActiveKey={0}>
+              {categories.map((category, key) => (
+                <Tab eventKey={key} title={category.name}>
+                  <POSCategoryViewer
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                    category={category}
+                    token={token}
+                    transaction={activeTransaction}
+                  />
+                </Tab>
+              ))}
+            </Tabs>
+>>>>>>> Stashed changes
           </Col>
           <Col lg="3" xl="3" className="position-relative">
             <Card className={styles.cartCard}>
