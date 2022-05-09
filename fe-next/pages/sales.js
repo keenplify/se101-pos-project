@@ -8,6 +8,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, L
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Badge from 'react-bootstrap/Badge'
+import {PieChart, Pie } from 'recharts';
 
 export default function Sales() {
   
@@ -35,8 +36,13 @@ export default function Sales() {
       Profit: 7280,
       TotalSales: 8708,
       Revenue: 5000,
-    }
-
+    },
+  
+    { name: 'Group A', value: 430 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 250 },
+    { name: 'Group D', value: 200 },
+  
   ])
   
   return (
@@ -46,10 +52,7 @@ export default function Sales() {
         <title>Vaperous M4ster - POS Website</title>
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
-
       
-    
-
     <NavBar></NavBar>
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
@@ -90,7 +93,16 @@ export default function Sales() {
 </Container>
 
 <br></br>
-<br></br>
+<div className='text-center'>
+<Badge bg="#8884d8">Profit: 20, 435.49 </Badge> 
+</div>
+<Container className="d-flex justify-content-center">
+          <PieChart  width={400} height={300} data={data}>
+        <Pie dataKey="value" data={data} fill="#8884d8" label />
+          </PieChart>
+        </Container>
+        
+
 <br></br>
   <h1 className="fs-2 text-center"> Sales Data</h1>
 

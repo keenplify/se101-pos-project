@@ -72,7 +72,7 @@ export default function Sales({employee}) {
     <h2 className="fs-2 text-center"> Sales Performance</h2>
     
 
-    <Dropdown>
+    <Dropdown className='text-center'>
   <Dropdown.Toggle variant="success" id="dropdown-basic">
     Week Sales
   </Dropdown.Toggle>
@@ -85,12 +85,12 @@ export default function Sales({employee}) {
 
 
 <div>
- <body> <h6> Here you will see a summary your transaction in a month </h6> </body>
+ <body> <h6 className='text-center'> Here you will see a summary your transaction in a month </h6> </body>
 </div>
 
-<div>
-  <Badge bg="primary">Total Sales: 34, 435.49</Badge> <Badge bg="secondary">Revenue: 62, 435.49</Badge>{' '}
-  <Badge bg="warning">Profit: 5, 435.49 </Badge> 
+<div  className='text-center'>
+  <Badge bg="primary">Total Sales: 34, 435.49</Badge> <Badge bg="secondary"> Revenue: 62, 435.49</Badge>{' '}
+  <Badge bg="warning" > Profit: 5, 435.49 </Badge> 
 </div>
 
       <Container className="d-flex justify-content-center">
