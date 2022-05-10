@@ -9,12 +9,28 @@ const {
 } = require("../libraries/helpers");
 const passport = require("passport");
 const upload = require("../libraries/multer");
-const { TransactedVariant, EWallet, Variant, Product, Log } = require("../models");
+const {
+  TransactedVariant,
+  EWallet,
+  Variant,
+  Product,
+  Log,
+} = require("../models");
 const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../libraries/sequelize");
 const Revoice = require("revoice");
 const helpers = require("../libraries/helpers");
 const path = require("path");
+
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 router.post(
   "/add",
@@ -35,8 +51,8 @@ router.post(
       await Log.create({
         createdBy: req.user.id,
         transactionId: newTransaction.id,
-        description: `A new transaction has been added.`
-      })
+        description: `A new transaction has been added.`,
+      });
 
       res.send({ newTransaction });
     } catch (error) {
@@ -165,8 +181,8 @@ router.post(
       await Log.create({
         createdBy: req.user.id,
         transactionId: req.params.id,
-        description: `Transaction ID#${req.params.id} was finalized.`
-      })
+        description: `Transaction ID#${req.params.id} was finalized.`,
+      });
 
       res.send();
     } catch (error) {
@@ -187,16 +203,18 @@ router.get(
         include: [
           {
             model: TransactedVariant,
-            include: [{
-              model: Variant,
-              include: [Product]
-            }],
+            include: [
+              {
+                model: Variant,
+                include: [Product],
+              },
+            ],
           },
           EWallet,
         ],
       });
 
-      const items = transaction.transactedvariants.map(tv => {
+      const items = transaction.transactedvariants.map((tv) => {
         return {
           id: tv.variant.id.toString(),
           title: `${tv.variant.product.name} - ${tv.variant.name}`,
@@ -204,39 +222,54 @@ router.get(
           amount: tv.variant.price,
           tax: 0,
           quantity: tv.quantity,
-          total: tv.variant.price*tv.quantity
-        }
-      })
-
-      const destination = "/public/generated-receipts/"
-
-      const invoicePath = await Revoice.default.generateHTMLInvoice({
-        id: transaction.id.toString(),
-        date: transaction.updatedAt.toISOString().slice(0, 10),
-        issuer: helpers.company,
-        type: transaction.type,
-        invoicee: {
-          name: transaction.type == "EWALLET" ? transaction['e-wallet'].account_name + " (" + transaction['e-wallet'].phone_number + ")" : "",
-        },
-        items,
-        comments: transaction.remarks
-      }, {
-        template: "./public/receipt/index.html",
-        destination: "." + destination,
-        name: "receipt-" + new Date().getTime().toString(),
+          total: tv.variant.price * tv.quantity,
+        };
       });
-      const extension = path.extname(invoicePath);
-      const invoiceFileName = path.basename(invoicePath, extension)
 
-      const link = req.protocol + "://" + req.headers.host + destination + invoiceFileName + ".html"
+      const destination = "/public/generated-receipts/";
+
+      const invoicePath = await Revoice.default.generateHTMLInvoice(
+        {
+          id: transaction.id.toString(),
+          date: transaction.updatedAt.toISOString().slice(0, 10),
+          issuer: helpers.company,
+          type: transaction.type,
+          invoicee: {
+            name:
+              transaction.type == "EWALLET"
+                ? transaction["e-wallet"].account_name +
+                  " (" +
+                  transaction["e-wallet"].phone_number +
+                  ")"
+                : "",
+          },
+          items,
+          comments: transaction.remarks,
+        },
+        {
+          template: "./public/receipt/index.html",
+          destination: "." + destination,
+          name: "receipt-" + new Date().getTime().toString(),
+        }
+      );
+      const extension = path.extname(invoicePath);
+      const invoiceFileName = path.basename(invoicePath, extension);
+
+      const link =
+        req.protocol +
+        "://" +
+        req.headers.host +
+        destination +
+        invoiceFileName +
+        ".html";
 
       await Log.create({
         createdBy: req.user.id,
         transactionId: req.params.id,
-        description: `Transaction ID#${req.params.id} receipt was generated. Link: "${link}"`
-      })
+        description: `Transaction ID#${req.params.id} receipt was generated. Link: "${link}"`,
+      });
 
-      res.send({location: link});
+      res.send({ location: link });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -244,7 +277,7 @@ router.get(
 );
 
 router.get(
-  "/generateSalesData",
+  "/generateSalesData/weekly",
   passport.authenticate("bearer", { session: false }),
   AdminOnly,
   query("startDate").notEmpty().isISO8601(),
@@ -259,11 +292,9 @@ router.get(
     let _endDate = new Date(endDate);
 
     try {
-      const weekdata = await Transaction.findAll({
-        attributes: [
-          [sequelize.fn("sum", sequelize.col("total_price")), "total_amount"],
-        ],
+      const mainDataSource = await Transaction.findAll({
         where: {
+          state: "PAID",
           createdAt: {
             [Op.and]: {
               [Op.gte]: _startDate,
@@ -271,9 +302,163 @@ router.get(
             },
           },
         },
+        include: [{
+          model: TransactedVariant,
+          include: [{
+            model: Variant,
+            include: [Product]
+          }]
+        }]
       });
 
-      res.send({ weekdata });
+      // Calculate week Data Table
+      let barData = [];
+      let currentDate = _startDate;
+      while (currentDate <= _endDate) {
+        currentDate.setDate(currentDate.getDate() + 1); // glad js is smart about date rollovers,,,
+        let sales = 0;
+
+        mainDataSource.forEach((source) => {
+          // Check if source is within the date
+          const createdAt = new Date(source.createdAt);
+          if (
+            createdAt.getYear() == currentDate.getYear() &&
+            createdAt.getMonth() == currentDate.getMonth() &&
+            createdAt.getDay() == currentDate.getDay()
+          ) {
+            sales += source.total_price;
+          }
+        });
+
+        barData.push({
+          name: days[currentDate.getDay()],
+          Sales: sales,
+        });
+      }
+
+      let pieData = [];
+      var totalSales = 0;
+
+      mainDataSource.forEach(transaction => {
+        totalSales += transaction.total_price;
+        transaction.transactedvariants.forEach((source) => {
+          var dataIndex = pieData.findIndex(
+            (data) => data.transactedVariant.variant.id == source.variant.id
+          );
+          if (dataIndex >= 0) {
+            pieData[dataIndex].value += source.quantity;
+            pieData[dataIndex].total_price += source.variant.price;
+          } else {
+            pieData.push({
+              transactedVariant: source,
+              name: `${source.variant.product.name} ${source.variant.name}`,
+              total_price: source.variant.price,
+              value: source.quantity,
+            });
+          }
+        });
+      })
+
+
+      res.send({ barData, pieData, totalSales });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
+router.get(
+  "/generateSalesData/monthly",
+  passport.authenticate("bearer", { session: false }),
+  AdminOnly,
+  query("startDate").notEmpty().isISO8601(),
+  query("endDate").notEmpty().isISO8601(),
+  validateResultMiddleware,
+  async (req, res) => {
+    const { startDate, endDate } = matchedData(req, {
+      locations: ["query"],
+    });
+
+    let _startDate = new Date(startDate);
+    let _endDate = new Date(endDate);
+
+    try {
+      const mainDataSource = await Transaction.findAll({
+        where: {
+          state: "PAID",
+          createdAt: {
+            [Op.and]: {
+              [Op.gte]: _startDate,
+              [Op.lte]: _endDate,
+            },
+          },
+        },
+        include: [{
+          model: TransactedVariant,
+          include: [{
+            model: Variant,
+            include: [Product]
+          }]
+        }]
+      });
+
+      // Calculate week Data Table
+      let barData = [];
+      let currentDate = _startDate;
+      let tblindex=0;
+      while (currentDate <= _endDate) {
+        let sales = 0;
+        console.log(currentDate.getDate());
+        let lastDate = new Date(currentDate.toISOString())
+        lastDate.setDate(lastDate.getDate() + 6);
+
+        mainDataSource.forEach((source) => {
+          // Check if source is within the date
+          const createdAt = new Date(source.createdAt);
+          if (
+            createdAt.getYear() == currentDate.getYear() &&
+            createdAt.getMonth() == currentDate.getMonth() &&
+            createdAt <= lastDate &&
+            createdAt >= currentDate
+          ) {
+            sales += source.total_price;
+          }
+        });
+
+        currentDate.setDate(currentDate.getDate() + 7); // glad js is smart about date rollovers,,,
+        tblindex++;
+        barData.push({
+          name: "Week " + tblindex,
+          Sales: sales,
+        });
+      }
+
+      let pieData = [];
+      var totalSales = 0;
+
+      mainDataSource.forEach(transaction => {
+        totalSales += transaction.total_price;
+        transaction.transactedvariants.forEach((source) => {
+          var dataIndex = pieData.findIndex(
+            (data) => data.transactedVariant.variant.id == source.variant.id
+          );
+          if (dataIndex >= 0) {
+            pieData[dataIndex].value += source.quantity;
+            pieData[dataIndex].total_price += source.variant.price;
+          } else {
+            pieData.push({
+              transactedVariant: source,
+              name: `${source.variant.product.name} ${source.variant.name}`,
+              total_price: source.variant.price,
+              value: source.quantity,
+            });
+          }
+        });
+      })
+
+
+      res.send({ barData, pieData, totalSales });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: error.message });

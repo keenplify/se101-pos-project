@@ -35,8 +35,8 @@ export function Verification({onProceed}) {
       <h4 className="text-center">Transaction Complete!</h4>
       <Modal.Footer>
             <div className='px-5'>
-              <Button variant="primary">Print Receipt</Button>
-              <Button variant="success" onClick={handleClose}>New Transaction</Button>
+              <Button variant="primary" className="mx-1">Print Receipt</Button>
+              <Button variant="success" onClick={handleClose} className="mx-1">New Transaction</Button>
             </div>
       </Modal.Footer>
 

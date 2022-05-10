@@ -1,253 +1,253 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { NavBar } from '../components/navbar'
-import { Footer } from '../components/footer'
-import { useEffect, useState } from 'react'
-import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar } from 'recharts';
-import Dropdown from 'react-bootstrap/Dropdown';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
-import Badge from 'react-bootstrap/Badge'
-import { PieChart, Pie, } from 'recharts';
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import { NavBar } from "../components/navbar";
+import { Footer } from "../components/footer";
+import { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  FormControl,
+  Button,
+  InputGroup,
+  Table,
+  Modal,
+} from "react-bootstrap";
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  ComposedChart,
+  Tooltip,
+  Legend,
+  Area,
+  Bar,
+  Sector,
+  ResponsiveContainer
+} from "recharts";
+import Dropdown from "react-bootstrap/Dropdown";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
+import Badge from "react-bootstrap/Badge";
+import { PieChart, Pie } from "recharts";
+import { TransactionsQueries } from "../queries/transactions";
 
-export default function Sales() {
-  
-  const [data,setData]=useState([
-    {
-      name: 'Jan',
-      Profit: 5587,
-      TotalSale: 4990,
-      Revenue: 2500,
-    },
-    {
-      name: 'Feb',
-      Profit: 3200,
-      TotalSale: 4398,
-      Revenue: 2210,
-    },
-    {
-      name: 'Mar',
-      Profit: 5198,
-      TotalSale: 6800,
-      Revenue: 3290,
-    },
-    {
-      name: 'Apr',
-      Profit: 3280,
-      TotalSale: 2708,
-      Revenue: 3010,
-    },
-    { 
-      name: 'May', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
-    value: 35
-    },
-    {
-    name: 'Jun', 
-    Profit: 4587,
-    TotalSale: 3790,
-    Revenue: 1300,
-    value: 15 
-    },
-    { 
-    name: 'Jul',
-    Profit: 6127,
-    TotalSale: 2490,
-    Revenue: 3900,
-    value: 20 
-    },
-    { 
-    name: 'August',
-    Profit: 6387,
-    TotalSale: 5190,
-    Revenue: 3620,
-    value: 25 
-    },
-    { 
-    name: 'Sep', 
-    Profit: 2287,
-    TotalSale: 1490,
-    Revenue: 1734,
-    },
-    { 
-    name: 'Oct', 
-    Profit: 3287,
-    TotalSale: 2190,
-    Revenue: 2601,
-    },
-    { 
-    name: 'Nov', 
-    Profit: 6287,
-    TotalSale: 4901,
-    Revenue: 2607,
-   },
-   {
-    name: 'Dec',
-    Profit: 7137,
-    TotalSale: 5290,
-    Revenue: 3034, 
-  },
-  ])
-    
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180;
+  const {
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+  } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const sx = cx + (outerRadius + 10) * cos;
+  const sy = cy + (outerRadius + 10) * sin;
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ey = my;
+  const textAnchor = cos >= 0 ? "start" : "end";
 
   return (
+    <g>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        {payload.name}
+      </text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text
+        x={ex + (cos >= 0 ? 1 : -1)}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#333"
+      >{`Total Sales - ${value}`}</text>
+      <text
+        x={ex + (cos >= 0 ? 1 : -1)}
+        y={ey}
+        dy={18}
+        textAnchor={textAnchor}
+        fill="#333"
+      >{`Total Price - ₱${payload.total_price}`}</text>
+      <text
+        x={ex + (cos >= 0 ? 1 : -1)}
+        y={ey}
+        dy={36}
+        textAnchor={textAnchor}
+        fill="#999"
+      >
+        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+      </text>
+    </g>
+  );
+};
 
+export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
+  const [activePieIndex, setActivePieIndex] = useState(0);
+  const [mode, setMode] = useState("Week");
+  return (
     <div>
-    
-    <Head>
-      <title>Vaperous M4ster - POS Website</title>
-      <link rel="icon" href="/img/Logo.jpg" />
-    </Head>
+      <Head>
+        <title>Vaperous M4ster - POS Website</title>
+        <link rel="icon" href="/img/Logo.jpg" />
+      </Head>
 
-    <NavBar></NavBar>
+      <NavBar token={token} employee={employee} />
 
-  <h2 className="fs-2 text-center"> Sales Performance</h2>
-  
-  <Dropdown className='text-center'>
-<Dropdown.Toggle variant="success" id="dropdown-basic">
-  Month Sales
-</Dropdown.Toggle>
+      <h2 className="fs-2 text-center"> Sales Performance</h2>
 
-<Dropdown.Menu>
-  <Dropdown.Item href="sales">Month Sales</Dropdown.Item>
-  <Dropdown.Item href="WeeklyCharts">Week Sales</Dropdown.Item>
-</Dropdown.Menu>
-</Dropdown>
+      <div className="d-flex align-items-center justify-content-center">
+        <Form.Select onChange={(e)=>setMode(e.target.value)} style={{maxWidth: 256}}>
+          <option value="Week">Week Sales</option>
+          <option value="Month">Month Sales</option>
+        </Form.Select>
+      </div>
 
+      <div>
+        {" "}
+        <h6 className="text-center">
+          {" "}
+          Here you will see a summary your transaction in a {mode === "Week" ? "week" : "month"}
+        </h6>{" "}
+      </div>
 
-<div>
-<body> <h6 className='text-center'> Here you will see a summary your transaction in a month </h6> </body>
-</div>
+      <div className="text-center">
+        <Badge bg="primary">Total Sales: ₱{(mode == "Week" ? _weeklyData : _monthlyData).totalSales}</Badge>
+      </div>
 
-<div  className='text-center'>
-<Badge bg="primary">Total Sales: 136, 435.49</Badge> <Badge bg="secondary"> Revenue: 250, 435.49</Badge>{' '}
-<Badge bg="warning" > Profit: 20, 435.49 </Badge> 
-</div>
-
-
-<Container><Badge bg="dark" > Battery Lion: 35% <br></br> Sale: 290 pcs<br></br> Total: 1750 </Badge> <Badge bg="dark" > Juice Tang: 25% <br></br> Sale: 250 pcs<br></br> Total: 1550 </Badge>
-  <br></br><Badge bg="dark" > Pods Relx: 25% <br></br> Sale: 170 pcs<br></br> Total: 1350 </Badge> <Badge bg="dark" > Mod OXVA: 15% <br></br> Sale: 100 pcs<br></br> Total: 1150 </Badge>
+      <Container className="my-5">
         <Row>
-        <PieChart  width={450} height={300} data={data}>
-        <Pie dataKey="value" data={data} fill="#8884d8" label />
-          </PieChart>
+          <Col md={6} className="d-flex justify-content-center align-items-center flex-column">
+            <h3>Top Selling Products this {mode}</h3>
+            <ResponsiveContainer width="100%" height={412}>
+              <PieChart>
+                <Pie
+                  activeIndex={activePieIndex}
+                  activeShape={renderActiveShape}
+                  data={mode == "Week" ? _weeklyData.pieData : _monthlyData.pieData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  onMouseEnter={(_, index) => setActivePieIndex(index)}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </Col>
+          <Col md={6} className="d-flex justify-content-center align-items-center flex-column">
+            <h3>{mode === "Week" ? "Daily" : "Weekly"} Breakdown of Sales</h3>
+            <ResponsiveContainer width="100%" height={412}>
+              <ComposedChart data={mode == "Week" ? _weeklyData.barData : _monthlyData.barData}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <CartesianGrid stroke="#f5f5f5" />
+                <Area
+                  type="monotone"
+                  dataKey="Sales"
+                  fill="#8884d8"
+                  stroke="#8884d8"
+                />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </Col>
+        </Row>
+      </Container>
 
-    <ComposedChart  width={630} height={400} data={data}>
-    <XAxis dataKey="name" />
-  <YAxis />
-  <Tooltip />
-  <CartesianGrid stroke="#f5f5f5" />
-  <Area type="monotone" dataKey="Profit" fill="#8884d8" stroke="#8884d8" />
-  <Bar dataKey="TotalSale" barSize={20} fill="#413ea0" />
-  <Line type="monotone" dataKey="Revenue" stroke="#ff7300" />
-  </ComposedChart>
-  
-          </Row>
-</Container>
+      <h1 className="fs-2 text-center"> Sales Data</h1>
 
-<h1 className="fs-2 text-center"> Sales Data</h1>
+      <Container>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>{mode === "Week" ? "Day" : "Months"}</th>
+              <th>Total Sales</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              (mode === "Week" ? _weeklyData.barData : _monthlyData.barData).map((data, key)=>(
+                <tr key={key}>
+                  <td>{data.name}</td>
+                  <td>₱{data.Sales}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+      </Container>
+      <br></br>
+      <br></br>
+      <br></br>
 
-<Container>
-  <Table striped bordered hover>
-  <thead>
-    <tr>
-      <th>Months</th>
-      <th>Total Sales</th>
-      <th>Revenue</th>
-      <th>Profit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>January</td>
-      <td>4490</td>
-      <td>2500</td>
-      <td>5587</td>
-    </tr>
-    <tr>
-      <td>February</td>
-      <td>4398</td>
-      <td>2210</td>
-      <td>3200</td>
-    </tr>
-    <tr>
-      <td>March</td>
-      <td>6800</td>
-      <td>3290</td>
-      <td>5198</td>
-    </tr>
-    <tr>
-      <td>April</td>
-      <td>2708</td>
-      <td>3010</td>
-      <td>3280</td>
-    </tr>
-    <tr>
-      <td>May</td>
-      <td>4990</td>
-      <td>2500</td>
-      <td>5587</td>
-    </tr>
-    <tr>
-      <td>June</td>
-      <td>3790</td>
-      <td>4587</td>
-      <td>1300</td>
-    </tr>
-    <tr>
-      <td>July</td>
-      <td>2490</td>
-      <td>3900</td>
-      <td>6127</td>
-    </tr>
-    <tr>
-      <td>August</td>
-      <td>5190</td>
-      <td>3620</td>
-      <td>6387</td>
-    </tr>
-    <tr>
-      <td>September</td>
-      <td>1490</td>
-      <td>1734</td>
-      <td>2287</td>
-    </tr>
-    <tr>
-      <td>October</td>
-      <td>2190</td>
-      <td>3287</td>
-      <td>2601</td>
-    </tr>
-    <tr>
-      <td>November</td>
-      <td>4901</td>
-      <td>2607</td>
-      <td>6287</td>
-    </tr>
-    <tr>
-      <td>December</td>
-      <td>5290</td>
-      <td>3034</td>
-      <td>7137</td>
-    </tr>
-  </tbody>
-</Table>
-</Container>
-<br></br>
-<br></br>
-<br></br>
+      <Footer></Footer>
 
-<Footer></Footer>
-
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      <script>AOS.init();</script>
     </div>
-  )
-  
+  );
+}
+
+export async function getServerSideProps(context) {
+  const { props } = await AuthenticateEmployee(context);
+
+  if (!props.employee) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
   }
+
+  let _weeklyData = (
+    await TransactionsQueries.generateSalesDataWeekly(props.token)
+  ).data;
+
+  let _monthlyData = (
+    await TransactionsQueries.generateSalesDataMonthly(props.token)
+  ).data;
+
+  return {
+    props: {
+      ...props,
+      _weeklyData,
+      _monthlyData
+    },
+  };
+}
