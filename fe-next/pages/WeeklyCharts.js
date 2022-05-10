@@ -20,31 +20,32 @@ export default function Sales({employee}) {
       Profit: 387,
       TotalSale: 1290,
       Revenue: 450,
-      value: 35
+      value: 10
     },
     {
       name: 'Week 2',
-      Profit: 300,
+      Profit: 250,
       TotalSale: 1198,
-      Revenue: 410,
-      value: 15
+      Revenue: 210,
+      value: 12
     },
     {
-      name: 'Week3',
+      name: 'Week 3' ,
       Profit: 421,
       TotalSale: 1322,
       Revenue: 520,
-      value: 20
+      value: 7
     },
     {
       name: 'Week 4',
       Profit: 780,
       TotalSale: 1508,
       Revenue: 705,
-      value: 25
+      value: 4
     },
 
-  ])
+  ]) 
+  
   
   return (
     <div>
@@ -61,12 +62,12 @@ export default function Sales({employee}) {
 
     <Dropdown className='text-center'>
   <Dropdown.Toggle variant="success" id="dropdown-basic">
-    Week Sales
+    Weekly Sales
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
-    <Dropdown.Item href="sales">Month Sales</Dropdown.Item>
-    <Dropdown.Item href="WeeklyCharts">Week Sales</Dropdown.Item>
+    <Dropdown.Item href="sales">Monthly Sales</Dropdown.Item>
+    <Dropdown.Item href="WeeklyCharts">Weekly Sales</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
 
@@ -80,29 +81,26 @@ export default function Sales({employee}) {
   <Badge bg="warning" > Profit: 5, 435.49 </Badge> 
 </div>
 
-      <Container className="d-flex justify-content-center">
-    <ComposedChart  width={1000} height={400} data={data}>
-  <XAxis dataKey="name" />
+
+<Container><Badge bg="dark" > Battery Lion: 10% <br></br> Sale: 45 pcs<br></br> Total: 450 </Badge> <Badge bg="dark" > Juice Tang: 12% <br></br> Sale: 25 pcs<br></br> Total: 725 </Badge>
+  <br></br><Badge bg="dark" > Pods Relx: 7% <br></br> Sale: 35 pcs<br></br> Total: 650 </Badge> <Badge bg="dark" > Mod OXVA: 4% <br></br> Sale: 25 pcs<br></br> Total: 650 </Badge>
+        <Row>
+        <PieChart  width={450} height={300} data={data}>
+        <Pie dataKey="value" data={data} fill="#8884d8" label />
+          </PieChart>
+
+    <ComposedChart  width={630} height={400} data={data}>
+    <XAxis dataKey="name" />
   <YAxis />
   <Tooltip />
-  <Legend />
   <CartesianGrid stroke="#f5f5f5" />
   <Area type="monotone" dataKey="Profit" fill="#8884d8" stroke="#8884d8" />
   <Bar dataKey="TotalSale" barSize={20} fill="#413ea0" />
   <Line type="monotone" dataKey="Revenue" stroke="#ff7300" />
+  </ComposedChart>
   
-</ComposedChart>
+          </Row>
 </Container>
-
-<br></br>
-<Container className="d-flex justify-content-center">
-        <PieChart  width={400} height={300} data={data}>
-        <Pie dataKey="value" data={data} fill="#8884d8" label />
-        
-          </PieChart>
-
-        </Container>
-<br></br>
 
 
   <h1 className="fs-2 text-center"> Sales Data</h1>
@@ -113,70 +111,36 @@ export default function Sales({employee}) {
     <tr>
       <th>Weeks</th>
       <th>Total Sales</th>
-      <th>Profit</th>
       <th>Revenue</th>
-      <th>Date</th>
-      <th>Employee</th>
+      <th>Profit</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Monday</td>
-      <td>1990</td>
-      <td>887</td>
-      <td>2500</td>
-      <td>01/03/2022</td>
-      <td>Hala Man</td>
-    </tr>
-    <tr>
-      <td>Tuesday</td>
-      <td>1398</td>
-      <td>1200</td>
-      <td>1210</td>
-      <td>01/04/2022</td>
-      <td>Sige Talon</td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>1800</td>
-      <td>998</td>
+      <td>Week 1</td>
       <td>1290</td>
-      <td>01/05/2022</td>
-      <td>Haduken</td>
+      <td>450</td>
+      <td>387</td>
     </tr>
     <tr>
-      <td>Thursday</td>
-      <td>1708</td>
+      <td>Week 2</td>
+      <td>1198</td>
+      <td>410</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <td>Week 3</td>
+      <td>1322</td>
+      <td>520</td>
+      <td>421</td>
+    </tr>
+    <tr>
+      <td>Week 4</td>
+      <td>1508</td>
+      <td>705</td>
       <td>780</td>
-      <td>1000</td>
-      <td>01/06/2022</td>
-      <td>Ako Lang</td>
     </tr>
-    <tr>
-      <td>Friday</td>
-      <td>1908</td>
-      <td>880</td>
-      <td>1400</td>
-      <td>01/07/2022</td>
-      <td>Ewan Ko</td>
-    </tr>
-    <tr>
-      <td>Saturday</td>
-      <td>1908</td>
-      <td>640</td>
-      <td>980</td>
-      <td>01/08/2022</td>
-      <td>Bahag Hari</td>
-    </tr>
-    <tr>
-      <td>Sunday</td>
-      <td>980</td>
-      <td>1240</td>
-      <td>1330</td>
-      <td>01/09/2022</td>
-      <td>Hay Buhay</td>
-    </tr>
-
+   
   </tbody>
 </Table>
 
