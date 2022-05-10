@@ -57,8 +57,6 @@ export default function Home({
       : []
   );
 
-  console.log("setting tl ci", cartItems);
-
   return (
     <div>
       <Head>
