@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { body, matchedData, param } = require("express-validator");
 const { compareSync, hash, hashSync } = require("bcrypt");
 const { Token, Image, Employee, Log } = require("../models");
-const { QueryTypes } = require('sequelize');
+const { QueryTypes } = require("sequelize");
 const {
   randomString,
   validateResultMiddleware,
@@ -11,6 +11,7 @@ const {
 const sequelize = require("../libraries/sequelize");
 const passport = require("passport");
 const upload = require("../libraries/multer");
+const { Op } = require("sequelize");
 
 router.get(
   "/me",
@@ -25,13 +26,13 @@ router.get("/all", async (req, res) => {
     const employees = await sequelize.query(
       `SELECT * FROM employees LEFT JOIN (SELECT id as "image_id", location AS "image_location" FROM images)images ON "employees"."imageId" = "images"."image_id"`,
       {
-        type: QueryTypes.SELECT
+        type: QueryTypes.SELECT,
       }
-      )
-    
+    );
+
     res.send({ employees });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -64,8 +65,8 @@ router.post(
 
       await Log.create({
         createdBy: id,
-        description: `Employee "${employee.firstName} ${employee.lastName}" has logged in.`
-      })
+        description: `Employee "${employee.firstName} ${employee.lastName}" has logged in.`,
+      });
 
       const token = await Token.create({
         hash: randomString(60),
@@ -123,6 +124,33 @@ router.post(
     });
 
     try {
+      // Check if same employee exists as sir said, bawal same firstname at lastname
+      const employees = await Employee.findOne({
+        where: {
+          [Op.and]: [
+            {
+              firstName: sequelize.where(
+                sequelize.fn("LOWER", sequelize.col("firstName")),
+                "LIKE",
+                "%" + firstName.toLowerCase() + "%"
+              ),
+            },
+            {
+              lastName: sequelize.where(
+                sequelize.fn("LOWER", sequelize.col("lastName")),
+                "LIKE",
+                "%" + lastName.toLowerCase() + "%"
+              ),
+            },
+          ],
+        },
+      });
+
+      if (employees !== null)
+        return res
+          .status(500)
+          .send({ error: "First name or last name must be unique!" });
+
       const newEmployee = await Employee.create({
         firstName,
         lastName,
@@ -133,8 +161,8 @@ router.post(
 
       await Log.create({
         createdBy: req.user.id,
-        description: `New employee named "${firstName} ${lastName}" has been added.`
-      })
+        description: `New employee named "${firstName} ${lastName}" has been added.`,
+      });
 
       res.send(newEmployee);
     } catch (error) {
@@ -145,43 +173,66 @@ router.post(
 );
 
 router.put(
-  "/:id",
+  "/me/changeName",
   passport.authenticate("bearer", { session: false }),
-  AdminOnly,
   [
     body("firstName").notEmpty().isString(),
     body("lastName").notEmpty().isString(),
-    body("type")
-      .notEmpty()
-      .custom((i) => i === "ADMIN" || i === "CASHIER")
-      .isString(),
   ],
-  param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
 
   async (req, res) => {
-    const { firstName, lastName, type } = matchedData(req, {
+    const { firstName, lastName } = matchedData(req, {
       locations: ["body"],
     });
 
     try {
+      // Check if same employee exists as sir said, bawal same firstname at lastname
+      const employees = await Employee.findOne({
+        where: {
+          [Op.and]: [
+            {
+              firstName: sequelize.where(
+                sequelize.fn("LOWER", sequelize.col("firstName")),
+                "LIKE",
+                "%" + firstName.toLowerCase() + "%"
+              ),
+            },
+            {
+              lastName: sequelize.where(
+                sequelize.fn("LOWER", sequelize.col("lastName")),
+                "LIKE",
+                "%" + lastName.toLowerCase() + "%"
+              ),
+            },
+          ],
+          id: {
+            [Op.not]: req.user.id,
+          },
+        },
+      });
+
+      if (employees !== null)
+        return res
+          .status(500)
+          .send({ error: "First name or last name must be unique!" });
+
       await Employee.update(
         {
           firstName,
           lastName,
-          type,
         },
         {
           where: {
-            id: req.params.id,
+            id: req.user.id,
           },
         }
       );
 
       await Log.create({
         createdBy: req.user.id,
-        description: `Employee ID#${req.params.id} has been updated into "${firstName} ${lastName}" with type of ${type}.`
-      })
+        description: `Employee ID#${req.params.id} has updated his/her own name into "${firstName} ${lastName}".`,
+      });
 
       res.send();
     } catch (error) {
@@ -191,11 +242,9 @@ router.put(
 );
 
 router.post(
-  "/:id/changePassword",
+  "/me/changePassword",
   passport.authenticate("bearer", { session: false }),
-  AdminOnly,
   [body("password").notEmpty().isString()],
-  param("id").notEmpty().isNumeric(),
   validateResultMiddleware,
 
   async (req, res) => {
@@ -210,15 +259,15 @@ router.post(
         },
         {
           where: {
-            id: req.params.id,
+            id: req.user.id,
           },
         }
       );
 
       await Log.create({
         createdBy: req.user.id,
-        description: `Employee ID#${req.params.id}'s password has been changed.`
-      })
+        description: `Employee ID#${req.user.id}'s password has been changed.`,
+      });
 
       res.send();
     } catch (error) {
@@ -243,14 +292,47 @@ router.delete(
 
       await Log.create({
         createdBy: req.user.id,
-        description: `Employee ID#${req.params.id} has been deleted.`
-      })
+        description: `Employee ID#${req.params.id} has been deleted.`,
+      });
 
       res.send();
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: error.message });
     }
+  }
+);
+
+router.post(
+  "/me/changeImage",
+  passport.authenticate("bearer", { session: false }),
+  upload.single("image"),
+  async (req, res) => {
+    if (!req.file) {
+      return res.status(422).send("Image not found");
+    }
+    const newImage = await Image.create({
+      location: "/" + req.file.path,
+      createdBy: req.user.id,
+    });
+
+    await Employee.update(
+      {
+        imageId: newImage.id,
+      },
+      {
+        where: {
+          id: req.user.id,
+        },
+      }
+    );
+
+    await Log.create({
+      createdBy: req.user.id,
+      description: `Employee ID#${req.user.id}'s self image has been changed.`,
+    });
+
+    res.send();
   }
 );
 
@@ -283,8 +365,8 @@ router.post(
 
     await Log.create({
       createdBy: req.user.id,
-      description: `Employee ID#${req.params.id}'s image has been changed.`
-    })
+      description: `Employee ID#${req.params.id}'s image has been changed.`,
+    });
 
     res.send();
   }

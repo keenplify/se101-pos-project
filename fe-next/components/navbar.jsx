@@ -19,7 +19,7 @@ import { Fragment, useEffect } from "react";
 import Setting from '../components/Setting'
 
 
-export function NavBar({ employee }) {
+export function NavBar({ employee, token }) {
   const [, , removeCookie] = useCookies(["token"]);
   const router = useRouter();
   const logout = () => {
@@ -132,7 +132,7 @@ export function NavBar({ employee }) {
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item href="#action/3.2">
-              <Setting></Setting>
+              <Setting token={token} employee={employee}></Setting>
               </NavDropdown.Item>
               <NavDropdown.Item href="/activitylogs">
                 <AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity

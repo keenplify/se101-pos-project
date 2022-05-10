@@ -1,12 +1,13 @@
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import { CookiesProvider } from "react-cookie";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+import { SSRProvider } from "@react-aria/ssr";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -15,10 +16,12 @@ function MyApp({ Component, pageProps }) {
     });
   }, []);
   return (
-    <CookiesProvider>
-      <Component {...pageProps} />
-      <ToastContainer />
-    </CookiesProvider>
+    <SSRProvider>
+      <CookiesProvider>
+        <Component {...pageProps} />
+        <ToastContainer />
+      </CookiesProvider>
+    </SSRProvider>
   );
 }
 

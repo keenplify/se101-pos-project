@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
@@ -20,7 +20,13 @@ export default function EditEmployee({ token, employee }) {
 
   return (
     <>
-      <Button size="sm" type="button" variant="success" onClick={handleShow} className="mx-2">
+      <Button
+        size="sm"
+        type="button"
+        variant="success"
+        onClick={handleShow}
+        className="mx-2"
+      >
         <AiFillEdit></AiFillEdit>
       </Button>
       <Modal
@@ -39,7 +45,8 @@ export default function EditEmployee({ token, employee }) {
             type: employee.type,
           }}
           validationSchema={schema}
-          onSubmit={async ({ firstName, lastName, type }, actions) => {
+          onSubmit={async ({ firstName, lastName, type }, {setStatus}) => {
+            console.log("submitting")
             try {
               await EmployeesQueries.update(
                 token,
@@ -50,14 +57,19 @@ export default function EditEmployee({ token, employee }) {
               );
               router.reload();
             } catch (error) {
-              console.log(error);
+              console.log("err",error?.response?.data?.error);
+              if (error?.response?.data?.error) 
+                setStatus(error.response.data.error)
             }
           }}
         >
           {(formik) => (
             <FormikForm>
               <Modal.Body>
-              <Form.Group>
+                <Form.Group>
+                  {formik.status && (
+                    <Alert variant="danger">{formik.status}</Alert>
+                  )}
                   <Form.Label>First Name</Form.Label>
                   <Field
                     as={Form.Control}
@@ -85,13 +97,9 @@ export default function EditEmployee({ token, employee }) {
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Type</Form.Label>
-                  <Field
-                    as={Form.Select}
-                    name="type"
-                  >
+                  <Field as={Form.Select} name="type">
                     <option value="CASHIER">Cashier</option>
                     <option value="ADMIN">Admin</option>
-
                   </Field>
                   {formik.errors["type"] && (
                     <Form.Text className="text-danger text-capitalize">

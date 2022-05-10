@@ -264,8 +264,6 @@ router.get(
       ],
     });
 
-    console.log(variants);
-
     output = [...variants];
 
     const products = await Product.findAll({

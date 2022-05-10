@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { Formik, Form as FormikForm, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
@@ -32,7 +32,7 @@ export default function AddEmployee({ token }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Employee</Modal.Title>
+          <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
         <Formik
           initialValues={{
@@ -42,7 +42,7 @@ export default function AddEmployee({ token }) {
             password: ""
           }}
           validationSchema={schema}
-          onSubmit={async ({ firstName, lastName, type, password }, actions) => {
+          onSubmit={async ({ firstName, lastName, type, password }, {setStatus}) => {
             try {
               await EmployeesQueries.add(
                 token,
@@ -54,6 +54,9 @@ export default function AddEmployee({ token }) {
               router.reload();
             } catch (error) {
               console.log(error);
+              if (error?.response?.data?.error) 
+                setStatus(error.response.data.error)
+              
             }
           }}
         >
@@ -61,6 +64,13 @@ export default function AddEmployee({ token }) {
             <FormikForm>
               <Modal.Body>
               <Form.Group>
+                {
+                  formik.status && (
+                    <Alert variant="danger">
+                      {formik.status}
+                    </Alert>
+                  )
+                }
                   <Form.Label>First Name</Form.Label>
                   <Field
                     as={Form.Control}

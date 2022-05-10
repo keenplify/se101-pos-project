@@ -110,9 +110,14 @@ export default function LoginCard({ employee, onSubmit }) {
                 </FormikForm>
                 <div class="d-grid gap-2 col-8 mx-auto">
                   <Button
-                    variant="primary"
-                    type="submit"
+                    variant={
+                      formik.isSubmitting || !formik.isValid
+                        ? "outline-primary"
+                        : "primary"
+                    }
                     onClick={formik.handleSubmit}
+                    disabled={formik.isSubmitting || !formik.isValid}
+                    size="sm"
                   >
                     Login
                   </Button>

@@ -30,4 +30,15 @@ export const LogsQueries = {
       }
     );
   },
+
+  search: async function (token, keyword) {
+    return await axios.get(
+      BACKEND + LogsQueries.route + "/search/" + keyword,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
 };
