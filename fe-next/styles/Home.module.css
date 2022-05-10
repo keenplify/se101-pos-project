@@ -164,3 +164,10 @@
   font-family: 'Roboto', sans-serif;
 
 }
+.title{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 200px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 250%;
+}
