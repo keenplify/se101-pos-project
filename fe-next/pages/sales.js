@@ -4,17 +4,18 @@ import { NavBar } from '../components/navbar'
 import { Footer } from '../components/footer'
 import { useEffect, useState } from 'react'
 import {Container,Row, Col, Form, FormControl, Button, InputGroup, Table, Modal} from "react-bootstrap"
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ComposedChart, Tooltip, Legend, Area, Bar, AreaChart } from 'recharts';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
 import Badge from 'react-bootstrap/Badge'
-import { PieChart, Pie, } from 'recharts';
+import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 
 
-export default function Sales({employee}) {
+export default function Sales() {
   
   const [data,setData]=useState([
+
     {
       name: 'Jan',
       Profit: 5587,
@@ -35,54 +36,82 @@ export default function Sales({employee}) {
     },
     {
       name: 'Apr',
-      Profit: 7280,
-      TotalSale: 8708,
-      Revenue: 5000,
+      Profit: 3280,
+      TotalSale: 2708,
+      Revenue: 3010,
     },
-    { name: 'May', 
+    { 
+      name: 'May', 
     Profit: 5587,
     TotalSale: 4990,
     Revenue: 2500,
-    value: 35 },
-    { name: 'Jun', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
+    value: 35 
+  },
+    {
+      name: 'Jun', 
+    Profit: 4587,
+    TotalSale: 3790,
+    Revenue: 1300,
     value: 15 },
-    { name: 'Jul', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
+    { name: 'Jul',
+    Profit: 6127,
+    TotalSale: 2490,
+    Revenue: 3900,
     value: 20 },
-    { name: 'August', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
+    { name: 'August',
+    Profit: 6387,
+    TotalSale: 5190,
+    Revenue: 3620,
     value: 25 },
     { name: 'Sep', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
+    Profit: 2287,
+    TotalSale: 1490,
+    Revenue: 1734,
      },
     { name: 'Oct', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
+    Profit: 3287,
+    TotalSale: 2190,
+    Revenue: 2601,
     },
     { name: 'Nov', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
+    Profit: 6287,
+    TotalSale: 4901,
+    Revenue: 2607,
    },
     { name: 'Dec', 
-    Profit: 5587,
-    TotalSale: 4990,
-    Revenue: 2500,
-     },
+    Profit: 7137,
+    TotalSale: 5290,
+    Revenue: 3034,
+   },
 
+  ]);
 
-  ])
-
+  const Data = [
+    {
+      name: 'Page A',
+      uv: 4000,
+      pv: 2400,
+      amt: 2400,
+    },
+    {
+      name: 'Page B',
+      uv: 3000,
+      pv: 1398,
+      amt: 2210,
+    },
+    {
+      name: 'Page C',
+      uv: 2000,
+      pv: 9800,
+      amt: 2290,
+    },
+    {
+      name: 'Page D',
+      uv: 2780,
+      pv: 3908,
+      amt: 2000,
+    },
+  ];
 
   return (
     <div>
@@ -92,11 +121,10 @@ export default function Sales({employee}) {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
 
-      <NavBar employee={employee}></NavBar>
+      <NavBar></NavBar>
 
     <h2 className="fs-2 text-center"> Sales Performance</h2>
     
-
     <Dropdown className='text-center'>
   <Dropdown.Toggle variant="success" id="dropdown-basic">
     Month Sales
@@ -107,7 +135,7 @@ export default function Sales({employee}) {
     <Dropdown.Item href="WeeklyCharts">Week Sales</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
-
+  
 
 <div>
  <body> <h6 className='text-center'> Here you will see a summary your transaction in a month </h6> </body>
@@ -128,7 +156,7 @@ export default function Sales({employee}) {
   <Area type="monotone" dataKey="Profit" fill="#8884d8" stroke="#8884d8" />
   <Bar dataKey="TotalSale" barSize={20} fill="#413ea0" />
   <Line type="monotone" dataKey="Revenue" stroke="#ff7300" />
-  
+
 </ComposedChart>
 </Container>
 
@@ -144,6 +172,28 @@ export default function Sales({employee}) {
           </PieChart>
 
         </Container>
+
+        <div style={{ width: '100%', height: 300 }}>
+        <ResponsiveContainer>
+          <AreaChart
+            Data={Data}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+            <Bar dataKey="pv" barSize={20} fill="#413ea0" />
+            <Line type="monotone" dataKey="amt" stroke="#ff7300" /> 
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
 
 <br></br>
 
@@ -212,4 +262,6 @@ export default function Sales({employee}) {
 
     </div>
   )
-}
+  
+  }
+  

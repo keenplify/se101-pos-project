@@ -9,53 +9,40 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthenticateEmployee } from '../helpers/AuthenticateEmployee'
 import Badge from 'react-bootstrap/Badge'
+import { PieChart, Pie, } from 'recharts';
 
 
 export default function Sales({employee}) {
   
   const [data,setData]=useState([
     {
-      name: 'Monday',
-      Profit: 887,
-      TotalSale: 1990,
-      Revenue: 2500,
+      name: 'Week 1',
+      Profit: 387,
+      TotalSale: 1290,
+      Revenue: 450,
+      value: 35
     },
     {
-      name: 'Tuesday',
-      Profit: 1200,
-      TotalSale: 1398,
-      Revenue: 1210,
+      name: 'Week 2',
+      Profit: 300,
+      TotalSale: 1198,
+      Revenue: 410,
+      value: 15
     },
     {
-      name: 'Wednesday',
-      Profit: 998,
-      TotalSale: 1800,
-      Revenue: 1290,
+      name: 'Week3',
+      Profit: 421,
+      TotalSale: 1322,
+      Revenue: 520,
+      value: 20
     },
     {
-      name: 'Thursday',
+      name: 'Week 4',
       Profit: 780,
-      TotalSale: 1708,
-      Revenue: 1000,
+      TotalSale: 1508,
+      Revenue: 705,
+      value: 25
     },
-    {
-      name: 'Friday',
-      Profit: 880,
-      TotalSale: 1908,
-      Revenue: 1400,
-    },
-    {
-       name: 'Saturday',
-       Profit: 640,
-       TotalSale : 1908,
-       Revenue: 980,
-    },
-    {
-       name: 'Sunday',
-       Profit: 1240,
-       TotalSale : 980,
-       Revenue: 1330, 
-    }
 
   ])
   
@@ -85,7 +72,7 @@ export default function Sales({employee}) {
 
 
 <div>
- <body> <h6 className='text-center'> Here you will see a summary your transaction in a month </h6> </body>
+ <body> <h6 className='text-center'> Here you will see a summary your transaction in a week </h6> </body>
 </div>
 
 <div  className='text-center'>
@@ -108,8 +95,15 @@ export default function Sales({employee}) {
 </Container>
 
 <br></br>
+<Container className="d-flex justify-content-center">
+        <PieChart  width={400} height={300} data={data}>
+        <Pie dataKey="value" data={data} fill="#8884d8" label />
+        
+          </PieChart>
+
+        </Container>
 <br></br>
-<br></br>
+
 
   <h1 className="fs-2 text-center"> Sales Data</h1>
 
