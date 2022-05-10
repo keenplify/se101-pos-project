@@ -130,7 +130,6 @@ router.post(
       for (let i = 0; i < transactedVariants.length; i++) {
         const tv = transactedVariants[i];
         total_price += tv.variant.price * tv.quantity;
-        console.log(total_price);
 
         await Variant.update(
           {
@@ -160,10 +159,15 @@ router.post(
     // Create new ewallet for consume on finalized transaction
 
     if (type === "EWALLET") {
-      let newEWallet = EWallet.create({
-        type: eWalletType,
-        phone_number,
-        account_name,
+      let [newEWallet] = await EWallet.findOrCreate({
+        where: {
+          type: eWalletType,
+          phone_number,
+        },
+        defaults: {
+          account_name,
+          createdBy: req.user.id,
+        }
       });
       updateData = {
         ...updateData,
@@ -409,7 +413,6 @@ router.get(
       let tblindex=0;
       while (currentDate <= _endDate) {
         let sales = 0;
-        console.log(currentDate.getDate());
         let lastDate = new Date(currentDate.toISOString())
         lastDate.setDate(lastDate.getDate() + 6);
 

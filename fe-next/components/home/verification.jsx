@@ -2,8 +2,9 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Button, Modal, ModalHeader} from "react-bootstrap"
 import Cookies from 'universal-cookie';
+import { TransactionsQueries } from '../../queries/transactions';
 
-export function Verification({onProceed}) {
+export function Verification({onProceed, token, transaction}) {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
@@ -35,7 +36,14 @@ export function Verification({onProceed}) {
       <h4 className="text-center">Transaction Complete!</h4>
       <Modal.Footer>
             <div className='px-5'>
-              <Button variant="primary" className="mx-1">Print Receipt</Button>
+              <Button variant="primary" className="mx-1" onClick={()=>{
+                TransactionsQueries.generateReceipt(token, transaction.id).then((res)=> {
+                  if (res.data?.location) {
+                    let win = window.open(res.data.location);
+                    win.focus();
+                  }
+                })
+              }}>Print Receipt</Button>
               <Button variant="success" onClick={handleClose} className="mx-1">New Transaction</Button>
             </div>
       </Modal.Footer>

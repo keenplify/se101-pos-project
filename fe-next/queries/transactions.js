@@ -42,6 +42,19 @@ export const TransactionsQueries = {
     );
   },
 
+  generateReceipt: async function (token, transactionId) {
+    return await axios.get(
+      BACKEND +
+        this.route +
+        `/generateReceipt/${transactionId}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  },
+
   add: async function (token) {
     return await axios.post(
       BACKEND + this.route + "/add",
@@ -68,7 +81,7 @@ export const TransactionsQueries = {
 
     if (type === "EWALLET")
       data = {
-        ...body,
+        ...data,
         eWalletType,
         account_name,
         phone_number,

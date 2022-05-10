@@ -16,7 +16,7 @@ const CheckoutSchemaComplete = Yup.object().shape({
 
 const CheckoutSchemaCash = Yup.object().shape({
   type: Yup.string().min(1).oneOf(["CASH", "EWALLET"]).required(),
-  remarks: Yup.string().optional()
+  remarks: Yup.string().max(254).optional()
 })
 
 export function CheckoutModal({
@@ -57,10 +57,11 @@ export function CheckoutModal({
         }}
         onSubmit={async ({type, phone_number, account_name, eWalletType, remarks}, action) => {
           try {
+            console.log(type);
             const query = await TransactionsQueries.finalize(token, transaction.id, type, remarks, eWalletType, account_name, phone_number)
             console.log(query);
           } catch (error) {
-            console.log(error.response)
+            console.log(error)
           }
         }}
         validateOnMount={true}
@@ -150,7 +151,9 @@ export function CheckoutModal({
                         className="form-control"
                         name="remarks"
                         required={true}
+                        maxlength="254"
                       />
+                      {formik.errors["remarks"] && <div className="text-danger"><small>{formik.errors["remarks"]}</small></div>}
                     </Form.Group>
                   </Row>
                 </div>
@@ -206,6 +209,8 @@ export function CheckoutModal({
                     <Transaction
                       onProceed={() => formik.handleSubmit()}
                       canProceed={formik.isValid && !formik.isSubmitting}
+                      token={token}
+                      transaction={transaction}
                     ></Transaction>
                   </Row>
                   <Row>

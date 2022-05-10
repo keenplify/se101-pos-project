@@ -4,7 +4,7 @@ import {Button, Modal, ModalFooter, ModalHeader} from "react-bootstrap"
 import { Verification } from "../home/verification";
 
 
-export default function Transaction({onProceed, canProceed}) {
+export default function Transaction({onProceed, canProceed, token, transaction}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,7 +27,7 @@ export default function Transaction({onProceed, canProceed}) {
       <Modal.Body>
       <h5 className="text-center">  Are you sure you want to proceed?</h5>
       <Modal.Footer>
-      <Verification onProceed={onProceed}></Verification>
+      <Verification onProceed={onProceed} token={token} transaction={transaction}></Verification>
                 <Button variant="secondary" onClick={handleClose}>No</Button>
       </Modal.Footer>
 

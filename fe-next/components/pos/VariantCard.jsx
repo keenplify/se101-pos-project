@@ -113,7 +113,7 @@ export function VariantCard({
                   console.log(error);
                 }
               }}
-              disabled={calcStock <= 0}
+              disabled={calcStock <= 0 || transaction.state == "PAID"}
             >
               {windowDimensions.width <= 576 ? <FiPlus /> : "Add to Cart"}
             </Button>

@@ -3,7 +3,7 @@ const sequelize = require("../libraries/sequelize");
 
 const Model = sequelize.define("e-wallets", {
   type: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM(["GCASH", "PAYMAYA"]),
     allowNull: false,
   },
   phone_number: {
@@ -11,7 +11,7 @@ const Model = sequelize.define("e-wallets", {
     allowNull: false,
   },
   account_name: {
-    type: DataTypes.ENUM(["GCASH", "PAYMAYA"]),
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });
