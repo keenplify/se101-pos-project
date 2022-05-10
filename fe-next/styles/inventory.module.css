@@ -25,17 +25,8 @@
 .mask{
   font-family: "Roboto", sans-serif;
   font-size: 120%;
-<<<<<<< Updated upstream
   background-color: rgb(255, 255, 255);
 
 
 >>>>>>> Stashed changes
 }
-=======
-  background-color: rgb(255, 255, 255)
-}
-.link, .mask{
-  text-decoration: none;
-  font-weight: bolder;
-}
->>>>>>> Stashed changes

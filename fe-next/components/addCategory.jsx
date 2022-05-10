@@ -21,7 +21,7 @@ export default function AddCategory({ token }) {
   return (
     <>
       <Button className="btn-sm" type="button" onClick={handleShow}>
-      <AiOutlineAppstoreAdd className="me-2 fs-5" ></AiOutlineAppstoreAdd>Add Category
+      <AiOutlineAppstoreAdd className="me-2" ></AiOutlineAppstoreAdd>Add Category
       </Button>
       <Modal
         show={show}

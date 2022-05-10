@@ -75,10 +75,8 @@ export default function Sales() {
   <Badge bg="warning">Profit: 20, 435.49 </Badge> 
 </div>
 
-
-<Container className="p-0">
-  <Row>
-  <ComposedChart  width={500} height={400} data={data}>
+      <Container className="d-flex justify-content-center">
+    <ComposedChart  width={1000} height={400} data={data}>
   <XAxis dataKey="name" />
   <YAxis />
   <Tooltip />
@@ -89,59 +87,9 @@ export default function Sales() {
   <Line type="monotone" dataKey="Revenue" stroke="#ff7300" />
   
 </ComposedChart>
-
-
-<PieChart  width={500} height={300} data={data}>
-        <Pie dataKey="value" data={data} fill="#8884d8" label />
-        
-          </PieChart>
-  </Row>
-  
 </Container>
 
-<<<<<<< Updated upstream
 <br></br>
-=======
-      
-    
-
-
-
-
-<br></br>
-
-
-<Container className=" justify-content-center">
-        <PieChart  width={400} height={300} data={data}>
-        <Pie dataKey="value" data={data} fill="#8884d8" label />
-        
-          </PieChart>
-
-        </Container>
-
-        <div style={{ width: '100%', height: 300 }}>
-        <ResponsiveContainer>
-          <AreaChart
-            Data={Data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
-            <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-            <Line type="monotone" dataKey="amt" stroke="#ff7300" /> 
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-
->>>>>>> Stashed changes
 <br></br>
 <br></br>
   <h1 className="fs-2 text-center"> Sales Data</h1>

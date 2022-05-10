@@ -24,19 +24,9 @@ export default function Empadsee({employee,allEmployees, token}) {
       </Head>
     <NavBar employee={employee}></NavBar>
     <br></br>
-    <div class=" d-flex mt-3 justify-content-center" style={{ width: "100%"}}>
-      
-        <label className="mb-2"
-          style={{
-            fontSize: "2em",
-            fontWeight: "bold",
-            fontFamily: 'Roboto',
-
-          }}
-        >
-          EMPLOYEE{" "}
-        </label>
-      </div>
+    <div> 
+        <h1 className="fs-2 text-center"> Employee</h1>
+        </div>
     <Container className="col-lg-12 my-3 rounded-3">  
     <Row>
     <Col className='p-2'>

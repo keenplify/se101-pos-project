@@ -5,21 +5,16 @@ import {
   NavDropdown,
   Card,
   Badge,
-  Button
 } from "react-bootstrap";
 import { useRouter } from "next/router";
 import styles from "../styles/navbar.module.css";
 import Image from "next/image";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
+import { AiOutlineSetting } from "react-icons/ai";
 import { AiFillProfile } from "react-icons/ai";
 import { BACKEND } from "../helpers";
 import { useCookies } from "react-cookie";
-<<<<<<< Updated upstream
-=======
-import { Fragment, useEffect } from "react";
-import Setting from '../components/Setting'
->>>>>>> Stashed changes
 
 export function NavBar({ employee }) {
   const [, , removeCookie] = useCookies(["token"]);
@@ -113,8 +108,9 @@ export function NavBar({ employee }) {
                   </div>
                 </NavDropdown.Item>
               )}
-              <NavDropdown.Item>
-              <Setting></Setting>
+              <NavDropdown.Item href="#action/3.2">
+                <AiOutlineSetting className="fs-3 p-1"></AiOutlineSetting>
+                Setting
               </NavDropdown.Item>
               <NavDropdown.Item href="/activitylogs">
                 <AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity
