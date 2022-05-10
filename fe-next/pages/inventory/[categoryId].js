@@ -98,7 +98,7 @@ export default function ProductsViewer({ employee, category, token }) {
         <hr />
         <Row>
           <Col>
-            <div className="d-flex col-lg-8 p-2">
+            <div className="d-flex col-lg-10  p-2">
               <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon1">
                   <AiOutlineSearch></AiOutlineSearch>

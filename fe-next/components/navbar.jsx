@@ -16,6 +16,8 @@ import { AiFillProfile } from "react-icons/ai";
 import { BACKEND } from "../helpers";
 import { useCookies } from "react-cookie";
 import { Fragment, useEffect } from "react";
+import Setting from '../components/Setting'
+
 
 export function NavBar({ employee }) {
   const [, , removeCookie] = useCookies(["token"]);
@@ -130,8 +132,7 @@ export function NavBar({ employee }) {
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item href="#action/3.2">
-                <AiOutlineSetting className="fs-3 p-1"></AiOutlineSetting>
-                Setting
+              <Setting></Setting>
               </NavDropdown.Item>
               <NavDropdown.Item href="/activitylogs">
                 <AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity

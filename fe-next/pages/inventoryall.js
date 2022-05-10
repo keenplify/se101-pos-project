@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Card, Form, FormControl, InputGroup, Table } from "react-bootstrap";
+import { Card, Container, FormControl, InputGroup, Table } from "react-bootstrap";
 import styles from "../styles/inventory.module.css";
 import { NavBar } from "../components/navbar";
 import { Footer } from "../components/footer";
@@ -44,21 +44,25 @@ export default function InventoryAll({ token, employee, _variants }) {
       </Head>
       <NavBar employee={employee}></NavBar>
       <div
-        className="d-flex mt-3"
-        style={{ width: "90%", alignSelf: "center" }}
+        className="mt-3 mb-2 text-center"
+        style={{ width: "100%"}}
       >
         <label
-          className="text-center"
+          className="text-center "
           style={{
-            fontSize: "2em",
+            fontSize: "30px",
             fontWeight: "bold",
-            marginRight: "auto",
+            fontFamily: 'Roboto',
           }}
         >
-          All Product Variants{" "}
+          ALL PRODUCT VARIANTS{" "}
         </label>
-        <div className="d-flex p-2">
-          <InputGroup className="mb-3">
+
+      </div>
+
+          <Container className="col-6">
+      <div className="d-flex p-1">
+          <InputGroup >
             <InputGroup.Text id="basic-addon1">
               <AiOutlineSearch></AiOutlineSearch>
             </InputGroup.Text>
@@ -71,9 +75,9 @@ export default function InventoryAll({ token, employee, _variants }) {
             />
           </InputGroup>
         </div>
-      </div>
+        </Container>
 
-      <div className="container col-lg-10 justify-content-center my-5">
+      <div className="container col-lg-10 justify-content-center my-4">
         <Table striped bordered hover>
           <thead>
             <tr>

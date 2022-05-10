@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { Pagination, Table } from "react-bootstrap";
+import { Pagination, Table, InputGroup, FormControl } from "react-bootstrap";
+import { AiOutlineSearch } from "react-icons/ai";
 import { Container } from "react-bootstrap";
 import { NavBar } from "../components/navbar";
 import { Footer } from "../components/footer";
@@ -21,15 +22,39 @@ export default function activitylogs({ token, _logs, employee }) {
           <link rel="icon" href="/img/Logo.jpg" />
         </Head>
         <NavBar employee={employee}></NavBar>
-        <div>
-          <h1 className="fs-2 text-center"> Activity Logs </h1>
-        </div>
-        <div>
-          <h3 className="text-center py-3">Vaperous Master's Activity Logs</h3>
-        </div>
 
-        <Container class="d-flex align-items-center flex-column mx-md-5">
-          <Table striped bordered hover variant="dark">
+        <div
+        className="mt-3 mb-2 text-center"
+        style={{ width: "100%"}}
+      >
+        <label
+          className="text-center "
+          style={{
+            fontSize: "30px",
+            fontWeight: "bold",
+            fontFamily: 'Roboto',
+          }}
+        >
+         ACTIVITY LOGS{" "}
+        </label>
+          </div>
+        <Container className="col-6 mb-3">
+      <div className="d-flex p-1">
+          <InputGroup >
+            <InputGroup.Text id="basic-addon1">
+              <AiOutlineSearch></AiOutlineSearch>
+            </InputGroup.Text>
+            <FormControl
+              placeholder="Search"
+              aria-label="Search"
+              type="search"
+            />
+          </InputGroup>
+          </div>
+          </Container>
+          
+        <Container>
+          <Table striped bordered hover variant="light">
             <thead>
               <tr>
                 <th>ID</th>
@@ -51,7 +76,7 @@ export default function activitylogs({ token, _logs, employee }) {
               ))}
             </tbody>
           </Table>
-          <Pagination>
+          <Pagination class="d-flex justify-content-center text-decoration-none list-unstyled">
             <Pagination.Prev
               onClick={() => {
                 if (currentPageNumber == 1 && !logs.pageInfo.hasPreviousPage) return;

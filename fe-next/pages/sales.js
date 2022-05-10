@@ -146,8 +146,9 @@ export default function Sales() {
   <Badge bg="warning" > Profit: 20, 435.49 </Badge> 
 </div>
 
-      <Container className="d-flex justify-content-center">
-    <ComposedChart  width={1000} height={400} data={data}>
+      <Container>
+        <Row>
+    <ComposedChart  width={630} height={400} data={data}>
   <XAxis dataKey="name" />
   <YAxis />
   <Tooltip />
@@ -156,102 +157,23 @@ export default function Sales() {
   <Area type="monotone" dataKey="Profit" fill="#8884d8" stroke="#8884d8" />
   <Bar dataKey="TotalSale" barSize={20} fill="#413ea0" />
   <Line type="monotone" dataKey="Revenue" stroke="#ff7300" />
-
 </ComposedChart>
-</Container>
 
 
 
-<br></br>
-
-
-<Container className="d-flex justify-content-center">
-        <PieChart  width={400} height={300} data={data}>
+<PieChart  width={500} height={300} data={data}>
         <Pie dataKey="value" data={data} fill="#8884d8" label />
         
           </PieChart>
-
-        </Container>
-
-        <div style={{ width: '100%', height: 300 }}>
-        <ResponsiveContainer>
-          <AreaChart
-            Data={Data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
-            <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-            <Line type="monotone" dataKey="amt" stroke="#ff7300" /> 
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-
-<br></br>
-
-  <h1 className="fs-2 text-center"> Sales Data</h1>
-
-<Container>
-  <Table striped bordered hover>
-  <thead>
-    <tr>
-      <th>Weeks</th>
-      <th>Total Sales</th>
-      <th>Profit</th>
-      <th>Revenue</th>
-      <th>Date</th>
-      <th>Employee</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Week 1</td>
-      <td>4490</td>
-      <td>5887</td>
-      <td>2500</td>
-      <td>01/03/2022</td>
-      <td>Hala Man</td>
-    </tr>
-    <tr>
-      <td>Week 2</td>
-      <td>4398</td>
-      <td>3200</td>
-      <td>2210</td>
-      <td>01/10/2022</td>
-      <td>Sige Talon</td>
-    </tr>
-    <tr>
-      <td>Week 3</td>
-      <td>6800</td>
-      <td>5198</td>
-      <td>3290</td>
-      <td>01/17/2022</td>
-      <td>Haduken</td>
-    </tr>
-    <tr>
-      <td>Week 4</td>
-      <td>8708</td>
-      <td>7280</td>
-      <td>5000</td>
-      <td>01/24/2022</td>
-      <td>Ako Lang</td>
-    </tr>
-     
-
-  </tbody>
-</Table>
+          </Row>
 </Container>
+
+
+
 <br></br>
-<br></br>
-<br></br>
+
+
+
   <Footer></Footer>
 
    
