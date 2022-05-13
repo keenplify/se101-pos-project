@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Container, Row, Col, Card, Table, InputGroup, Button, Form, FormControl } from "react-bootstrap"
 import Deleteemp from '../components/deleteemp'
-import Editemp from '../components/editEmp'
+import Editemp from '../components/editemp'
 import Addemp from '../components/addemp'
 import { useEffect, useState } from 'react'
 import { NavBar } from '../components/navbar'

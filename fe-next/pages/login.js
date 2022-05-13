@@ -74,7 +74,7 @@ export default function Login({ employee, allEmployees }) {
 
                   
                     <Col className="input-group py-2">
-                    <span class="input-group-text bg-transparent" id="basic-addon1"><FaRegUser></FaRegUser></span>
+                    <span className="input-group-text bg-transparent" id="basic-addon1"><FaRegUser></FaRegUser></span>
                       <Field
                       className="form-control border-start-0"
                         id="id"
@@ -87,7 +87,7 @@ export default function Login({ employee, allEmployees }) {
                   
              
                     <Col className="input-group py-2">
-                    <span class="input-group-text bg-transparent border" id="basic-addon1"><FiLock></FiLock></span>
+                    <span className="input-group-text bg-transparent border" id="basic-addon1"><FiLock></FiLock></span>
                       <Field
                        className="form-control border-start-0"
                         type="password"
@@ -98,7 +98,7 @@ export default function Login({ employee, allEmployees }) {
                       />
                       
                     </Col >
-                    <div class="d-grid gap-2">
+                    <div className="d-grid gap-2">
                     <Button
                       variant="primary"
                       type="submit"

@@ -14,7 +14,7 @@ export default function DeleteCategory({ token, category }) {
     <>
       <button
         type="button"
-        class="btn btn-sm btn-danger mt-1 w-100"
+        className="btn btn-sm btn-danger mt-1 w-100"
         onClick={handleShow}
       >
         <MdDelete></MdDelete> Delete Category

@@ -73,7 +73,7 @@ export default function ProductsViewer({ employee, category, token }) {
           </Col>
           <Col className="mt-2">
             <div
-              class="d-flex mt-3"
+              className="d-flex mt-3"
               style={{ width: "100%", alignSelf: "center" }}
             >
               <label
@@ -86,7 +86,7 @@ export default function ProductsViewer({ employee, category, token }) {
               >
                 {category.name}
               </label>
-              <div class="d-flex flex-column">
+              <div className="d-flex flex-column">
                 {employee.type === "ADMIN" && (
                   <Fragment>
                     <EditCategory token={token} category={category} />

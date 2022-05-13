@@ -12,7 +12,7 @@ export default function DeleteProduct({token, product}) {
   
     return (
       <>
-    <button type="button" class="btn btn-sm btn-danger mx-1" onClick={handleShow}><MdDelete></MdDelete></button>
+    <button type="button" className="btn btn-sm btn-danger mx-1" onClick={handleShow}><MdDelete></MdDelete></button>
     <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"
       centered>
         <Modal.Header closeButton>

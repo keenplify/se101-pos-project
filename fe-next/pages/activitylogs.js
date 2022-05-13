@@ -9,7 +9,7 @@ import { LogsQueries } from "../queries/logs";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
-export default function activitylogs({ token, _logs, employee }) {
+export default function ActivityLogs({ token, _logs, employee }) {
   const [logs, setLogs] = useState(_logs);
   const [pageCount, setPageCount] = useState(_logs.totalCount % 10);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);

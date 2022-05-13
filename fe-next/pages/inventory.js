@@ -21,7 +21,7 @@ export default function Inventory({ token, employee, categories }) {
       </Head>
       <NavBar employee={employee} token={token}></NavBar>
       <div
-        class=" d-flex mt-3 justify-content-center"
+        className=" d-flex mt-3 justify-content-center"
         style={{ width: "100%" }}
       >
         <label
