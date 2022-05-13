@@ -42,8 +42,7 @@ export default function Empadsee({employee,allEmployees, token}) {
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Image</th>
-      <th scope="col">First Name</th>
-      <th scope="col">LastName</th>
+      <th scope="col">Full Name</th>
       <th scope="col">Role</th>
       <th scope="col">Action</th>
     </tr>
@@ -61,8 +60,7 @@ export default function Empadsee({employee,allEmployees, token}) {
               image={_employee?.image_location}
             />
           </td>
-          <td>{_employee.firstName}</td>
-          <td>{_employee.lastName}</td>
+          <td>{_employee.firstName} {_employee.lastName}</td>
           <td>{_employee.type}</td>
           <td className="py-2">
              <Editemp token={token} employee={_employee}></Editemp>
