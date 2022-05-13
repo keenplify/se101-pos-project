@@ -55,7 +55,7 @@ export default function Login({ employee, allEmployees }) {
             </Row>
           </Col>
 
-          <Col md={4} className="py-5 ms-5">
+          <Col md={4} className="py-5">
             <Formik
               initialValues={{
                 id: "",
@@ -65,7 +65,7 @@ export default function Login({ employee, allEmployees }) {
             >
               {(formik) => (
                 <Container className="border shadow p-4">
-              <h1 className={styles.NavBrand}>Account LogIn</h1>
+              <h1 className={styles.NavBrand}>Account Login</h1>
               <Image src="/img/tao.jpg" className="img-fluid rounded-circle mx-auto d-flex mb-3" style={{
                          width: "40%",
                         }}/>
