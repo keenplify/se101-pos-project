@@ -51,7 +51,7 @@ router.post(
       await Log.create({
         createdBy: req.user.id,
         variantId: newVariant.id,
-        description: `Created variant "${name}" for product "${newVariant.product.name}".`
+        description: `Created variant "${name}" for product "${newVariant?.product?.name}".`
       })
 
       res.send(newVariant);
@@ -169,7 +169,7 @@ router.post(
       return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
-      location: "/" + req.file.path,
+      location: req.file.link,
       createdBy: req.user.id,
     });
 

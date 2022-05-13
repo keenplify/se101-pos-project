@@ -295,6 +295,9 @@ router.get(
     let _startDate = new Date(startDate);
     let _endDate = new Date(endDate);
 
+    _startDate.setDate(_startDate.getDate() - 1);
+    _endDate.setDate(_endDate.getDate() - 1);
+
     try {
       const mainDataSource = await Transaction.findAll({
         where: {
@@ -362,7 +365,6 @@ router.get(
           }
         });
       })
-
 
       res.send({ barData, pieData, totalSales });
     } catch (error) {

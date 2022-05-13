@@ -213,7 +213,7 @@ router.post(
       return res.status(422).send("Image not found");
     }
     const newImage = await Image.create({
-      location: "/" + req.file.path,
+      location: req.file.link,
       createdBy: req.user.id,
     });
 

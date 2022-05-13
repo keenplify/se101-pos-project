@@ -94,7 +94,6 @@ router.post(
         }
       );
 
-      console.log(quantity <= transactedvariant.variant.stock)
       if (!(quantity <= transactedvariant.variant.stock)) {
         throw "Not enough stocks!";
       }
