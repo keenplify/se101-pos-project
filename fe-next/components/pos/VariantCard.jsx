@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Badge } from "react-bootstrap";
 import { FiPlus } from "react-icons/fi";
 import { BACKEND } from "../../helpers";
+import { ImageWrapper } from "../../helpers/ImageWrapper";
 import { ProductsQueries } from "../../queries/products";
 import { TransactedVariantsQueries } from "../../queries/transactedvariants";
 
@@ -31,11 +32,7 @@ export function VariantCard({
         <div style={{ position: "relative" }}>
           <Card.Img
             variant="top"
-            src={
-              variant.image?.location
-                ? BACKEND + variant.image.location
-                : "/img/blank.png"
-            }
+            src={ImageWrapper(variant?.image?.location)}
             className="img-fluid rounded bg-transparent"
             style={{
               width: "100%",
@@ -59,7 +56,7 @@ export function VariantCard({
           )}
         </div>
         <Card.Body>
-          <Card.Title 
+          <Card.Title
             style={{
               width: "100%",
               overflow: "hidden",

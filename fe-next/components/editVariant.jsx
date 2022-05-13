@@ -21,7 +21,7 @@ export default function EditVariant({ token, variant }) {
 
   return (
     <>
-      <Button size="sm" type="button" variant="success" onClick={handleShow}>
+      <Button size="sm" type="button" variant="success" onClick={handleShow} title="Edit Variant">
         <AiFillEdit></AiFillEdit>
       </Button>
       <Modal

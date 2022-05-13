@@ -9,6 +9,7 @@ import { BACKEND } from "../helpers";
 import Link from "next/link";
 import AddCategory from "../components/addCategory";
 import { FaThList } from "react-icons/fa";
+import { ImageWrapper } from "../helpers/ImageWrapper";
 
 export default function Inventory({ token, employee, categories }) {
   return (
@@ -19,27 +20,29 @@ export default function Inventory({ token, employee, categories }) {
         <link rel="icon" href="/img/Logo.jpg" />
       </Head>
       <NavBar employee={employee} token={token}></NavBar>
-      <div class=" d-flex mt-3 justify-content-center" style={{ width: "100%"}}>
-
-<label className="mb-2"
-  style={{
-    fontSize: "2em",
-    fontWeight: "bold",
-    fontFamily: 'Roboto',
-
-  }}
->
-  PRODUCT CATEGORIES{" "}
-</label>
-</div>
-  <Container className="d-flex justify-content-center">
-{employee.type === "ADMIN" && <AddCategory token={token} />}
-<Link href="/inventoryall">
-  <a className=" mx-1 btn btn-sm btn-success text-white d-flex align-items-center justify-content-center shadow-sm">
-  <FaThList className="me-2"></FaThList>All Variants
-  </a>
-</Link>
-</Container>
+      <div
+        class=" d-flex mt-3 justify-content-center"
+        style={{ width: "100%" }}
+      >
+        <label
+          className="mb-2"
+          style={{
+            fontSize: "2em",
+            fontWeight: "bold",
+            fontFamily: "Roboto",
+          }}
+        >
+          PRODUCT CATEGORIES{" "}
+        </label>
+      </div>
+      <Container className="d-flex justify-content-center">
+        {employee.type === "ADMIN" && <AddCategory token={token} />}
+        <Link href="/inventoryall">
+          <a className=" mx-1 btn btn-sm btn-success text-white d-flex align-items-center justify-content-center shadow-sm">
+            <FaThList className="me-2"></FaThList>All Variants
+          </a>
+        </Link>
+      </Container>
       <div className="container col-lg-10 justify-content-center mb-5">
         <div className="row">
           {categories.map((category, key) => (
@@ -47,21 +50,17 @@ export default function Inventory({ token, employee, categories }) {
               className="col-md-3 py-3 d-flex justify-content-center"
               key={key}
             >
-              <Link
-                className="text-black"
-                href={"/inventory/" + category.id}
-              >
+              <Link className="text-black" href={"/inventory/" + category.id}>
                 <a className="text-decoration-none">
                   <div
                     className="bg-image shadow"
                     style={{ maxWidth: "254px", height: "254px" }}
                   >
                     <img
-                      src={
-                        category?.image?.location
-                          ? BACKEND + category.image.location
-                          : "/img/blank.png"
-                      }
+                      src={ImageWrapper(
+                        category?.image?.location,
+                        "/img/blank.png"
+                      )}
                       className="img-fluid bg-white"
                       style={{
                         width: "254px",
@@ -70,9 +69,7 @@ export default function Inventory({ token, employee, categories }) {
                       }}
                       alt={`${category.name}'s logo`}
                     />
-                    <div
-                      className="mask"
-                    >
+                    <div className="mask">
                       <div className="d-flex justify-content-center align-items-center h-100">
                         <p className="fs-5 text-dark mb-0">{category.name}</p>
                       </div>

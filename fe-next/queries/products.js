@@ -59,7 +59,7 @@ export const ProductsQueries = {
     );
   },
 
-  searchByCategory: async function (token, categoryId, keyword) {
+  searchByCategory: async function (token, categoryId, {keyword}) {
     return await axios.get(
       BACKEND + ProductsQueries.route + `/searchByCategory?categoryId=${categoryId}&keyword=${keyword}`,
       {

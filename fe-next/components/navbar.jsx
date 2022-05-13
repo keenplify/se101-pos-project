@@ -16,8 +16,8 @@ import { AiFillProfile } from "react-icons/ai";
 import { BACKEND } from "../helpers";
 import { useCookies } from "react-cookie";
 import { Fragment, useEffect } from "react";
-import Setting from '../components/Setting'
-
+import Setting from "../components/Setting";
+import { ImageWrapper } from "../helpers/ImageWrapper";
 
 export function NavBar({ employee, token }) {
   const [, , removeCookie] = useCookies(["token"]);
@@ -27,17 +27,15 @@ export function NavBar({ employee, token }) {
     router.push("/login");
   };
 
-  
-  useEffect(()=> {
+  useEffect(() => {
     if (!employee) return;
 
     // Restrict genesis admin from opening other pages other than employeeadmin
-    console.log(employee.id == 1 && !router.route.includes("/employeeadmin"))
     if (employee.id == 1 && !router.route.includes("/employeeadmin"))
       router.replace("/employeeadmin");
-  }, [router.route])
+  }, [router.route]);
 
-  const imageSrc = employee?.image_location ? `${BACKEND}${employee.image_location}` : "/img/tao.jpg";
+  const imageSrc = ImageWrapper(employee?.image_location, "/img/tao.jpg");
 
   return (
     <Navbar collapseOnSelect sticky="top" bg="dark" variant="dark" expand="lg">
@@ -60,37 +58,37 @@ export function NavBar({ employee, token }) {
           className="justify-content-center"
         >
           <Nav className={styles.NavLink} activeKey={router.asPath}>
-            {
-              employee?.id != 1 && (
-                <Fragment>
-                  <Nav.Link href="/" className="fw-bold">
-                    HOME
-                  </Nav.Link>
-                  <Nav.Link href="/inventory" className="fw-bold">
-                    INVENTORY
-                  </Nav.Link>
+            {employee?.id != 1 && (
+              <Fragment>
+                <Nav.Link href="/" className="fw-bold">
+                  HOME
+                </Nav.Link>
+                <Nav.Link href="/inventory" className="fw-bold">
+                  INVENTORY
+                </Nav.Link>
+                {employee.type == "ADMIN" && (
                   <Nav.Link href="/sales" className="fw-bold">
                     SALES
                   </Nav.Link>
-                </Fragment>
-              )
-            }
+                )}
+              </Fragment>
+            )}
             <Nav.Link href="/employee" className="fw-bold">
               EMPLOYEE
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
 
-
         <Navbar.Collapse className="justify-content-end">
-          
           <Nav>
             <NavDropdown
               id="nav-dropdown-dark-example"
               disabled={!employee}
               className={styles.NavDropdown}
-              title={ 
-                <span className={styles.dropdownTitle}> <FaUserCircle className="fs-2 me-1"></FaUserCircle>
+              title={
+                <span className={styles.dropdownTitle}>
+                  {" "}
+                  <FaUserCircle className="fs-2 me-1"></FaUserCircle>
                   {employee ? (
                     <span className={styles.employeeText}>
                       {employee.firstName} {employee.lastName}
@@ -102,22 +100,20 @@ export function NavBar({ employee, token }) {
               }
               menuVariant="dark"
             >
-          
-              {employee && ( 
+              {employee && (
                 <NavDropdown.Item
-                disabled
+                  disabled
                   href="profile"
                   className={styles.employeeContainer}
                 >
                   <div className={styles.employeeAvatar}>
-                    <Image  
-                      loader={()=> imageSrc}
+                    <Image
+                      loader={() => imageSrc}
                       src={imageSrc}
                       layout="responsive"
                       className="rounded-circle"
                       width="1"
                       height="1"
-                     
                     />
                   </div>
                   <div className={styles.employeeDetails}>
@@ -131,8 +127,8 @@ export function NavBar({ employee, token }) {
                   </div>
                 </NavDropdown.Item>
               )}
-              <NavDropdown.Item href="#action/3.2">
-              <Setting token={token} employee={employee}></Setting>
+              <NavDropdown.Item>
+                <Setting token={token} employee={employee}></Setting>
               </NavDropdown.Item>
               <NavDropdown.Item href="/activitylogs">
                 <AiFillProfile className="fs-3 p-1"></AiFillProfile>Activity
@@ -142,9 +138,7 @@ export function NavBar({ employee, token }) {
               <NavDropdown.Item onClick={logout}>
                 <FiLogOut className="fs-3 p-1"></FiLogOut>Log Out
               </NavDropdown.Item>
-              
             </NavDropdown>
-            
           </Nav>
         </Navbar.Collapse>
       </Container>

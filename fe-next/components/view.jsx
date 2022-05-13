@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { MdGridView } from "react-icons/md";
+import { useRef, useState } from "react";
+import { MdDownload, MdGridView } from "react-icons/md";
 import { Container, Row, Col, Button, Table, Modal } from "react-bootstrap";
 import { BACKEND, COMPANY_NAME } from "../helpers";
 import AddVariant from "./addVariant";
@@ -9,9 +9,20 @@ import { VariantsQueries } from "../queries/variants";
 import QrCode from "react-qr-code";
 import EditVariant from "./editVariant";
 import DeleteVariant from "./deleteVariant";
+import toImg from 'react-svg-to-image';
+import { newUniqueId } from "../helpers/newid";
+import { ImageWrapper } from "../helpers/ImageWrapper";
 
 export default function View({ product, employee, token }) {
   const [show, setShow] = useState(false);
+
+  const downloadQr = ( {qrRef, product, variant}) => {
+    toImg('#'+qrRef.current, `qr-${product.name}-${variant.name}-${new Date().toLocaleDateString()}`, {
+      scale: 3,
+      format: 'png',
+      download: true,
+    })
+  };
 
   return (
     <>
@@ -33,9 +44,9 @@ export default function View({ product, employee, token }) {
                   <img
                     src={
                       product?.variants[0] &&
-                      product.variants[0].image?.location
-                        ? BACKEND + product.variants[0].image.location
-                        : "/img/blank.png"
+                      ImageWrapper(
+                        product.variants[0].image?.location
+                      )
                     }
                     className="img-fluid rounded bg-white"
                     style={{
@@ -81,29 +92,46 @@ export default function View({ product, employee, token }) {
                 </tr>
               </thead>
               <tbody>
-                {product.variants.map((variant) => (
-                  <tr>
-                    <th scope="row">{variant.id}</th>
-                    <td className="w-25">
-                      <ChangeableImage
-                        token={token}
-                        employee={employee}
-                        query={VariantsQueries.changeImage}
-                        selectorId={variant.id}
-                        image={variant?.image?.location}
-                        width="7em"
-                        height="7em"
-                      />
-                    </td>
-                    <td>{variant.name}</td>
-                    <td>{variant.stock}</td>
-                    <td> <QrCode value={`${COMPANY_NAME}-.-${variant.id}-.-INVENTORY`} size="128"/> </td>
-                    <td className="py-2">
-                      <EditVariant token={token} variant={variant} />
-                      <DeleteVariant token={token} variant={variant} />
-                    </td>
-                  </tr>
-                ))}
+                {product.variants.map((variant, key) => {
+                  const qrRef = useRef(newUniqueId('qr-'));
+                  return (
+                    <tr key={key}>
+                      <th scope="row">{variant.id}</th>
+                      <td className="w-25">
+                        <ChangeableImage
+                          token={token}
+                          employee={employee}
+                          query={VariantsQueries.changeImage}
+                          selectorId={variant.id}
+                          image={variant?.image?.location}
+                          width="7em"
+                          height="7em"
+                        />
+                      </td>
+                      <td>{variant.name}</td>
+                      <td>{variant.stock}</td>
+                      <td>
+                        <QrCode
+                          value={`${COMPANY_NAME}-.-${variant.id}-.-INVENTORY`}
+                          size={128}
+                          id={qrRef.current}
+                        />
+                      </td>
+                      <td className="py-2">
+                        <EditVariant token={token} variant={variant} />
+                        <DeleteVariant token={token} variant={variant} />
+                        <Button
+                          type="button"
+                          className="btn btn-sm btn-info mx-1"
+                          title="Download QR Code"
+                          onClick={()=>downloadQr({qrRef, product, variant})}
+                        >
+                          <MdDownload />
+                        </Button>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </Table>
           </Container>

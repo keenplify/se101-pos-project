@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { MdAddToPhotos } from "react-icons/md";
 import { BACKEND } from "../helpers";
+import { ImageWrapper } from "../helpers/ImageWrapper";
 
 export const ChangeableImage = ({
   token,
@@ -35,11 +36,9 @@ export const ChangeableImage = ({
     setShow(true);
   };
 
-  const imgSrc=previewImage
-  ? previewImage
-  : image
-  ? BACKEND + image
-  : "/img/blank.png";
+  const imgSrc = previewImage
+    ? previewImage
+    : ImageWrapper(image, "/img/blank.png");
 
   return (
     <Fragment>
@@ -49,13 +48,18 @@ export const ChangeableImage = ({
       >
         <img
           className={"img-changeable rounded"}
-          src={image ? BACKEND + image : "/img/blank.png"}
+          src={ImageWrapper(image, "img/blank.png")}
         />
         <Button
           variant="info "
           size="sm"
           className="position-absolute"
-          style={{ right: "1em", bottom: "1em", fontSize: ".5em", display: employee.type !== "ADMIN" ? "none" : "initial" }}
+          style={{
+            right: "1em",
+            bottom: "1em",
+            fontSize: ".5em",
+            display: employee.type !== "ADMIN" ? "none" : "initial",
+          }}
           onClick={handleShow}
           disabled={employee.type !== "ADMIN"}
         >
@@ -93,7 +97,11 @@ export const ChangeableImage = ({
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} disabled={isSubmitting}>
+          <Button
+            variant="secondary"
+            onClick={handleClose}
+            disabled={isSubmitting}
+          >
             Close
           </Button>
           <Button

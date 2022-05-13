@@ -79,7 +79,7 @@ export default function SettingsModal({ token, employee }) {
                 </>
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="1">
+            {/* <Accordion.Item eventKey="1">
               <Accordion.Header>Change Name</Accordion.Header>
               <Accordion.Body>
                 <Formik
@@ -153,9 +153,9 @@ export default function SettingsModal({ token, employee }) {
                   )}
                 </Formik>
               </Accordion.Body>
-            </Accordion.Item>
+            </Accordion.Item> */}
 
-            <Accordion.Item eventKey="2">
+            <Accordion.Item eventKey="1">
               <Accordion.Header>Change Password</Accordion.Header>
               <Accordion.Body>
               <Formik

@@ -17,8 +17,9 @@ import { AuthenticateEmployee } from "../helpers/AuthenticateEmployee";
 import { useEffect } from "react";
 import axios from "axios";
 import { BACKEND } from "../helpers";
+import { ImageWrapper } from "../helpers/ImageWrapper";
 
-export default function Employee({ employee, allEmployees }) {
+export default function Employee({ token, employee, allEmployees }) {
   return (
     <div>
       <Head>
@@ -45,11 +46,10 @@ export default function Employee({ employee, allEmployees }) {
                             style={{ maxWidth: "24rem" }}
                           >
                             <img
-                              src={
-                                employee?.image_location
-                                  ? BACKEND + employee.image_location
-                                  : "/img/tao.jpg"
-                              }
+                              src={ImageWrapper(
+                                employee?.image_location,
+                                "/img/tao.jpg"
+                              )}
                               className="img-fluid"
                               alt="emp"
                             />

@@ -94,14 +94,14 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Total Sales - ${value}`}</text>
+      >{`Unit Sales - ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1)}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Total Price - ₱${payload.total_price}`}</text>
+      >{`Total Sales - ₱${payload.total_price}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1)}
         y={ey}
@@ -118,6 +118,8 @@ const renderActiveShape = (props) => {
 export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
   const [activePieIndex, setActivePieIndex] = useState(0);
   const [mode, setMode] = useState("Week");
+
+  console.log(_weeklyData);
   return (
     <div>
       <Head>

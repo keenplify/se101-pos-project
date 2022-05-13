@@ -16,6 +16,7 @@ import {
 import { BACKEND } from "../helpers";
 import { Field, Formik, Form as FormikForm } from "formik";
 import { FiLock } from "react-icons/fi";
+import { ImageWrapper } from "../helpers/ImageWrapper";
 
 export default function LoginCard({ employee, onSubmit }) {
   const [show, setShow] = useState(false);
@@ -42,7 +43,7 @@ export default function LoginCard({ employee, onSubmit }) {
                 objectFit: "contain",
               }}
               variant="top"
-              src={BACKEND + employee.image_location}
+              src={ImageWrapper(employee.image_location)}
             />
           ) : (
             <Card.Img variant="top" src="img/tao.jpg" />
@@ -78,13 +79,13 @@ export default function LoginCard({ employee, onSubmit }) {
               ></Modal.Header>
               <Modal.Body className="text-center">
                 {formik.status && (
-                  <div class="alert alert-danger">{formik.status}</div>
+                  <div className="alert alert-danger">{formik.status}</div>
                 )}
                 <FormikForm>
                   <img
                     className="img-thumbnail rounded-circle w-75"
                     style={{ height: "12em", objectFit: "contain" }}
-                    src={BACKEND + employee.image_location}
+                    src={ImageWrapper(employee.image_location)}
                   />
                   <Card.Text className="text-center">
                     {employee.firstName} {employee.lastName}
@@ -93,7 +94,7 @@ export default function LoginCard({ employee, onSubmit }) {
                     <Form.Label column sm="2"></Form.Label>
                     <Col className="input-group" sm="5">
                       <span
-                        class="input-group-text bg-transparent border"
+                        className="input-group-text bg-transparent border"
                         id="basic-addon1"
                       >
                         <FiLock></FiLock>
@@ -108,7 +109,7 @@ export default function LoginCard({ employee, onSubmit }) {
                     </Col>
                   </Form.Group>
                 </FormikForm>
-                <div class="d-grid gap-2 col-8 mx-auto">
+                <div className="d-grid gap-2 col-8 mx-auto">
                   <Button
                     variant={
                       formik.isSubmitting || !formik.isValid

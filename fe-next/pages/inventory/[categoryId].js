@@ -28,6 +28,7 @@ import DeleteCategory from "../../components/deleteCategory";
 import { Fragment, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { ProductsQueries } from "../../queries/products";
+import { ImageWrapper } from "../../helpers/ImageWrapper";
 
 export default function ProductsViewer({ employee, category, token }) {
   const [keyword, setKeyword] = useState("");
@@ -35,7 +36,6 @@ export default function ProductsViewer({ employee, category, token }) {
   const [debouncedKeyword] = useDebounce(keyword, 1000); // Wait 1000 before searching (debounced search)
 
   useEffect(() => {
-    console.log("debounced")
     if (debouncedKeyword.length > 0) {
       //Get data from search then set it as products state
       ProductsQueries.searchByCategory(token, category.id, {
@@ -143,12 +143,10 @@ export default function ProductsViewer({ employee, category, token }) {
                 <th scope="row">{product.id}</th>
                 <td className="w-25">
                   <img
-                    src={
-                      product?.variants[0] &&
-                      product.variants[0].image?.location
-                        ? BACKEND + product.variants[0].image.location
-                        : "/img/blank.png"
-                    }
+                    src={ product.variants[0] ? ImageWrapper(
+                      product.variants[0].image?.location,
+                      "/img/blank.jpg"
+                    ) : "/img/blank.jpg" }
                     className="img-fluid rounded bg-white"
                     style={{
                       width: "7em",
