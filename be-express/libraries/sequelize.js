@@ -9,8 +9,18 @@ if (process.env.DBLOG === "true") {
 }
 
 const sequelize = new Sequelize(
-  `postgres://${process.env.PGUSER}:${process.env.PGPASS}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGNAME}`,
-  sequelizeOptions
+  process.env.DATABASE_URL
+    ? process.env.DATABASE_URL
+    : `postgres://${process.env.PGUSER}:${process.env.PGPASS}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGNAME}`,
+  {
+    ...sequelizeOptions,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  }
 );
 
 async function prestart() {
