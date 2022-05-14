@@ -119,7 +119,6 @@ export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
   const [activePieIndex, setActivePieIndex] = useState(0);
   const [mode, setMode] = useState("Week");
 
-  console.log(_weeklyData);
   return (
     <div>
       <Head>

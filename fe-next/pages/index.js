@@ -47,8 +47,9 @@ export default function Home({
   const [modalShow, setModalShow] = useState(false);
   const [cartItems, setCartItems] = useState(
     activeTransaction.transactedvariants
-      ? activeTransaction.transactedvariants.map((transactedVariant) => {
+      ? activeTransaction.transactedvariants.map((transactedVariant, key) => {
           return {
+            key,
             quantity: transactedVariant.quantity,
             variant: transactedVariant.variant,
             transactedVariant,

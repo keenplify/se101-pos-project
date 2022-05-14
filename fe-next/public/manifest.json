@@ -4,8 +4,8 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "POS PWA",
-    "short_name": "pospwa",
+    "name": "V4perous M4ster POS",
+    "short_name": "POS Cashier",
     "description": "",
     "icons": [
         {

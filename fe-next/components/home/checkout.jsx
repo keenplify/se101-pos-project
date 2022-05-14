@@ -49,7 +49,7 @@ export function CheckoutModal({
         .map((cart) => cart.variant.price * cart.quantity)
         .reduce((a, b) => a + b, 0) * 100
     ) / 100;
-  const change = (amountPaid - totalPrice).toFixed(2)
+  const change = (amountPaid - totalPrice).toFixed(2);
   const hasChange = change >= 0;
 
   return (
@@ -247,14 +247,22 @@ export function CheckoutModal({
               </Modal.Body>
               <Modal.Footer className={styles.transactionButton}>
                 <div className="px-2">
-                  <Row className="mb-2">
-                    <Col md={5}>
-                      <Form.Label as="strong">AMOUNT PAID</Form.Label>
-                    </Col>
-                    <Col md={7}>
-                      <Form.Control placeholder="Amount Paid" value={amountPaid} onChange={e => setAmountPaid(e.target.value)} size="sm"/>
-                    </Col>
-                  </Row>
+                  {formik.values.type == "CASH" && (
+                    <Row className="mb-2">
+                      <Col md={5}>
+                        <Form.Label as="strong">AMOUNT PAID</Form.Label>
+                      </Col>
+                      <Col md={7}>
+                        <Form.Control
+                          placeholder="Amount Paid"
+                          value={amountPaid}
+                          onChange={(e) => setAmountPaid(e.target.value)}
+                          size="sm"
+                        />
+                      </Col>
+                    </Row>
+                  )}
+
                   <Row className="mb-2">
                     <Col sm={5}>
                       <strong> TOTAL AMOUNT </strong>
@@ -263,20 +271,24 @@ export function CheckoutModal({
                       <strong> &#8369;{totalPrice}</strong>
                     </Col>
                   </Row>
-                  <Row className="mb-2">
-                    <Col md={5}>
-                      <Form.Label as="strong">CHANGE</Form.Label>
-                    </Col>
-                    <Col md={7}>
-                      <strong> &#8369;{hasChange ? change : 0}</strong>
-                    </Col>
-                  </Row>
+                  {formik.values.type == "CASH" && (
+                    <Row className="mb-2">
+                      <Col md={5}>
+                        <Form.Label as="strong">CHANGE</Form.Label>
+                      </Col>
+                      <Col md={7}>
+                        <strong> &#8369;{hasChange ? change : 0}</strong>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
                 <div className="d-grid gap-2 mt-3">
                   <Row>
                     <Transaction
                       onProceed={() => formik.handleSubmit()}
-                      canProceed={formik.isValid && !formik.isSubmitting && hasChange}
+                      canProceed={
+                        formik.isValid && !formik.isSubmitting && (formik.values.type == "CASH" ? hasChange : true)
+                      }
                       token={token}
                       transaction={transaction}
                     ></Transaction>

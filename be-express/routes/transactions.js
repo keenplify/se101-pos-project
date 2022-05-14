@@ -416,14 +416,12 @@ router.get(
       while (currentDate <= _endDate) {
         let sales = 0;
         let lastDate = new Date(currentDate.toISOString())
-        lastDate.setDate(lastDate.getDate() + 6);
+        lastDate.setDate(lastDate.getDate() + 7);
 
         mainDataSource.forEach((source) => {
           // Check if source is within the date
           const createdAt = new Date(source.createdAt);
           if (
-            createdAt.getYear() == currentDate.getYear() &&
-            createdAt.getMonth() == currentDate.getMonth() &&
             createdAt <= lastDate &&
             createdAt >= currentDate
           ) {

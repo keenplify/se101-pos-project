@@ -8,18 +8,22 @@ if (process.env.DBLOG === "true") {
   sequelizeOptions.logging = false;
 }
 
+if (process.env.ENV == "dev") {
+  
+} else if (process.env.ENV == "prod") {
+  sequelizeOptions.dialectOptions = {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  }
+}
 const sequelize = new Sequelize(
   process.env.DATABASE_URL
     ? process.env.DATABASE_URL
     : `postgres://${process.env.PGUSER}:${process.env.PGPASS}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGNAME}`,
   {
     ...sequelizeOptions,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
   }
 );
 
