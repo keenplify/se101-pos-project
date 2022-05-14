@@ -196,7 +196,7 @@ export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>{mode === "Week" ? "Day" : "Months"}</th>
+              <th>{mode === "Week" ? "Day" : "Month"} Name</th>
               <th>Total Sales</th>
             </tr>
           </thead>
@@ -204,8 +204,8 @@ export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
             {
               (mode === "Week" ? _weeklyData.barData : _monthlyData.barData).map((data, key)=>(
                 <tr key={key}>
-                  <td>{data.name}</td>
-                  <td>₱{data.Sales}</td>
+                  <td data-label={mode === "Week" ? "Day Name" : "Month Name"}>{data.name}</td>
+                  <td data-label="Total Sales">₱{data.Sales}</td>
                 </tr>
               ))
             }

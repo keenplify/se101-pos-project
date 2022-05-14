@@ -225,13 +225,13 @@ export function CheckoutModal({
                         <tbody>
                           {cartItems.map((item, key) => (
                             <tr key={key}>
-                              <td>{item.quantity}</td>
-                              <td>{item.variant.name}</td>
-                              <td>
+                              <td data-label="Quantity">{item.quantity}</td>
+                              <td data-label="Variant Name">{item.variant.name}</td>
+                              <td data-label="Price">
                                 &#8369;
                                 {Math.round(item.variant.price * 100) / 100}
                               </td>
-                              <td>
+                              <td data-label="Amount">
                                 &#8369;
                                 {Math.round(
                                   item.quantity * item.variant.price * 100

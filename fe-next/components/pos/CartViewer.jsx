@@ -61,93 +61,94 @@ export const POSCartViewer = ({
               <tbody style={{ fontSize: ".8em" }}>
                 {cartItems.map((item, key) => (
                   <tr key={key}>
-                    <td>
-                      <div
-                        style={{
-                          width: "58px",
+                    <td data-label="Variant" style={{
+                          width: "100%",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                        }}
-                      >
+                        }}>
                         {item.variant.name}
-                      </div>
                     </td>
                     <td
+                      data-label="Quantity"
                       style={{
                         overflow: "hidden",
                         whiteSpace: "nowrap",
-                        display: "block",
                       }}
+                      className="d-flex"
+                      data-label="Price"
                     >
-                      <InputGroup>
-                        <InputGroup.Text
-                          className={styles.inputGroupText}
-                          onClick={async () => {
-                            if (transaction.state !== "PROCESSING") return;
-                            const newCartItems = [...cartItems];
-                            const f = newCartItems.find(
-                              (e) => e.variant.id == item.variant.id
-                            );
-                            if (f.quantity > 1) {
-                              f.quantity--;
+                      <div className="ms-auto ms-md-0">
+                        <InputGroup>
+                          <InputGroup.Text
+                            className={styles.inputGroupText}
+                            onClick={async () => {
+                              if (transaction.state !== "PROCESSING") return;
+                              const newCartItems = [...cartItems];
+                              const f = newCartItems.find(
+                                (e) => e.variant.id == item.variant.id
+                              );
+                              if (f.quantity > 1) {
+                                f.quantity--;
 
-                              await TransactedVariantsQueries.editQuantityById(
+                                await TransactedVariantsQueries.editQuantityById(
+                                  token,
+                                  f.transactedVariant.id,
+                                  f.quantity
+                                );
+                              }
+
+                              setCartItems(newCartItems);
+                            }}
+                            style={{
+                              display:
+                                transaction.state !== "PROCESSING"
+                                  ? "none"
+                                  : undefined,
+                            }}
+                          >
+                            <FaMinusCircle></FaMinusCircle>
+                          </InputGroup.Text>
+                          <span style={{margin: "0 .5rem"}}>{item.quantity}</span>
+                          <InputGroup.Text
+                            className={styles.inputGroupText}
+                            onClick={async () => {
+                              if (transaction.state !== "PROCESSING") return;
+                              const newCartItems = [...cartItems];
+
+                              const f = newCartItems.find(
+                                (e) => e.variant.id == item.variant.id
+                              );
+                              if (f.quantity >= f.variant.stock) return;
+                              f.quantity++;
+
+                              TransactedVariantsQueries.editQuantityById(
                                 token,
                                 f.transactedVariant.id,
                                 f.quantity
                               );
-                            }
 
-                            setCartItems(newCartItems);
-                          }}
-                          style={{
-                            display:
-                              transaction.state !== "PROCESSING"
-                                ? "none"
-                                : undefined,
-                          }}
-                        >
-                          <FaMinusCircle></FaMinusCircle>
-                        </InputGroup.Text>
-                        {item.quantity}
-                        <InputGroup.Text
-                          className={styles.inputGroupText}
-                          onClick={async () => {
-                            if (transaction.state !== "PROCESSING") return;
-                            const newCartItems = [...cartItems];
-
-                            const f = newCartItems.find(
-                              (e) => e.variant.id == item.variant.id
-                            );
-                            if (f.quantity >= f.variant.stock) return;
-                            f.quantity++;
-
-                            TransactedVariantsQueries.editQuantityById(
-                              token,
-                              f.transactedVariant.id,
-                              f.quantity
-                            );
-
-                            setCartItems(newCartItems);
-                          }}
-                          style={{
-                            display:
-                              transaction.state !== "PROCESSING"
-                                ? "none"
-                                : undefined,
-                          }}
-                        >
-                          <FaPlusCircle></FaPlusCircle>
-                        </InputGroup.Text>
-                      </InputGroup>
+                              setCartItems(newCartItems);
+                            }}
+                            style={{
+                              display:
+                                transaction.state !== "PROCESSING"
+                                  ? "none"
+                                  : undefined,
+                            }}
+                          >
+                            <FaPlusCircle></FaPlusCircle>
+                          </InputGroup.Text>
+                        </InputGroup>
+                      </div>
+                      
                     </td>
-                    <td>
+                    <td data-label="Price">
                       &#8369;
                       {Math.round(item.quantity * item.variant.price * 100) /
                         100}
                     </td>
-                    <td>
+                    <td  data-label="Action">
                       <div
                         onClick={async () => {
                           if (transaction.state !== "PROCESSING") return;
@@ -224,15 +225,15 @@ export const POSCartViewer = ({
                 >
                   Checkout
                 </Button>
-                <BarcodeScannerModal
-                  token={token}
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                  transaction={transaction}
-                  disabled={transaction.state !== "PROCESSING"}
-                />
               </span>
             </OverlayTrigger>
+            <BarcodeScannerModal
+              token={token}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              transaction={transaction}
+              disabled={transaction.state !== "PROCESSING"}
+            />
             <DeleteTransactionModal />
             <ChangeTransactionForm transaction={transaction} />
           </Col>

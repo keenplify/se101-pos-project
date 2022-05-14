@@ -77,10 +77,10 @@ export default function ActivityLogs({ token, _logs, employee }) {
           <Table striped bordered hover variant="light">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>DATE CREATED</th>
-                <th>CREATED BY</th>
-                <th>DESCRIPTION</th>
+                <th  scope="col">ID</th>
+                <th  scope="col">DATE CREATED</th>
+                <th  scope="col">CREATED BY</th>
+                <th  scope="col">DESCRIPTION</th>
               </tr>
             </thead>
             <tbody>

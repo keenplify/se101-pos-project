@@ -109,7 +109,7 @@
 }
 
 .inputGroupText {
-  padding: 0 10px !important;
+  padding: 0 !important;
   background-color: transparent !important;
   border: none !important;
   cursor: pointer;
