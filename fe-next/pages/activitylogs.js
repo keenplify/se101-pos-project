@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Pagination, Table, InputGroup, FormControl } from "react-bootstrap";
+import { Pagination, Table, InputGroup, FormControl, Badge } from "react-bootstrap";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Container } from "react-bootstrap";
 import { NavBar } from "../components/navbar";
@@ -15,25 +15,25 @@ export default function ActivityLogs({ token, _logs, employee }) {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [debouncedKeyword] = useDebounce(keyword, 1000); // Wait 1000 before searching (debounced search)
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     if (debouncedKeyword.length > 0) {
       //Get data from search then set it as logs state
-      LogsQueries.getAllPaginate(token, 10, {keyword: debouncedKeyword}).then((res) => {
-        if (res.data?.logs) {
-          setLogs(res.data.logs);
-          setCurrentPageNumber(1);
-          setPageCount(Math.ceil(res.data.logs.totalCount / 10));
+      LogsQueries.getAllPaginate(token, 10, { keyword: debouncedKeyword }).then(
+        (res) => {
+          if (res.data?.logs) {
+            setLogs(res.data.logs);
+            setCurrentPageNumber(1);
+            setPageCount(Math.ceil(res.data.logs.totalCount / 10));
+          }
         }
-      })
+      );
     } else {
       setLogs(_logs);
       setCurrentPageNumber(1);
       setPageCount(Math.ceil(_logs.totalCount / 10));
-
     }
-  }, [debouncedKeyword])
-
+  }, [debouncedKeyword]);
   return (
     <>
       <>
@@ -44,38 +44,35 @@ export default function ActivityLogs({ token, _logs, employee }) {
         </Head>
         <NavBar employee={employee} token={token}></NavBar>
 
-        <div
-        className="mt-3 mb-2 text-center"
-        style={{ width: "100%"}}
-      >
-        <label
-          className="text-center "
-          style={{
-            fontSize: "30px",
-            fontWeight: "bold",
-            fontFamily: 'Roboto',
-          }}
-        >
-         ACTIVITY LOGS{" "}
-        </label>
-          </div>
+        <div className="mt-3 mb-2 text-center" style={{ width: "100%" }}>
+          <label
+            className="text-center "
+            style={{
+              fontSize: "30px",
+              fontWeight: "bold",
+              fontFamily: "Roboto",
+            }}
+          >
+            ACTIVITY LOGS{" "}
+          </label>
+        </div>
         <Container className="col-6 mb-3">
-      <div className="d-flex p-1">
-          <InputGroup >
-            <InputGroup.Text id="basic-addon1">
-              <AiOutlineSearch></AiOutlineSearch>
-            </InputGroup.Text>
-            <FormControl
-              placeholder="Search"
-              aria-label="Search"
-              type="search"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
-          </InputGroup>
+          <div className="d-flex p-1">
+            <InputGroup>
+              <InputGroup.Text id="basic-addon1">
+                <AiOutlineSearch></AiOutlineSearch>
+              </InputGroup.Text>
+              <FormControl
+                placeholder="Search"
+                aria-label="Search"
+                type="search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+            </InputGroup>
           </div>
-          </Container>
-          
+        </Container>
+
         <Container>
           <Table striped bordered hover variant="light">
             <thead>
@@ -89,12 +86,20 @@ export default function ActivityLogs({ token, _logs, employee }) {
             <tbody>
               {logs.edges.map((edge, key) => (
                 <tr key={key}>
-                  <td>{edge.node.id}</td>
-                  <td>{new Date(edge.node.createdAt).toLocaleString()}</td>
-                  <td>
-                    {edge.node.employee.firstName} {edge.node.employee.lastName}
+                  <td data-label="ID">{edge?.node?.id}</td>
+                  <td data-label="Date Created">
+                    {new Date(edge?.node?.createdAt)?.toLocaleString()}
                   </td>
-                  <td>{edge.node.description}</td>
+                  <td data-label="Created By">
+                    {edge?.node?.employee
+                      ? edge?.node?.employee?.firstName +
+                        " " +
+                        edge?.node?.employee?.lastName
+                      : (<Badge bg="danger">
+                          Account Not Found
+                        </Badge>)}
+                  </td>
+                  <td data-label="Description">{edge?.node?.description}</td>
                 </tr>
               ))}
             </tbody>
@@ -102,11 +107,12 @@ export default function ActivityLogs({ token, _logs, employee }) {
           <Pagination className="d-flex justify-content-center text-decoration-none list-unstyled">
             <Pagination.Prev
               onClick={() => {
-                if (currentPageNumber == 1 && !logs.pageInfo.hasPreviousPage) return;
+                if (currentPageNumber == 1 && !logs.pageInfo.hasPreviousPage)
+                  return;
 
                 LogsQueries.getAllPaginate(token, 10, {
                   before: logs.pageInfo.startCursor,
-                  keyword: keyword ? keyword : null
+                  keyword: keyword ? keyword : null,
                 })
                   .then((res) => {
                     setLogs(res.data.logs);
@@ -114,7 +120,6 @@ export default function ActivityLogs({ token, _logs, employee }) {
                     setPageCount(Math.ceil(res.data.logs.totalCount / 10));
                   })
                   .catch((err) => console.log(err.response));
-
               }}
             />
             {Array.from(Array(pageCount)).map((_, key) => (
@@ -129,11 +134,15 @@ export default function ActivityLogs({ token, _logs, employee }) {
             ))}
             <Pagination.Next
               onClick={() => {
-                if (currentPageNumber == pageCount && !logs.pageInfo.hasNextPage) return;
+                if (
+                  currentPageNumber == pageCount &&
+                  !logs.pageInfo.hasNextPage
+                )
+                  return;
 
                 LogsQueries.getAllPaginate(token, 10, {
                   after: logs.pageInfo.endCursor,
-                  keyword: keyword ? keyword : null
+                  keyword: keyword ? keyword : null,
                 })
                   .then((res) => {
                     setLogs(res.data.logs);

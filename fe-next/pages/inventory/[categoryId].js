@@ -140,8 +140,8 @@ export default function ProductsViewer({ employee, category, token }) {
           <tbody>
             {products.map((product, key) => (
               <tr key={key}>
-                <th scope="row">{product.id}</th>
-                <td className="w-25">
+                <td data-label="ID">{product.id}</td>
+                <td data-label="Image">
                   <img
                     src={ product.variants[0] ? ImageWrapper(
                       product.variants[0].image?.location,
@@ -158,16 +158,16 @@ export default function ProductsViewer({ employee, category, token }) {
                     alt={product.name + "'s logo"}
                   />
                 </td>
-                <td>{product.name}</td>
-                <td>
-                  <ul>
+                <td data-label="Product Name" >{product.name}</td>
+                <td data-label="Variants" >
+                  <ul className="list-unstyled">
                     {product.variants.map(
                       (variant, key) =>
                         key < 5 && <li key={key}> {variant.name}</li>
                     )}
                   </ul>
                 </td>
-                <td>{new Date(product.createdAt).toLocaleString()}</td>
+                <td data-label="Actions" >{new Date(product.createdAt).toLocaleString()}</td>
                 {employee.type === "ADMIN" && (
                   <td className="py-2">
                     <View

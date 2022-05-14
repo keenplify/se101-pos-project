@@ -50,19 +50,21 @@ export default function Empadsee({employee,allEmployees, token}) {
   <tbody>
     { allEmployees && allEmployees.map ((_employee, key) => (
           <tr key={key}>
-          <th scope="row">{_employee.id}</th>
-          <td className="w-25">
-            <ChangeableImage
-              employee={employee}
-              token={token}
-              selectorId={_employee.id}
-              query={EmployeesQueries.changeImage}
-              image={_employee?.image_location}
-            />
+          <td scope="row"  data-label="ID">{_employee.id}</td>
+          <td data-label="Image" className="d-flex w-100">
+            <div className="ms-auto ms-md-0">
+              <ChangeableImage
+                employee={employee}
+                token={token}
+                selectorId={_employee.id}
+                query={EmployeesQueries.changeImage}
+                image={_employee?.image_location}
+              />
+            </div>
           </td>
-          <td>{_employee.firstName} {_employee.lastName}</td>
-          <td>{_employee.type}</td>
-          <td className="py-2">
+          <td data-label="Full Name">{_employee.firstName} {_employee.lastName}</td>
+          <td data-label="Type">{_employee.type}</td>
+          <td className="py-2" data-label="Actions">
              <Editemp token={token} employee={_employee}></Editemp>
               <Deleteemp token={token} employee={_employee}></Deleteemp>
           </td>

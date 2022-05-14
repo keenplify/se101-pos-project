@@ -92,23 +92,25 @@ export default function InventoryAll({ token, employee, _variants }) {
           <tbody>
             {variants.map((variant, key) => (
               <tr key={key}>
-                <td>
-                  <ChangeableImage
-                    token={token}
-                    employee={employee}
-                    query={VariantsQueries.changeImage}
-                    selectorId={variant.id}
-                    image={variant?.image?.location}
-                    width="7em"
-                    height="7em"
-                  />
+                <td className="d-flex" data-label="Image">
+                  <div className="ms-auto ms-md-0">
+                    <ChangeableImage
+                      token={token}
+                      employee={employee}
+                      query={VariantsQueries.changeImage}
+                      selectorId={variant.id}
+                      image={variant?.image?.location}
+                      width="7em"
+                      height="7em"
+                    />
+                  </div>
                 </td>
-                <td>{variant.product.name}</td>
-                <td>{variant.name}</td>
-                <td>{variant.product.category.name}</td>
-                <td>{variant.stock}</td>
+                <td data-label="Product Name">{variant.product.name}</td>
+                <td data-label="Variant Name">{variant.name}</td>
+                <td data-label="Category Name">{variant.product.category.name}</td>
+                <td data-label="Stocks">{variant.stock}</td>
                 {employee.type == "ADMIN" && (
-                  <td>
+                  <td data-label="Actions">
                     <EditVariant token={token} variant={variant} />
                     <DeleteVariant token={token} variant={variant} />
                   </td>

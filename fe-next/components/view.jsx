@@ -96,21 +96,23 @@ export default function View({ product, employee, token }) {
                   const qrRef = useRef(newUniqueId('qr-'));
                   return (
                     <tr key={key}>
-                      <th scope="row">{variant.id}</th>
-                      <td className="w-25">
-                        <ChangeableImage
-                          token={token}
-                          employee={employee}
-                          query={VariantsQueries.changeImage}
-                          selectorId={variant.id}
-                          image={variant?.image?.location}
-                          width="7em"
-                          height="7em"
-                        />
+                      <td scope="row" data-label="ID">{variant.id}</td>
+                      <td data-label="Image" className="d-flex">
+                        <div className="ms-auto">
+                          <ChangeableImage
+                            token={token}
+                            employee={employee}
+                            query={VariantsQueries.changeImage}
+                            selectorId={variant.id}
+                            image={variant?.image?.location}
+                            width="128px"
+                            height="128px"
+                          />
+                        </div>
                       </td>
-                      <td>{variant.name}</td>
-                      <td>{variant.stock}</td>
-                      <td>
+                      <td data-label="Name">{variant.name}</td>
+                      <td data-label="Stock">{variant.stock}</td>
+                      <td data-label="QR Code">
                         <QrCode
                           value={`${COMPANY_NAME}-.-${variant.id}-.-INVENTORY`}
                           size={128}
