@@ -173,6 +173,77 @@ router.post(
 );
 
 router.put(
+  "/:id",
+  passport.authenticate("bearer", { session: false }),
+  [
+    body("firstName").notEmpty().isString(),
+    body("lastName").notEmpty().isString(),
+    body("type").notEmpty().isString(),
+  ],
+  validateResultMiddleware,
+
+  async (req, res) => {
+    const { firstName, lastName, type } = matchedData(req, {
+      locations: ["body"],
+    });
+
+    try {
+      // Check if same employee exists as sir said, bawal same firstname at lastname
+      const employees = await Employee.findOne({
+        where: {
+          [Op.and]: [
+            {
+              firstName: sequelize.where(
+                sequelize.fn("LOWER", sequelize.col("firstName")),
+                "LIKE",
+                "%" + firstName.toLowerCase() + "%"
+              ),
+            },
+            {
+              lastName: sequelize.where(
+                sequelize.fn("LOWER", sequelize.col("lastName")),
+                "LIKE",
+                "%" + lastName.toLowerCase() + "%"
+              ),
+            },
+          ],
+          id: {
+            [Op.not]: req.params.id,
+          },
+        },
+      });
+
+      if (employees !== null)
+        return res
+          .status(500)
+          .send({ error: "First name or last name must be unique!" });
+
+      await Employee.update(
+        {
+          firstName,
+          lastName,
+          type
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
+
+      await Log.create({
+        createdBy: req.user.id,
+        description: `Employee ID#${req.params.id}'s information has been updated into "${firstName} ${lastName}" of type ${type}.`,
+      });
+
+      res.send();
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
+router.put(
   "/me/changeName",
   passport.authenticate("bearer", { session: false }),
   [

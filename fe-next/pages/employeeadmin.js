@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Table, InputGroup, Button, Form, FormControl
 import Deleteemp from '../components/deleteemp'
 import Editemp from '../components/editemp'
 import Addemp from '../components/addemp'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { NavBar } from '../components/navbar'
 import {AiFillEdit} from "react-icons/ai"
 import { Footer } from '../components/footer'
@@ -65,8 +65,15 @@ export default function Empadsee({employee,allEmployees, token}) {
           <td data-label="Full Name">{_employee.firstName} {_employee.lastName}</td>
           <td data-label="Type">{_employee.type}</td>
           <td className="py-2" data-label="Actions">
-             <Editemp token={token} employee={_employee}></Editemp>
-              <Deleteemp token={token} employee={_employee}></Deleteemp>
+            {
+              _employee.id != 1 && (
+                <Fragment>
+                  <Editemp token={token} employee={_employee}></Editemp>
+                  <Deleteemp token={token} employee={_employee}></Deleteemp>
+                </Fragment>
+              )
+            }
+             
           </td>
         </tr>
     ))}

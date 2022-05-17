@@ -220,13 +220,13 @@ router.get(
 
       const items = transaction.transactedvariants.map((tv) => {
         return {
-          id: tv.variant.id.toString(),
-          title: `${tv.variant.product.name} - ${tv.variant.name}`,
-          date: tv.variant.createdAt.toISOString().slice(0, 10),
-          amount: tv.variant.price,
+          id: tv?.variant?.id?.toString(),
+          title: `${tv?.variant?.product?.name} - ${tv?.variant?.name}`,
+          date: tv?.variant?.createdAt?.toISOString().slice(0, 10),
+          amount: tv?.variant?.price,
           tax: 0,
-          quantity: tv.quantity,
-          total: tv.variant.price * tv.quantity,
+          quantity: tv?.quantity,
+          total: tv?.variant?.price * tv?.quantity,
         };
       });
 
@@ -326,6 +326,8 @@ router.get(
         let sales = 0;
 
         mainDataSource.forEach((source) => {
+          if (!source || source == null) return;
+
           // Check if source is within the date
           const createdAt = new Date(source.createdAt);
           if (
@@ -350,7 +352,7 @@ router.get(
         totalSales += transaction.total_price;
         transaction.transactedvariants.forEach((source) => {
           var dataIndex = pieData.findIndex(
-            (data) => data.transactedVariant.variant.id == source.variant.id
+            (data) => data?.transactedVariant?.variant?.id == source?.variant?.id
           );
           if (dataIndex >= 0) {
             pieData[dataIndex].value += source.quantity;
@@ -358,9 +360,9 @@ router.get(
           } else {
             pieData.push({
               transactedVariant: source,
-              name: `${source.variant.product.name} ${source.variant.name}`,
-              total_price: source.variant.price,
-              value: source.quantity,
+              name: `${source?.variant?.product?.name} ${source?.variant?.name}`,
+              total_price: source?.variant?.price,
+              value: source?.quantity,
             });
           }
         });
@@ -443,18 +445,20 @@ router.get(
       mainDataSource.forEach(transaction => {
         totalSales += transaction.total_price;
         transaction.transactedvariants.forEach((source) => {
+          if (!source || source == null) return;
+
           var dataIndex = pieData.findIndex(
-            (data) => data.transactedVariant.variant.id == source.variant.id
+            (data) => data?.transactedVariant?.variant?.id == source?.variant?.id
           );
           if (dataIndex >= 0) {
-            pieData[dataIndex].value += source.quantity;
-            pieData[dataIndex].total_price += source.variant.price;
+            pieData[dataIndex].value += source?.quantity;
+            pieData[dataIndex].total_price += source?.variant?.price;
           } else {
             pieData.push({
               transactedVariant: source,
-              name: `${source.variant.product.name} ${source.variant.name}`,
-              total_price: source.variant.price,
-              value: source.quantity,
+              name: `${source?.variant?.product?.name} ${source?.variant?.name}`,
+              total_price: source?.variant?.price,
+              value: source?.quantity,
             });
           }
         });

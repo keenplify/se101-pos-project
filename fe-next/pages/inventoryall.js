@@ -105,10 +105,10 @@ export default function InventoryAll({ token, employee, _variants }) {
                     />
                   </div>
                 </td>
-                <td data-label="Product Name">{variant.product.name}</td>
-                <td data-label="Variant Name">{variant.name}</td>
-                <td data-label="Category Name">{variant.product.category.name}</td>
-                <td data-label="Stocks">{variant.stock}</td>
+                <td data-label="Product Name">{variant?.product?.name}</td>
+                <td data-label="Variant Name">{variant?.name}</td>
+                <td data-label="Category Name">{variant?.product?.category?.name}</td>
+                <td data-label="Stocks">{variant?.stock}</td>
                 {employee.type == "ADMIN" && (
                   <td data-label="Actions">
                     <EditVariant token={token} variant={variant} />

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { MdDownload, MdGridView } from "react-icons/md";
 import { Container, Row, Col, Button, Table, Modal } from "react-bootstrap";
 import { BACKEND, COMPANY_NAME } from "../helpers";
@@ -9,20 +9,12 @@ import { VariantsQueries } from "../queries/variants";
 import QrCode from "react-qr-code";
 import EditVariant from "./editVariant";
 import DeleteVariant from "./deleteVariant";
-import toImg from 'react-svg-to-image';
+import toImg from "react-svg-to-image";
 import { newUniqueId } from "../helpers/newid";
 import { ImageWrapper } from "../helpers/ImageWrapper";
 
 export default function View({ product, employee, token }) {
   const [show, setShow] = useState(false);
-
-  const downloadQr = ( {qrRef, product, variant}) => {
-    toImg('#'+qrRef.current, `qr-${product.name}-${variant.name}-${new Date().toLocaleDateString()}`, {
-      scale: 3,
-      format: 'png',
-      download: true,
-    })
-  };
 
   return (
     <>
@@ -44,9 +36,7 @@ export default function View({ product, employee, token }) {
                   <img
                     src={
                       product?.variants[0] &&
-                      ImageWrapper(
-                        product.variants[0].image?.location
-                      )
+                      ImageWrapper(product.variants[0].image?.location)
                     }
                     className="img-fluid rounded bg-white"
                     style={{
@@ -75,7 +65,10 @@ export default function View({ product, employee, token }) {
 
               <Col>
                 <div className="text-end">
+                {employee.type === "ADMIN" && (
                   <AddVariant token={token} product={product} />
+                )}
+                  
                 </div>
               </Col>
             </Row>
@@ -92,48 +85,15 @@ export default function View({ product, employee, token }) {
                 </tr>
               </thead>
               <tbody>
-                {product.variants.map((variant, key) => {
-                  const qrRef = useRef(newUniqueId('qr-'));
-                  return (
-                    <tr key={key}>
-                      <td scope="row" data-label="ID">{variant.id}</td>
-                      <td data-label="Image" className="d-flex">
-                        <div className="ms-auto">
-                          <ChangeableImage
-                            token={token}
-                            employee={employee}
-                            query={VariantsQueries.changeImage}
-                            selectorId={variant.id}
-                            image={variant?.image?.location}
-                            width="128px"
-                            height="128px"
-                          />
-                        </div>
-                      </td>
-                      <td data-label="Name">{variant.name}</td>
-                      <td data-label="Stock">{variant.stock}</td>
-                      <td data-label="QR Code">
-                        <QrCode
-                          value={`${COMPANY_NAME}-.-${variant.id}-.-INVENTORY`}
-                          size={128}
-                          id={qrRef.current}
-                        />
-                      </td>
-                      <td className="py-2">
-                        <EditVariant token={token} variant={variant} />
-                        <DeleteVariant token={token} variant={variant} />
-                        <Button
-                          type="button"
-                          className="btn btn-sm btn-info mx-1"
-                          title="Download QR Code"
-                          onClick={()=>downloadQr({qrRef, product, variant})}
-                        >
-                          <MdDownload />
-                        </Button>
-                      </td>
-                    </tr>
-                  )
-                })}
+                {product.variants.map((variant, key) => (
+                  <ViewVariant
+                    variant={variant}
+                    token={token}
+                    employee={employee}
+                    key={key}
+                    product={product}
+                  />
+                ))}
               </tbody>
             </Table>
           </Container>
@@ -141,4 +101,68 @@ export default function View({ product, employee, token }) {
       </Modal>
     </>
   );
+}
+
+export function ViewVariant({ variant, token, employee, product }) {
+  {
+    const [qrRef] = useState(`qr-${Math.floor(Math.random() * 100 + 1)}`);
+
+    const downloadQr = ({ qrRef, product, variant }) => {
+      toImg(
+        "#" + qrRef,
+        `qr-${product?.name}-${variant?.name}-${new Date().toLocaleDateString()}`,
+        {
+          scale: 3,
+          format: "png",
+          download: true,
+        }
+      );
+    };
+
+    return (
+      <tr>
+        <td scope="row" data-label="ID">
+          {variant.id}
+        </td>
+        <td data-label="Image" className="d-flex">
+          <div className="ms-auto">
+            <ChangeableImage
+              token={token}
+              employee={employee}
+              query={VariantsQueries.changeImage}
+              selectorId={variant?.id}
+              image={variant?.image?.location}
+              width="128px"
+              height="128px"
+            />
+          </div>
+        </td>
+        <td data-label="Name">{variant?.name}</td>
+        <td data-label="Stock">{variant?.stock}</td>
+        <td data-label="QR Code">
+          <QrCode
+            value={`${COMPANY_NAME}-.-${variant?.id}-.-INVENTORY`}
+            size={128}
+            id={qrRef}
+          />
+        </td>
+        <td className="py-2" data-label="Actions">
+          {employee.type === "ADMIN" && (
+            <Fragment>
+              <EditVariant token={token} variant={variant} />
+              <DeleteVariant token={token} variant={variant} />
+            </Fragment>
+          )}
+          <Button
+            type="button"
+            className="btn btn-sm btn-info mx-1"
+            title="Download QR Code"
+            onClick={() => downloadQr({ qrRef, product, variant })}
+          >
+            <MdDownload />
+          </Button>
+        </td>
+      </tr>
+    );
+  }
 }

@@ -31,22 +31,28 @@ import { ProductsQueries } from "../../queries/products";
 import { ImageWrapper } from "../../helpers/ImageWrapper";
 
 export default function ProductsViewer({ employee, category, token }) {
-  const [keyword, setKeyword] = useState("");
   const [products, setProducts] = useState(category.products); // Use SSRed data as products default
+  const [keyword, setKeyword] = useState("");
   const [debouncedKeyword] = useDebounce(keyword, 1000); // Wait 1000 before searching (debounced search)
 
   useEffect(() => {
     if (debouncedKeyword.length > 0) {
       //Get data from search then set it as products state
-      ProductsQueries.searchByCategory(token, category.id, {
-        keyword: debouncedKeyword,
-      }).then((res) => {
-        if (res.data?.products) {
-          setProducts(res.data.products);
-        }
-      });
+      try {
+        ProductsQueries.searchByCategory(token, category.id, {
+          keyword: debouncedKeyword,
+        }).then((res) => {
+          res?.data?.products && setProducts(res.data.products);
+        }).catch((err) => {
+          setProducts(category.products);
+        });
+      } catch (error) {
+        setProducts(category.products);
+      }
+      
     } else {
-      // If no keyword is typed, show original SSRed data
+      console.log("else debounce")
+      // If no keyword is typed, show original SSRed dataa
       setProducts(category.products);
     }
   }, [debouncedKeyword]);
@@ -134,7 +140,7 @@ export default function ProductsViewer({ employee, category, token }) {
               <th scope="col">Product Name</th>
               <th scope="col">Variants</th>
               <th scope="col">Date Added</th>
-              {employee.type === "ADMIN" && <th scope="col">Action</th>}
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -167,21 +173,20 @@ export default function ProductsViewer({ employee, category, token }) {
                     )}
                   </ul>
                 </td>
-                <td data-label="Actions" >{new Date(product.createdAt).toLocaleString()}</td>
-                {employee.type === "ADMIN" && (
-                  <td className="py-2">
-                    <View
-                      product={product}
-                      token={token}
-                      employee={employee}
-                    ></View>
-                    <EditProduct token={token} product={product} />
-                    <DeleteProduct
-                      token={token}
-                      product={product}
-                    ></DeleteProduct>
-                  </td>
-                )}
+                <td data-label="Date Added" >{new Date(product.createdAt).toLocaleString()}</td>
+                <td className="py-2" data-label="Actions">
+                  <View employee={employee} product={product} token={token}/>
+                  {employee.type === "ADMIN" && (
+                    <Fragment>
+                      <EditProduct token={token} product={product} />
+                      <DeleteProduct
+                        token={token}
+                        product={product}
+                      ></DeleteProduct>
+                    </Fragment>
+                  )}
+                </td>
+                
               </tr>
             ))}
           </tbody>

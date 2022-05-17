@@ -26,7 +26,7 @@ import {
   Area,
   Bar,
   Sector,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -35,6 +35,7 @@ import Badge from "react-bootstrap/Badge";
 import { PieChart, Pie } from "recharts";
 import { TransactionsQueries } from "../queries/transactions";
 
+const COLORS = ["#5a8d3b", "#0882d5", "#d2dd8e", "#9bad77", "#bc843d", '#676c52', '#232297'];
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
@@ -62,7 +63,7 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={375} dy={8} textAnchor="middle" fill={fill}>
         {payload.name}
       </text>
       <Sector
@@ -131,7 +132,10 @@ export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
       <h2 className="fs-2 text-center"> Sales Performance</h2>
 
       <div className="d-flex align-items-center justify-content-center">
-        <Form.Select onChange={(e)=>setMode(e.target.value)} style={{maxWidth: 256}}>
+        <Form.Select
+          onChange={(e) => setMode(e.target.value)}
+          style={{ maxWidth: 256 }}
+        >
           <option value="Week">Week Sales</option>
           <option value="Month">Month Sales</option>
         </Form.Select>
@@ -141,39 +145,61 @@ export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
         {" "}
         <h6 className="text-center">
           {" "}
-          Here you will see a summary your transaction in a {mode === "Week" ? "week" : "month"}
+          Here you will see a summary your transaction in a{" "}
+          {mode === "Week" ? "week" : "month"}
         </h6>{" "}
       </div>
 
       <div className="text-center">
-        <Badge bg="primary">Total Sales: ₱{(mode == "Week" ? _weeklyData : _monthlyData).totalSales}</Badge>
+        <Badge bg="primary">
+          Total Sales: ₱
+          {(mode == "Week" ? _weeklyData : _monthlyData).totalSales}
+        </Badge>
       </div>
 
       <Container className="my-5">
         <Row>
-          <Col md={6} className="d-flex justify-content-center align-items-center flex-column">
+          <Col
+            md={6}
+            className="d-flex justify-content-center align-items-center flex-column"
+          >
             <h3>Top Selling Products this {mode}</h3>
             <ResponsiveContainer width="100%" height={412}>
               <PieChart>
                 <Pie
                   activeIndex={activePieIndex}
                   activeShape={renderActiveShape}
-                  data={mode == "Week" ? _weeklyData.pieData : _monthlyData.pieData}
+                  data={[
+                    ...(mode == "Week"
+                      ? _weeklyData.pieData
+                      : _monthlyData.pieData),
+                  ].map((data, index) => {
+                    return {
+                      ...data,
+                      fill: COLORS[index % COLORS.length],
+                    };
+                  })}
                   cx="50%"
                   cy="50%"
                   innerRadius={60}
                   outerRadius={80}
-                  fill="#8884d8"
                   dataKey="value"
                   onMouseEnter={(_, index) => setActivePieIndex(index)}
                 />
               </PieChart>
             </ResponsiveContainer>
           </Col>
-          <Col md={6} className="d-flex justify-content-center align-items-center flex-column">
+          <Col
+            md={6}
+            className="d-flex justify-content-center align-items-center flex-column"
+          >
             <h3>{mode === "Week" ? "Daily" : "Weekly"} Breakdown of Sales</h3>
             <ResponsiveContainer width="100%" height={412}>
-              <ComposedChart data={mode == "Week" ? _weeklyData.barData : _monthlyData.barData}>
+              <ComposedChart
+                data={
+                  mode == "Week" ? _weeklyData.barData : _monthlyData.barData
+                }
+              >
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
@@ -201,14 +227,16 @@ export default function Sales({ token, employee, _weeklyData, _monthlyData }) {
             </tr>
           </thead>
           <tbody>
-            {
-              (mode === "Week" ? _weeklyData.barData : _monthlyData.barData).map((data, key)=>(
+            {(mode === "Week" ? _weeklyData.barData : _monthlyData.barData).map(
+              (data, key) => (
                 <tr key={key}>
-                  <td data-label={mode === "Week" ? "Day Name" : "Month Name"}>{data.name}</td>
+                  <td data-label={mode === "Week" ? "Day Name" : "Month Name"}>
+                    {data.name}
+                  </td>
                   <td data-label="Total Sales">₱{data.Sales}</td>
                 </tr>
-              ))
-            }
+              )
+            )}
           </tbody>
         </Table>
       </Container>
@@ -248,7 +276,7 @@ export async function getServerSideProps(context) {
     props: {
       ...props,
       _weeklyData,
-      _monthlyData
+      _monthlyData,
     },
   };
 }

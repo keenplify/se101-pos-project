@@ -41,7 +41,7 @@ export default function DeleteCategory({ token, category }) {
             onClick={async () => {
               try {
                 await CategoriesQueries.delete(token, category.id);
-                router.reload();
+                router.push("/inventory");
               } catch (error) {
                 console.log(error);
               }

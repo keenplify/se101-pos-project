@@ -122,16 +122,11 @@ export default function ActivityLogs({ token, _logs, employee }) {
                   .catch((err) => console.log(err.response));
               }}
             />
-            {Array.from(Array(pageCount)).map((_, key) => (
-              <Pagination.Item
-                key={key}
-                active={
-                  Number.parseInt(currentPageNumber) == Number.parseInt(key + 1)
-                }
+            <Pagination.Item
+                active={true}
               >
-                {key + 1}
+                {currentPageNumber}
               </Pagination.Item>
-            ))}
             <Pagination.Next
               onClick={() => {
                 if (

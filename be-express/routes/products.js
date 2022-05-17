@@ -3,7 +3,7 @@ const Product = require("../models/product");
 const { body, matchedData, param, query } = require("express-validator");
 const passport = require("passport");
 const { validateResultMiddleware, AdminOnly } = require("../libraries/helpers");
-const { Image, Variant, Category } = require("../models");
+const { Image, Variant, Category, Log } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -101,7 +101,10 @@ router.get(
         products,
       });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // res.status(500).json({ error: error.message });
+      res.send({
+        products: []
+      })
     }
   }
 );
@@ -192,7 +195,7 @@ router.post(
       await Log.create({
         createdBy: req.user.id,
         productId: newProduct.id,
-        description: `Created new product named "${name}" with category of "${newProduct.category.name}" (ID#${newProduct.category.id})`
+        description: `Created new product named "${name}"`
       })
 
       res.send(newProduct);
@@ -220,7 +223,6 @@ router.delete(
 
       await Log.create({
         createdBy: req.user.id,
-        productId: req.params.id,
         description: `Deleted product with ID ${req.params.id}`
       })
 
