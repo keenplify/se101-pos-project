@@ -50,7 +50,7 @@ export function NavBar({ employee, token }) {
           />
         </Navbar.Brand>
         <Navbar.Brand className={styles.NavBrand} href="/">
-          Vaperous M4ster
+          V4perous M4ster
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse

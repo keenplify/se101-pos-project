@@ -53,7 +53,7 @@ export const POSCategoryViewer = ({
               <h4>
                 <Badge bg="dark ">{product.name}</Badge>
               </h4>
-              <Row xs={2} md={3} className="g-4">
+              <Row xs={12} md={3} className="g-4">
                 {product.variants.map((variant, key) => (
                   <VariantCard
                     token={token}

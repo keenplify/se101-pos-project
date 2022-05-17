@@ -94,7 +94,7 @@ export default function Home({
             </Tabs>
           </Col>
           <Col
-            xs={{ order: 1 }}
+            xs={{ span: 12, order: 1 }}
             md={{ span: 3, order: 2 }}
             className="position-relative"
           >
